@@ -797,25 +797,61 @@
 
   updateHeader();
 
-  // ── Sources menu: open on trigger hover, close on card leave ──
+  // ── Sources menu ──
+  var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  function closeAllSourceMenus(except) {
+    document.querySelectorAll('.sources-trigger').forEach(function(t) {
+      if (t !== except) {
+        var m = t.querySelector('.sources-menu');
+        if (m) m.classList.remove('active');
+        t.classList.remove('active');
+      }
+    });
+  }
+
   document.querySelectorAll('.sources-trigger').forEach(function(trigger) {
     var menu = trigger.querySelector('.sources-menu');
     var card = trigger.closest('[class*="event-card"]');
 
-    // Open menu when hovering the Sources trigger
-    trigger.addEventListener('mouseenter', function() {
-      menu.classList.add('active');
-      trigger.classList.add('active');
-    });
-
-    // Close menu when mouse leaves the entire card
-    if (card) {
-      card.addEventListener('mouseleave', function() {
-        menu.classList.remove('active');
-        trigger.classList.remove('active');
+    if (isTouchDevice) {
+      // Touch: toggle on tap
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = menu.classList.contains('active');
+        closeAllSourceMenus();
+        if (!isOpen) {
+          menu.classList.add('active');
+          trigger.classList.add('active');
+        }
       });
+    } else {
+      // Desktop: open on hover, close on card leave
+      trigger.addEventListener('mouseenter', function() {
+        menu.classList.add('active');
+        trigger.classList.add('active');
+      });
+      if (card) {
+        card.addEventListener('mouseleave', function() {
+          menu.classList.remove('active');
+          trigger.classList.remove('active');
+        });
+      }
     }
   });
+
+  // Touch: close on tap outside
+  if (isTouchDevice) {
+    document.addEventListener('click', function() {
+      closeAllSourceMenus();
+    });
+
+    // Touch: close on scroll
+    window.addEventListener('scroll', function() {
+      closeAllSourceMenus();
+    }, { passive: true });
+  }
 </script>
 
 </body>
