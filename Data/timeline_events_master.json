@@ -290,7 +290,6 @@
     },
     "sort_date": "2021-02",
     "source_thumbnails": {
-      "The War Zone (Feb 2021)": "https://thedrive.com/content/2021/02/blue-water-top-2.jpg?quality=85&w=1200",
       "USNI News (Aug 2021)": "https://news.usni.org/wp-content/uploads/2021/08/skyways.jpeg"
     }
   },
@@ -870,8 +869,6 @@
     },
     "sort_date": "2025-09",
     "source_thumbnails": {
-      "RWE Press Release (Oct 2025)": "https://www.rwe.com/-/media/RWE/images/07-presse/rwe-offshore-wind-gmbh/open-graph/2025/OG-2025-10-15-rwe-successfully-pioneers-cargo-drone-operations-at-offshore-wind-farms.jpg",
-      "Skyports Press Release (Oct 2025)": "https://skyportsdroneservices.com/wp-content/uploads/2025/10/Screenshot-2025-10-13-135003.png",
       "GlobeNewswire (Oct 2025)": "https://ml.globenewswire.com/Resource/Download/c73f7c2f-8376-4ad9-8442-d68627929ec6"
     }
   },
