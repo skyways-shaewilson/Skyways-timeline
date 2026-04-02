@@ -52,9 +52,16 @@
 - Facility after Cross Park is "Tech Ridge" in North Austin, 25,000 SF
 - Founded January 2017 (Delaware incorporation Feb 13, 2017)
 - V1 built in San Francisco apartment Summer 2016 (pre-founding)
+- **V3 capabilities are payload OR range, not both simultaneously:**
+  - 157 nautical miles range with 100 lbs payload
+  - ~35 lbs cargo at 1,000 nautical miles
+  - Source: internal engineering slide 49
+  - Never say "100 lbs over 1,000 miles" — that implies both at once
 - Event details should be thorough enough that clicking source links isn't required
 - All dates and facts must match published sources
+- Always run engineer feedback past the data before publishing — capability specs change
 - Charles corrections override published sources — cite as "Skyways Internal — Charles Acknin"
+- Engineer corrections override published sources — note correction source
 - Cards without any source: cite as "Skyways Internal — No Source"
 - Charles comment rounds I, II, and III all fully addressed
 
@@ -111,7 +118,8 @@ service cloud.firestore {
 | Stat | Value | Source |
 |------|-------|--------|
 | Gov't Contracts | $40M+ | STRATFI $37M + Navy OTA ~$2.3M + SBIRs ~$0.8M + OTA $0.575M |
-| Flights Logged | 1,100+ | SBIR.gov portfolio |
+| Flights Logged | 2,950+ | Updated per internal data |
+| km Flown | 40,500+ | Internal flight logs |
 | Aircraft Iterations | 20+ | SBIR.gov portfolio |
 | Continents | 3 | North America, Asia, Europe |
 | Cost of Helicopter | 1/30th | BusinessWire press release |
