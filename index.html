@@ -320,6 +320,16 @@
     letter-spacing: -1px; position: -webkit-sticky; position: sticky; line-height: 1;
   }
 
+  .year-suffix {
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .year-suffix.flash {
+    color: var(--lime);
+    transform: scale(1.15);
+  }
+
   .year-label-col::after {
     content: ''; position: absolute;
     top: 0; right: 0; bottom: 0; width: 2px; background: var(--gray-15);
@@ -957,7 +967,7 @@
         cards += renderCard(evts[e]);
       }
       html += '<div class="year-section">' +
-        '<div class="year-label-col"><div class="year-label">' + yr + '</div></div>' +
+        '<div class="year-label-col"><div class="year-label">' + yr.substring(0,2) + '<span class="year-suffix">' + yr.substring(2) + '</span></div></div>' +
         '<div class="events-col">' + cards + '</div></div>';
     }
 
@@ -1126,6 +1136,22 @@
       return;
     }
     renderTimeline(events);
+
+    // ═══ YEAR LABEL FLASH ON SCROLL ═══
+    var yearObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var suffix = entry.target.querySelector('.year-suffix');
+        if (!suffix) return;
+        if (entry.isIntersecting) {
+          suffix.classList.add('flash');
+          setTimeout(function() { suffix.classList.remove('flash'); }, 400);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '-20% 0px -60% 0px' });
+
+    document.querySelectorAll('.year-section').forEach(function(section) {
+      yearObserver.observe(section);
+    });
   });
 </script>
 
