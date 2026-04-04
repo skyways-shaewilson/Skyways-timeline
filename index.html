@@ -317,7 +317,7 @@
 
   .year-label {
     font-size: 32px; font-weight: 800; color: var(--navy);
-    letter-spacing: -1px; position: sticky; line-height: 1;
+    letter-spacing: -1px; position: -webkit-sticky; position: sticky; line-height: 1;
   }
 
   .year-label-col::after {
@@ -1099,9 +1099,14 @@
       header.classList.remove('minimized');
       heroWrapper.style.height = heroHeight + 'px';
     }
-    var offset = isMinimized ? '210px' : (heroHeight + 170) + 'px';
+    var headerRect = header.getBoundingClientRect();
+    var offset = (headerRect.height + 16) + 'px';
     document.querySelectorAll('.year-label').forEach(function(l) { l.style.top = offset; });
   }
+
+  // Set initial year label offset on load
+  var initOffset = (header.getBoundingClientRect().height + 16) + 'px';
+  document.querySelectorAll('.year-label').forEach(function(l) { l.style.top = initOffset; });
 
   var ticking = false;
   window.addEventListener('scroll', function() {
