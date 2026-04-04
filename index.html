@@ -1138,21 +1138,35 @@
     }
     renderTimeline(events);
 
-    // ═══ YEAR LABEL FLASH ON SCROLL ═══
-    var yearObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        var suffix = entry.target.querySelector('.year-suffix');
-        if (!suffix) return;
-        if (entry.isIntersecting) {
-          suffix.classList.add('flash');
-          setTimeout(function() { suffix.classList.remove('flash'); }, 400);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '-20% 0px -60% 0px' });
+    // ═══ YEAR LABEL FLASH AT YEAR BOUNDARY ═══
+    var lastVisibleYear = null;
+    var yearSections = document.querySelectorAll('.year-section');
 
-    document.querySelectorAll('.year-section').forEach(function(section) {
-      yearObserver.observe(section);
-    });
+    function checkYearBoundary() {
+      var headerBottom = header.getBoundingClientRect().bottom + 20;
+      var currentYear = null;
+
+      for (var i = 0; i < yearSections.length; i++) {
+        var rect = yearSections[i].getBoundingClientRect();
+        if (rect.top <= headerBottom && rect.bottom > headerBottom) {
+          var label = yearSections[i].querySelector('.year-label');
+          currentYear = label ? label.textContent : null;
+          if (currentYear && currentYear !== lastVisibleYear) {
+            var suffix = yearSections[i].querySelector('.year-suffix');
+            if (suffix) {
+              suffix.classList.add('flash');
+              setTimeout(function(s) { return function() { s.classList.remove('flash'); }; }(suffix), 500);
+            }
+            lastVisibleYear = currentYear;
+          }
+          break;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(checkYearBoundary);
+    }, { passive: true });
   });
 </script>
 
