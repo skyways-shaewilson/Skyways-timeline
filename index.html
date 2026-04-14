@@ -38,7 +38,17 @@
     background: var(--white);
     color: var(--navy);
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.8s ease;
   }
+
+  .year-gradient-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none; z-index: 0;
+    opacity: 0.45;
+    transition: background 1s ease;
+  }
+
+  .sticky-header, .timeline-wrapper, .footer { position: relative; z-index: 1; }
 
   /* ══ STICKY HEADER ══ */
   .sticky-header {
@@ -778,6 +788,7 @@
 </head>
 <body>
 
+<div class="year-gradient-overlay" id="yearGradient"></div>
 <div class="sticky-header" id="stickyHeader">
   <div class="brand-bar"><div class="brand-bar-inner">
     <div class="logo-wrap">
@@ -1352,10 +1363,76 @@
     }
   }
 
+  // ═══ YEAR BACKGROUND GRADIENT ═══
+  var yearColors = {
+    2016: { r: 200, g: 210, b: 220 },  // Cool slate — pre-founding
+    2017: { r: 180, g: 200, b: 215 },  // Steel blue — founding year
+    2018: { r: 170, g: 195, b: 210 },  // Deeper steel — early military
+    2019: { r: 160, g: 190, b: 215 },  // Navy tint — ANTX
+    2020: { r: 175, g: 200, b: 195 },  // Teal hint — OTA spiral
+    2021: { r: 170, g: 195, b: 190 },  // Sea green — carrier trials
+    2022: { r: 185, g: 195, b: 175 },  // Olive warm — Series A, DIU
+    2023: { r: 195, g: 190, b: 175 },  // Warm sand — V3 development
+    2024: { r: 200, g: 185, b: 170 },  // Warm amber — Japan ops, RIMPAC
+    2025: { r: 195, g: 180, b: 190 },  // Muted plum — demo day, ULTRA
+    2026: { r: 190, g: 195, b: 180 },  // Fresh sage — current year
+  };
+  var gradientEl = document.getElementById('yearGradient');
+  var lastGradientYear = null;
+
+  function lerpColor(c1, c2, t) {
+    return {
+      r: Math.round(c1.r + (c2.r - c1.r) * t),
+      g: Math.round(c1.g + (c2.g - c1.g) * t),
+      b: Math.round(c1.b + (c2.b - c1.b) * t)
+    };
+  }
+
+  function updateYearGradient() {
+    var sections = document.querySelectorAll('.year-section');
+    if (!sections.length) return;
+    var viewMid = window.innerHeight * 0.4;
+    var currentSection = null;
+    var nextSection = null;
+    var blendProgress = 0;
+
+    for (var i = 0; i < sections.length; i++) {
+      var rect = sections[i].getBoundingClientRect();
+      if (rect.top <= viewMid && rect.bottom > viewMid) {
+        currentSection = sections[i];
+        nextSection = sections[i + 1] || null;
+        var sectionHeight = rect.bottom - rect.top;
+        var scrolledInto = viewMid - rect.top;
+        blendProgress = Math.min(scrolledInto / sectionHeight, 1);
+        break;
+      }
+    }
+
+    if (!currentSection) return;
+    var yearText = currentSection.querySelector('.year-label');
+    if (!yearText) return;
+    var year = parseInt(yearText.textContent);
+    var c1 = yearColors[year] || { r: 200, g: 200, b: 200 };
+    var c2 = c1;
+
+    if (nextSection) {
+      var nextLabel = nextSection.querySelector('.year-label');
+      if (nextLabel) {
+        var nextYear = parseInt(nextLabel.textContent);
+        c2 = yearColors[nextYear] || c1;
+      }
+    }
+
+    var blended = lerpColor(c1, c2, blendProgress);
+    var topColor = 'rgba(' + blended.r + ',' + blended.g + ',' + blended.b + ',0.3)';
+    var bottomColor = 'rgba(' + blended.r + ',' + blended.g + ',' + blended.b + ',0.08)';
+    gradientEl.style.background = 'linear-gradient(180deg, ' + topColor + ' 0%, ' + bottomColor + ' 70%, transparent 100%)';
+  }
+
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {
-      requestAnimationFrame(function() { updateHeader(); updateYearLabels(); ticking = false; });
+      requestAnimationFrame(function() { updateHeader(); updateYearLabels(); updateYearGradient(); ticking = false; });
       ticking = true;
     }
   }, { passive: true });
