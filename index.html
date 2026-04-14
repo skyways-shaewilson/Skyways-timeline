@@ -202,24 +202,26 @@
     transform: translateY(-100%); opacity: 0; pointer-events: none;
   }
 
-  .hero-inner { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
+  .hero-inner { max-width: 1440px; margin: 0 auto; padding: 0 64px; text-align: center; }
 
   .hero-inner h1 {
-    font-size: 44px; font-weight: 800;
+    font-size: 52px; font-weight: 800;
     letter-spacing: 3px; line-height: 1.15; color: var(--navy);
     text-transform: uppercase;
-    display: inline-flex; align-items: flex-start;
+    display: inline-flex; flex-direction: column; align-items: center;
+    text-align: center;
   }
 
   .h1-divider {
-    font-weight: 300; color: var(--gray-15); margin: 0 12px;
-    letter-spacing: 0; align-self: stretch;
+    display: block; width: 100%; height: 1px;
+    background: var(--gray-15); margin: 12px 0;
+    letter-spacing: 0; font-size: 0; overflow: hidden;
   }
 
   .h1-subtitle {
     font-weight: 300; font-size: 28px; color: var(--gray-50);
     letter-spacing: -0.5px; text-transform: none;
-    line-height: 1.4; text-align: left;
+    line-height: 1.4; text-align: center;
   }
 
 
@@ -720,9 +722,10 @@
 
     .hero-section { padding: 28px 0 16px; }
     .hero-inner { padding: 0 20px; }
-    .hero-inner h1 { font-size: 24px; letter-spacing: 2px; display: block; }
+    .hero-inner { text-align: left; }
+    .hero-inner h1 { font-size: 24px; letter-spacing: 2px; display: block; text-align: left; }
     .h1-divider { display: none; }
-    .h1-subtitle { font-size: 16px; font-weight: 300; display: block; margin-top: 4px; line-height: 1.3; }
+    .h1-subtitle { font-size: 16px; font-weight: 300; display: block; margin-top: 4px; line-height: 1.3; text-align: left; }
     .h1-subtitle br { display: none; }
 
     .stats-banner-inner { padding: 8px 20px; }
@@ -790,7 +793,7 @@
     </div>
   </div></div>
   <div class="hero-wrapper" id="heroWrapper"><div class="hero-section"><div class="hero-inner">
-    <h1>History & Timeline <span class="h1-divider">|</span> <span class="h1-subtitle">9 Years of Flying.<br>Built for the Mission.</span></h1>
+    <h1>History & Timeline <span class="h1-divider">|</span> <span class="h1-subtitle">9 Years of Flying.<br> Built for the Mission.</span></h1>
   </div></div></div>
   <div class="stats-banner"><div class="stats-banner-inner">
     <div class="stats-row">
