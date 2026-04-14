@@ -119,61 +119,56 @@
     position: relative;
     margin-left: auto;
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-toggle {
-    background: none; border: none; cursor: pointer; padding: 6px;
-    color: var(--gray-50); display: flex; align-items: center;
-    transition: color 0.2s ease;
-  }
-  .search-toggle:hover { color: var(--white); }
-  .sticky-header.minimized .search-toggle:hover { color: var(--navy); }
-  .search-toggle svg { width: 20px; height: 20px; }
-
-  .search-input-wrap {
-    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-    width: 0; opacity: 0; overflow: hidden;
-    transition: width 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
-    display: flex; align-items: center;
-  }
-
-  .search-input-wrap.open {
-    width: 260px; opacity: 1;
+    width: 220px;
   }
 
   .search-input {
-    width: 100%; padding: 8px 36px 8px 12px;
-    border: 1px solid var(--gray-15); border-radius: 6px;
+    width: 100%; padding: 7px 32px 7px 12px;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
     font-family: 'Founders Grotesk', sans-serif;
-    font-size: 14px; font-weight: 450;
-    background: var(--white); color: var(--navy);
+    font-size: 13px; font-weight: 450;
+    background: rgba(255,255,255,0.08); color: var(--white);
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
   .search-input:focus {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.12);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+  }
+  .search-input::placeholder { color: rgba(255,255,255,0.4); }
+
+  .sticky-header.minimized .search-input {
+    border-color: var(--gray-15);
+    background: var(--white);
+    color: var(--navy);
+  }
+  .sticky-header.minimized .search-input:focus {
     border-color: var(--blue);
+    background: var(--white);
     box-shadow: 0 0 0 3px rgba(0,154,235,0.15);
   }
-  .search-input::placeholder { color: var(--gray-50); }
+  .sticky-header.minimized .search-input::placeholder { color: var(--gray-50); }
 
   .search-clear {
     position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
     background: none; border: none; cursor: pointer; padding: 4px;
-    color: var(--gray-50); display: none; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4); display: none; align-items: center; justify-content: center;
   }
   .search-clear.visible { display: flex; }
-  .search-clear:hover { color: var(--navy); }
+  .search-clear:hover { color: var(--white); }
+  .sticky-header.minimized .search-clear { color: var(--gray-50); }
+  .sticky-header.minimized .search-clear:hover { color: var(--navy); }
   .search-clear svg { width: 14px; height: 14px; }
 
   .search-count {
     position: absolute; right: 0; top: calc(100% + 4px);
-    font-size: 11px; font-weight: 500; color: var(--gray-50);
+    font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4);
     white-space: nowrap; opacity: 0;
     transition: opacity 0.2s ease;
   }
   .search-count.visible { opacity: 1; }
+  .sticky-header.minimized .search-count { color: var(--gray-50); }
 
 
   .brand-bar-inline-title {
@@ -736,8 +731,8 @@
     .sticky-header.minimized .brand-bar { height: 52px; }
     .brand-bar-inline-title { font-size: 11px; }
     .brand-bar-label { display: none; }
-    .search-input-wrap.open { width: 200px; }
-    .search-toggle svg { width: 18px; height: 18px; }
+    .search-wrap { width: 160px; }
+    .search-input { font-size: 12px; padding: 6px 28px 6px 10px; }
 
     .hero-section { padding: 28px 0 16px; }
     .hero-inner { padding: 0 20px; }
@@ -803,16 +798,11 @@
     <div class="brand-bar-inline-title">History & Timeline</div>
     <div class="brand-bar-label">Company Timeline</div>
     <div class="search-wrap">
-      <button class="search-toggle" onclick="toggleSearch()" aria-label="Search timeline">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search events..." oninput="handleSearch()" onkeydown="if(event.key==='Escape')this.blur()">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-      <div class="search-input-wrap" id="searchWrap">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search events..." oninput="handleSearch()" onkeydown="if(event.key==='Escape')toggleSearch()">
-        <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div class="search-count" id="searchCount"></div>
-      </div>
+      <div class="search-count" id="searchCount"></div>
     </div>
   </div></div>
   <div class="hero-wrapper" id="heroWrapper"><div class="hero-section"><div class="hero-inner">
@@ -1204,21 +1194,6 @@
   }
 
   // ═══ SEARCH SYSTEM ═══
-  var searchOpen = false;
-
-  function toggleSearch() {
-    var wrap = document.getElementById('searchWrap');
-    var input = document.getElementById('searchInput');
-    searchOpen = !searchOpen;
-    if (searchOpen) {
-      wrap.classList.add('open');
-      setTimeout(function() { input.focus(); }, 100);
-    } else {
-      clearSearch();
-      wrap.classList.remove('open');
-    }
-  }
-
   function handleSearch() {
     var query = document.getElementById('searchInput').value.toLowerCase().trim();
     var clearBtn = document.getElementById('searchClear');
@@ -1266,7 +1241,7 @@
     var input = document.getElementById('searchInput');
     input.value = '';
     handleSearch();
-    if (searchOpen) input.focus();
+    input.focus();
   }
 
   // ═══ FILTER SYSTEM ═══
@@ -1274,8 +1249,7 @@
 
   function toggleFilter(category) {
     // Clear search when filtering
-    if (searchOpen) { toggleSearch(); }
-    else { clearSearch(); }
+    clearSearch();
 
     var cards = document.querySelectorAll('.event-card');
     var sections = document.querySelectorAll('.year-section');
