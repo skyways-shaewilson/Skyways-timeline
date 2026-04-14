@@ -1118,9 +1118,8 @@
             g = Math.round(g / count);
             b = Math.round(b / count);
 
-            // Apply subtle tinted background and left border accent
-            card.style.background = 'linear-gradient(135deg, rgba(' + r + ',' + g + ',' + b + ',0.04) 0%, rgba(' + r + ',' + g + ',' + b + ',0.01) 60%, transparent 100%)';
-            card.style.borderLeft = '3px solid rgba(' + r + ',' + g + ',' + b + ',0.25)';
+            // Apply subtle tinted background only
+            card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.04)';
 
             // Store color for hover state
             card.dataset.tintR = r;
@@ -1139,13 +1138,13 @@
       var card = e.target.closest('.event-card');
       if (!card || !card.dataset.tintR) return;
       var r = card.dataset.tintR, g = card.dataset.tintG, b = card.dataset.tintB;
-      card.style.background = 'linear-gradient(135deg, rgba(' + r + ',' + g + ',' + b + ',0.08) 0%, rgba(' + r + ',' + g + ',' + b + ',0.03) 60%, transparent 100%)';
+      card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.07)';
     });
     document.addEventListener('mouseout', function(e) {
       var card = e.target.closest('.event-card');
       if (!card || !card.dataset.tintR) return;
       var r = card.dataset.tintR, g = card.dataset.tintG, b = card.dataset.tintB;
-      card.style.background = 'linear-gradient(135deg, rgba(' + r + ',' + g + ',' + b + ',0.04) 0%, rgba(' + r + ',' + g + ',' + b + ',0.01) 60%, transparent 100%)';
+      card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.04)';
     });
   }
 
