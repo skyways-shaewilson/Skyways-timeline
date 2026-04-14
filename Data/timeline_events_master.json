@@ -393,12 +393,16 @@
     "detail": "Skyways raised a $13M Series A led by Thursday Ventures, joined by MVP Ventures, Outlander VC, Defense Angels, Cathexis, Capital Factory, and other follow-on investors. Total raised at the close of the Series A was $17M.",
     "tag": "Funding",
     "sources": [
-      "Skyways Internal — Charles Acknin"
+      "Skyways Internal — Charles Acknin",
+      "Crunchbase — Skyways Series A (Jan 2022)"
     ],
     "charles_corrections": [
-      "Round III: Series A was missing entirely from the timeline. Added per Charles."
+      "Round III: Series A was missing entirely from the timeline. Added per Charles.",
+      "Note: Crunchbase lists $15M; Charles confirmed $13M. Charles figure is authoritative."
     ],
-    "source_urls": {},
+    "source_urls": {
+      "Crunchbase — Skyways Series A (Jan 2022)": "https://www.crunchbase.com/funding_round/skyways-series-a--cc98b67a"
+    },
     "sort_date": "2022-01",
     "source_thumbnails": {
       "Skyways (hero)": "https://www.skyways.com/_astro/hero.DmMP60zO_Z1mKK4i.webp"
