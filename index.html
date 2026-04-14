@@ -124,51 +124,35 @@
 
   .search-input {
     width: 100%; padding: 7px 32px 7px 12px;
-    border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
     font-family: 'Founders Grotesk', sans-serif;
     font-size: 13px; font-weight: 450;
-    background: rgba(255,255,255,0.08); color: var(--white);
+    background: var(--white); color: var(--navy);
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .search-input:focus {
-    border-color: rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.12);
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
-  }
-  .search-input::placeholder { color: rgba(255,255,255,0.4); }
-
-  .sticky-header.minimized .search-input {
-    border-color: var(--gray-15);
-    background: var(--white);
-    color: var(--navy);
-  }
-  .sticky-header.minimized .search-input:focus {
     border-color: var(--blue);
-    background: var(--white);
     box-shadow: 0 0 0 3px rgba(0,154,235,0.15);
   }
-  .sticky-header.minimized .search-input::placeholder { color: var(--gray-50); }
+  .search-input::placeholder { color: var(--gray-50); }
 
   .search-clear {
     position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
     background: none; border: none; cursor: pointer; padding: 4px;
-    color: rgba(255,255,255,0.4); display: none; align-items: center; justify-content: center;
+    color: var(--gray-50); display: none; align-items: center; justify-content: center;
   }
   .search-clear.visible { display: flex; }
-  .search-clear:hover { color: var(--white); }
-  .sticky-header.minimized .search-clear { color: var(--gray-50); }
-  .sticky-header.minimized .search-clear:hover { color: var(--navy); }
+  .search-clear:hover { color: var(--navy); }
   .search-clear svg { width: 14px; height: 14px; }
 
   .search-count {
     position: absolute; right: 0; top: calc(100% + 4px);
-    font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4);
+    font-size: 11px; font-weight: 500; color: var(--gray-50);
     white-space: nowrap; opacity: 0;
     transition: opacity 0.2s ease;
   }
   .search-count.visible { opacity: 1; }
-  .sticky-header.minimized .search-count { color: var(--gray-50); }
 
 
   .brand-bar-inline-title {
@@ -235,9 +219,6 @@
     letter-spacing: -0.5px; text-transform: none;
   }
 
-  .hero-inner .subtitle {
-    font-size: 15px; font-weight: 450; color: var(--gray-50); margin-top: 8px;
-  }
 
   .stats-banner {
     background: var(--navy);
@@ -278,12 +259,21 @@
   }
 
   .legend-row {
-    display: flex; gap: 12px; justify-content: flex-start;
+    display: flex; gap: 12px; align-items: center;
     border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;
     transition: padding-top 0.35s ease;
   }
 
   .sticky-header.minimized .legend-row { padding-top: 6px; }
+
+  .legend-note {
+    margin-left: auto;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  .sticky-header.minimized .legend-note { color: var(--gray-50); }
 
   .legend-item {
     display: flex; align-items: center; gap: 7px;
@@ -739,7 +729,7 @@
     .hero-inner h1 { font-size: 24px; letter-spacing: 2px; }
     .h1-divider { display: none; }
     .h1-subtitle { font-size: 16px; display: block; margin-top: 4px; }
-    .hero-inner .subtitle { font-size: 13px; }
+    .legend-note { display: none; }
 
     .stats-banner-inner { padding: 8px 20px; }
     .sticky-header.minimized .stats-banner-inner { padding: 6px 20px; }
@@ -807,7 +797,6 @@
   </div></div>
   <div class="hero-wrapper" id="heroWrapper"><div class="hero-section"><div class="hero-inner">
     <h1>History & Timeline <span class="h1-divider">|</span> <span class="h1-subtitle">9 Years of Flying. Built for the Mission.</span></h1>
-    <div class="subtitle">Founded 2017 &#183; First public Demo Day November 2025 &#183; All publicly verified milestones</div>
   </div></div></div>
   <div class="stats-banner"><div class="stats-banner-inner">
     <div class="stats-row">
@@ -825,6 +814,7 @@
       <div class="legend-item" data-filter="product" onclick="toggleFilter('product')"><div class="legend-dot product"></div>Product Development<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
       <div class="legend-item" data-filter="defense" onclick="toggleFilter('defense')"><div class="legend-dot defense"></div>Defense Milestones<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
       <div class="legend-item" data-filter="milestone" onclick="toggleFilter('milestone')"><div class="legend-dot milestone"></div>Major Milestones<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-note">Founded 2017 &#183; First public Demo Day November 2025 &#183; All publicly verified milestones</div>
     </div>
   </div></div>
 </div>
