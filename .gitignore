@@ -1,0 +1,8 @@
+# Firebase service account key - NEVER commit
+*firebase-adminsdk*
+*-firebase-adminsdk-*
+
+# Environment Variables
+.env
+.env.local
+.env.*
