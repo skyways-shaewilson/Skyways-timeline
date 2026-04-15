@@ -70,8 +70,8 @@
 
   .sticky-header.minimized .brand-bar {
     height: 60px;
-    background: var(--gray-05);
-    border-bottom: 1px solid var(--gray-15);
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
   .brand-bar-inner {
@@ -112,8 +112,8 @@
     opacity: 0;
   }
 
-  .sticky-header.minimized .logo-white { opacity: 0; }
-  .sticky-header.minimized .logo-color { opacity: 1; }
+  .sticky-header.minimized .logo-white { opacity: 1; }
+  .sticky-header.minimized .logo-color { opacity: 0; }
 
 
   /* ══ SEARCH ══ */
@@ -178,7 +178,7 @@
   .brand-bar-inline-title {
     font-size: 13px;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--white);
     letter-spacing: -0.2px;
     opacity: 0;
     transform: translateX(-8px);
@@ -196,7 +196,7 @@
   .brand-bar-divider {
     width: 1px;
     height: 18px;
-    background: var(--gray-15);
+    background: rgba(255,255,255,0.15);
     flex-shrink: 0;
     opacity: 0;
     transition: opacity 0.3s ease 0.1s;
