@@ -1034,18 +1034,18 @@
             <div class="tel-sub">ALL-TIME LOGBOOK RECORD</div>
           </div>
           <div class="telemetry-item">
-            <div class="tel-label">V3.2 AIRFRAME SUM</div>
+            <div class="tel-label">V3.2 LOGBOOK SUM</div>
             <div class="tel-value" id="activeFlightsCounter">---</div>
             <div class="tel-sub">ACTIVE TELEMETRY ARRAY</div>
           </div>
           <div class="telemetry-item">
-            <div class="tel-label">TOTAL DISTANCE (KM)</div>
-            <div class="tel-value" id="distanceKmCounter">---</div>
-            <div class="tel-sub">V3.2 AUTONOMOUS RANGE</div>
+            <div class="tel-label">DEPLOYED FLEET</div>
+            <div class="tel-value">07</div>
+            <div class="tel-sub">V3.2 AIRFRAMES</div>
           </div>
         </div>
         <div class="telemetry-footer">
-          // SYS: ACTIVE FLEET [07] V3.2 AIRFRAMES <span style="opacity:0.5; margin-left: 12px; font-variant-numeric: tabular-nums;">NET: <span id="msCounter">42ms</span></span>
+          // SYS: CONNECTION ESTABLISHED <span style="opacity:0.5; margin-left: 12px; font-variant-numeric: tabular-nums;">NET: <span id="msCounter">42ms</span></span>
         </div>
       </div>
 
@@ -1779,23 +1779,10 @@
         
         animateCounter('globalFlightsCounter', 3100, globalF, 2000);
         animateCounter('activeFlightsCounter', 0, activeF, 2100);
-        
-        // [MANUAL OVERRIDE] Distance is fixed to historical baseline +40,500 instead of active API sync
-        animateCounter('distanceKmCounter', 39000, 40500, 2200);
-        setTimeout(() => {
-           var dCounter = document.getElementById('distanceKmCounter');
-           if (dCounter) dCounter.innerHTML += '+';
-        }, 2250);
       })
       .catch(e => {
         animateCounter('globalFlightsCounter', 3100, 3977, 2000);
         animateCounter('activeFlightsCounter', 0, 1382, 2100);
-        
-        animateCounter('distanceKmCounter', 39000, 40500, 2200);
-        setTimeout(() => {
-           var dCounter = document.getElementById('distanceKmCounter');
-           if (dCounter) dCounter.innerHTML += '+';
-        }, 2250);
       });
   }
 
