@@ -9,12 +9,16 @@ export default async function handler(req, res) {
 
   try {
     let allRecordsCount = 0;
+    let globalLifetimeFlights = 0;
+    let totalFlightHours = 0;
+    let totalDistanceKm = 0;
+    
     let offset = null;
     let keepFetching = true;
 
-    // Paginate through the Airtable view counting records. We ask for 0 fields to keep the data packet incredibly small.
+    // Paginate through the Airtable view counting records and aggregating stats.
     while (keepFetching) {
-      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100000&fields%5B%5D=Id` + 
+      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?fields%5B%5D=Flight%20%23&fields%5B%5D=Flight%20time%20(h)&fields%5B%5D=Dist%20Cruise%20(km)` + 
                   (offset ? `&offset=${offset}` : '');
                   
       const response = await fetch(url, {
@@ -30,6 +34,14 @@ export default async function handler(req, res) {
 
       const data = await response.json();
       allRecordsCount += (data.records || []).length;
+      
+      (data.records || []).forEach(record => {
+        const fNum = record.fields['Flight #'] || 0;
+        if (fNum > globalLifetimeFlights) globalLifetimeFlights = fNum;
+        
+        totalFlightHours += (record.fields['Flight time (h)'] || 0);
+        totalDistanceKm += (record.fields['Dist Cruise (km)'] || 0);
+      });
 
       if (data.offset) {
         offset = data.offset;
@@ -39,7 +51,10 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({ 
-       flightsLogged: allRecordsCount, 
+       globalFlights: globalLifetimeFlights,
+       activeFlights: allRecordsCount,
+       flightHours: Math.round(totalFlightHours),
+       distanceKm: Math.round(totalDistanceKm),
        status: "success" 
     });
 

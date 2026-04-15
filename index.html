@@ -1029,19 +1029,19 @@
         
         <div class="telemetry-grid">
           <div class="telemetry-item">
-            <div class="tel-label">FLIGHTS LOGGED</div>
-            <div class="tel-value thrust" id="flightsLoggedCounter">---</div>
-            <div class="tel-sub">V3.2 &middot; YTD RECORD</div>
+            <div class="tel-label">GLOBAL FLIGHTS</div>
+            <div class="tel-value thrust" id="globalFlightsCounter">---</div>
+            <div class="tel-sub">ALL-TIME LOGBOOK RECORD</div>
           </div>
           <div class="telemetry-item">
-            <div class="tel-label">CUMULATIVE FLIGHT HRS</div>
-            <div class="tel-value" id="flightHoursCounter">---</div>
-            <div class="tel-sub">AUTONOMOUS MODE</div>
+            <div class="tel-label">V3.2 AIRFRAME SUM</div>
+            <div class="tel-value" id="activeFlightsCounter">---</div>
+            <div class="tel-sub">ACTIVE TELEMETRY ARRAY</div>
           </div>
           <div class="telemetry-item">
             <div class="tel-label">TOTAL DISTANCE (KM)</div>
             <div class="tel-value" id="distanceKmCounter">---</div>
-            <div class="tel-sub">GLOBAL NETWORK</div>
+            <div class="tel-sub">V3.2 AUTONOMOUS RANGE</div>
           </div>
         </div>
         <div class="telemetry-footer">
@@ -1774,17 +1774,17 @@
     fetch('/api/airtable')
       .then(r => r.json())
       .then(data => {
-        var flights = data.flightsLogged || 1382;
-        var hours = data.flightHours || 387;
+        var globalF = data.globalFlights || 3977;
+        var activeF = data.activeFlights || 1382;
         var dist = data.distanceKm || 32552;
         
-        animateCounter('flightsLoggedCounter', 1100, flights, 2000);
-        animateCounter('flightHoursCounter', 0, hours, 2100);
+        animateCounter('globalFlightsCounter', 3100, globalF, 2000);
+        animateCounter('activeFlightsCounter', 0, activeF, 2100);
         animateCounter('distanceKmCounter', 20000, dist, 2200);
       })
       .catch(e => {
-        animateCounter('flightsLoggedCounter', 1100, 1382, 2000);
-        animateCounter('flightHoursCounter', 0, 387, 2100);
+        animateCounter('globalFlightsCounter', 3100, 3977, 2000);
+        animateCounter('activeFlightsCounter', 0, 1382, 2100);
         animateCounter('distanceKmCounter', 20000, 32552, 2200);
       });
   }
