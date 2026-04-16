@@ -1,0 +1,12 @@
+{
+  "lifetimeFlights": 1561,
+  "flightTimeSec": 1808773,
+  "flightTimeHours": 502.4,
+  "kmFlown": 42895.3,
+  "breakdown": {
+    "mergedRecords": 1549,
+    "flightsDeltaRecords": 12
+  },
+  "updatedAt": "2026-04-16T16:15:51+00:00",
+  "source": "Airtable base appoHrNhrbURTxmuh \u2014 Merged flights + Flights delta (dedup by Flight #)"
+}

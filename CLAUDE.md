@@ -18,6 +18,15 @@
 - Don't ask Shae to check things manually — verify yourself via APIs, scripts, or Firestore REST API
 - At the end of every project session: update CLAUDE.md, PRD, MEMORY.md, and all project docs
 
+## Typography
+- **Font:** Founders Grotesk (self-hosted WOFF2), replaced Google Fonts Inter (April 14, 2026)
+- **Font files:** `/Founders Grotesk Family/WOFF2/` — 10 files (Light, Regular, Medium, Semibold, Bold × normal + italic)
+- **10 `@font-face` declarations** in `<style>` block, `font-display: swap`
+- **`font-family: 'Founders Grotesk', sans-serif`** on `body`
+- **Weight mapping:** Light=300, Regular=400, Medium=500, Semibold=600, Bold=700
+- **Detail text, subtitle, search input:** `font-weight: 450` (interpolates between Regular and Medium — Founders Grotesk renders lighter than Inter at the same weight)
+- **Card titles:** `font-size: 22px` desktop, `19px` mobile
+
 ## Technical Lessons (Mobile Safari / iOS)
 - NEVER put `overflow-x: hidden` on `html` or `body` — it breaks `position: sticky`
 - NEVER put `overflow: hidden` on `.event-card` — it clips source dropdown menus. Put it on `.event-card-bg` instead.
@@ -28,6 +37,41 @@
 - Always include `-webkit-sticky` for Safari sticky positioning support
 - Mobile stats/filter section: keep compact (~40% smaller than desktop)
 - Year label sticky offset must clear the header fade gradient (currently 210px in minimized mode)
+
+## Search System
+- **Always-visible search bar** in header — white background, navy text, placeholder "Search events..."
+- Replaces previous toggle/magnifying-glass pattern — search is always accessible
+- Filters cards in real-time by title and detail text
+- Styled to match header in both expanded and minimized (scrolled) states
+
+## Hero Section
+- **Heading:** `HISTORY & TIMELINE` — all caps (`text-transform: uppercase; letter-spacing: 3px`)
+- **Subtitle:** `9 Years of Flying. Built for the Mission.` — separated by `|` divider
+- **Layout:** `<h1>HISTORY & TIMELINE <span class="h1-divider">|</span> <span class="h1-subtitle">...</span></h1>`
+- Page title: "Skyways — History & Timeline" (removed "Company Timeline" branding)
+
+## Legend Note
+- Clarification text moved to the filter legend row, right-aligned: `Founded 2017 · First public Demo Day November 2025 · All publicly verified milestones`
+- Uses `margin-left: auto` for right alignment within the legend flex row
+
+## Year Label Animations
+- **Year fade:** When the next year's sticky label approaches the current one, the current label fades out. Compares `labels[i+1].getBoundingClientRect().top` against the current label's `stickyTop` position with a 50px fade zone
+- **Year separator line removed** — `.year-label-col::after` vertical line deleted (not needed with fade animation)
+- **Year highlight function removed** — no more `.year-suffix` CSS/HTML/JS
+
+## Year Background Gradient
+- Fixed overlay div with scroll-based color transitions
+- **Year-specific RGB colors** for 2016–2026 (navy/blue/teal/green palette)
+- Uses linear interpolation (lerp) between adjacent years based on scroll position
+- Opacity: 0.45
+- Colors update as user scrolls through different year sections
+
+## Thumbnail Color Tinting
+- Canvas-based color extraction from card thumbnail images
+- Samples 32×32 downscaled image, skips pixels with brightness <30 or >220
+- Applies extracted color as `backgroundColor` on card at **9% opacity** (default) / **13% opacity** (hover)
+- Uses `crossOrigin = 'anonymous'` for cross-origin image access
+- Subtle effect — adds visual variety without overpowering card content
 
 ## Filter System
 - Legend items in `.legend-row` use `data-filter` attribute matching `data-category` on event cards
@@ -67,7 +111,7 @@
 
 ## Timeline Database (Firebase Firestore)
 - **Firebase Project:** `marketing---earned-media-db` (shared with Earned Media DB)
-- **Collection:** `skyways_history_and_story` — **54 documents**
+- **Collection:** `skyways_history_and_story` — **56 documents**
 - **Local backup:** `Data/timeline_events_master.json` (always keep in sync with Firestore)
 - **Seed script:** `scripts/seed_firestore.py`
 - **Service account key:** `~/Desktop/Claude/Marketing - Earned Media DB/marketing---earned-media-db-firebase-adminsdk-fbsvc-57c1abc041.json`
@@ -184,9 +228,30 @@ service cloud.firestore {
 
 ## CSS Lessons
 - **Source dropdown z-index:** `.event-card` needs `z-index: 1` base value so `.event-card.sources-open { z-index: 20 }` properly stacks above siblings
-- **Card shadow:** `box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)` gives subtle texture without being heavy
+- **Card shadow:** `box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08)` — strengthened after thumbnail tinting made lighter shadows invisible. Cards MUST have explicit `background: var(--white)` for shadow visibility.
+- **Thumbnail color ≠ shadow color:** When adding color tinting to cards, apply to `backgroundColor` not `borderLeft` or gradient overlays — those look like colored shadows instead of card tinting
+- **Font weight interpolation:** `font-weight: 450` works to interpolate between 400/500 weight stops — useful when swapping font families that render at different visual weights
 
 ## Spreadsheet Formatting Preferences
 - Related columns must be adjacent
 - Preserve existing template formatting
 - New columns in their logical group, not appended
+
+## Live Flight Stats (Airtable → Static Snapshot → UI)
+- **Dashboard panel shows 3 live counters** in the war-room panel:
+  - LIFETIME FLIGHTS (integer, dedup'd across tables)
+  - FLIGHT TIME (SEC) (integer seconds, all-time)
+  - KM FLOWN (integer km, cruise distance, all-time)
+- **Data source:** `Data/live_stats.json` (static file, served by GitHub Pages)
+- **Generator:** `scripts/update_live_stats.py` — pulls from Airtable base `appoHrNhrbURTxmuh`:
+  - Starts with every row in `Merged flights` (already contains SKYWAYS + ANA + SKYPORTS)
+  - Adds any rows from `Flights` whose `Flight #` is not already on the SKYWAYS side of Merged (catches recent flights not yet merged)
+  - Sums `Flight time (s)` and `Dist Cruise (km)` for flight-time and distance totals
+- **Why this dedup:** Merged flights is the rollup, but a tail of ~12 recent Skyways flights can lag behind the merge. The delta ensures archive completeness without double-counting.
+- **Credentials:** `AIRTABLE_PAT` + `AIRTABLE_BASE_ID` in `.env.local` (gitignored)
+- **Scheduled task:** `skyways-timeline-live-stats` runs every 15 min:
+  - Regenerates `Data/live_stats.json`
+  - Only commits/pushes if values changed
+  - Refuses to push if any counter decreased (sanity guard)
+- **Frontend behavior:** browser fetches `Data/live_stats.json?t=<now>` on load (cache-busted) and re-polls every 60 sec. On fetch failure, falls back to `STATS_FALLBACK` hardcoded in `index.html` — keep that block in sync with the most recent authoritative values so the site never shows zeros.
+- **When adding/removing an Airtable flight table:** update `scripts/update_live_stats.py` (FLIGHTS_TABLE / MERGED_TABLE constants), update `STATS_FALLBACK` in index.html, regenerate snapshot, commit.
