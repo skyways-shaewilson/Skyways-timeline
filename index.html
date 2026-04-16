@@ -266,16 +266,19 @@
   }
 
   .sticky-header.minimized .tel-value {
-    font-size: 20px;
+    font-size: 18px;
   }
   .sticky-header.minimized .tel-value.small {
-    font-size: 16px;
+    font-size: 18px;
   }
   .sticky-header.minimized .tel-label {
     font-size: 8.5px; margin-bottom: 4px;
   }
   .sticky-header.minimized .tel-sub {
     font-size: 8px; margin-top: 4px;
+  }
+  .sticky-header.minimized .telemetry-grid {
+    gap: 14px;
   }
 
   .hero-inner { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
@@ -319,7 +322,7 @@
     background: rgba(17, 30, 38, 0.85);
     border: 1px solid rgba(194, 242, 19, 0.3);
     padding: 24px;
-    min-width: 420px;
+    min-width: 520px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(194, 242, 19, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -356,10 +359,13 @@
   }
 
   .telemetry-grid {
-    display: flex; gap: 32px; align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: flex-start;
   }
   .telemetry-item {
-    display: flex; flex-direction: column;
+    display: flex; flex-direction: column; min-width: 0;
   }
   .tel-label {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -368,13 +374,16 @@
   }
   .tel-value {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 36px; font-weight: bold; color: var(--white); line-height: 1;
+    font-size: 26px; font-weight: bold; color: var(--white); line-height: 1;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
   .tel-value.thrust {
     color: var(--thrust-green); text-shadow: 0 0 15px rgba(194, 242, 19, 0.3);
   }
-  .tel-value.small { font-size: 24px; color: var(--blue); }
+  /* Legacy .small modifier retained for backwards compat; no longer used
+     on the current three-counter layout. */
+  .tel-value.small { font-size: 22px; color: var(--blue); }
   
   .tel-sub {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -885,7 +894,10 @@
     .h1-subtitle { font-size: 18px; }
     .dashboard-hero { flex-direction: column; align-items: flex-start; gap: 40px; }
     .war-room-panel { width: 100%; min-width: 0; }
-    .telemetry-grid { flex-wrap: wrap; gap: 20px; }
+    .telemetry-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+    }
     .stats-banner-inner { padding: 16px 32px; }
     .sticky-header.minimized .stats-banner-inner { padding: 10px 32px; }
     .stats-row { grid-template-columns: repeat(3, 1fr); gap: 12px 0; }
@@ -922,19 +934,22 @@
     .h1-subtitle br { display: none; }
     .dashboard-hero { flex-direction: column; align-items: flex-start; gap: 32px; }
     .war-room-panel { width: 100%; padding: 16px; }
-    .tel-value { font-size: 28px; }
-    .telemetry-grid { gap: 16px; justify-content: space-between; }
-    
+    .tel-value { font-size: 20px; }
+    .telemetry-grid {
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 16px;
+    }
+
     .sticky-header.minimized .war-room-panel { padding: 10px 16px; min-width: 0; }
-    .sticky-header.minimized .telemetry-grid { gap: 12px; }
-    .sticky-header.minimized .tel-value { font-size: 16px; }
+    .sticky-header.minimized .telemetry-grid { gap: 10px; }
+    .sticky-header.minimized .tel-value { font-size: 14px; }
     .sticky-header.minimized .tel-value.small { font-size: 14px; }
     .sticky-header.minimized .tel-label { font-size: 7.5px; }
-    
+
     .sticky-header.minimized .hero-section { padding: 12px 0 16px; }
     .sticky-header.minimized .war-room-panel { padding: 10px 16px; }
-    .sticky-header.minimized .telemetry-grid { gap: 8px; justify-content: space-between; }
-    .sticky-header.minimized .tel-value { font-size: 15px; }
+    .sticky-header.minimized .telemetry-grid { gap: 8px; }
+    .sticky-header.minimized .tel-value { font-size: 13px; }
     .sticky-header.minimized .tel-value.small { font-size: 13px; }
     .sticky-header.minimized .tel-label { font-size: 7px; letter-spacing: 0.5px; }
     .sticky-header.minimized .tel-sub { font-size: 6.5px; }
@@ -1044,7 +1059,7 @@
           </div>
           <div class="telemetry-item">
             <div class="tel-label">KM FLOWN</div>
-            <div class="tel-value small" id="kmFlownCounter">---</div>
+            <div class="tel-value" id="kmFlownCounter">---</div>
             <div class="tel-sub">CRUISE DISTANCE, ALL-TIME</div>
           </div>
         </div>
