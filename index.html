@@ -188,16 +188,25 @@
   }
 
 
+  /* Inline title that lives in the brand bar. Invisible at the top of the
+     page (the hero H1 is the active title then); fades in as soon as the
+     header starts minimizing so the page always has a visible title. */
   .brand-bar-inline-title {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     color: var(--white);
-    letter-spacing: -0.2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     opacity: 0;
-    transform: translateX(-8px);
+    transform: translateX(-6px);
     white-space: nowrap;
+    /* flex-shrink:0 prevents a narrow search bar or long logo from squeezing
+       the title out of the row on tablet/mobile. */
+    flex-shrink: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
+    /* No delay — we want it visible the instant the H1 starts collapsing, so
+       there's never a frame where neither title is on screen. */
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
   .sticky-header.minimized .brand-bar-inline-title {
@@ -208,11 +217,11 @@
 
   .brand-bar-divider {
     width: 1px;
-    height: 18px;
-    background: rgba(255,255,255,0.15);
+    height: 20px;
+    background: rgba(255,255,255,0.25);
     flex-shrink: 0;
     opacity: 0;
-    transition: opacity 0.3s ease 0.1s;
+    transition: opacity 0.25s ease;
   }
 
   .sticky-header.minimized .brand-bar-divider {
@@ -433,7 +442,7 @@
      above the legend instead of being clipped by it. */
   .stats-row {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     width: 100%;
     position: relative;
     z-index: 3;
@@ -1100,9 +1109,7 @@
       <div class="stat"><div class="stat-value">$40M+</div><div class="stat-label">Gov&#8217;t Contracts</div>
         <div class="stat-menu"><div class="stat-menu-info">Sum of all government awards</div><div class="stat-menu-source">Verified Source: DoD Awards</div></div>
       </div>
-      <div class="stat"><div class="stat-value">40,500+</div><div class="stat-label">km Flown</div>
-        <div class="stat-menu"><div class="stat-menu-info">Accumulated distance over test + ops flights</div></div>
-      </div>
+      <!-- km Flown removed — now shown live in the Fleet Flight Telemetry panel -->
       <div class="stat"><div class="stat-value">20+</div><div class="stat-label">Aircraft Iterations</div>
         <div class="stat-menu"><div class="stat-menu-info">Hardware versions developed since 2017</div><div class="stat-menu-source">Verified Source: SBIR.gov portfolio</div></div>
       </div>
