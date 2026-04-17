@@ -271,44 +271,45 @@
   }
 
   /* Aircraft hero card — sits to the left of the telemetry panel once the
-     header minimizes, filling what was dead space. Hidden at the top of the
-     page so the H1 title + subtitle can stretch over the full hero row. */
+     header minimizes, filling what was dead space. Mirrors the .event-card-bg
+     aesthetic: atmospheric background image with a soft right-side fade mask
+     so the image dissolves into the navy rather than sitting in a framed box.
+     Hidden at the top of the page so the H1 title can take the full row. */
   .header-aircraft {
     flex: 0 0 auto;
     width: 0;
     max-width: 0;
-    height: 80px;
+    align-self: stretch;
+    min-height: 100px;
     overflow: hidden;
-    border-radius: 6px;
-    border: 1px solid transparent;
     opacity: 0;
-    transform: translateX(-8px);
+    background-image: url('aircraft_header.jpg');
+    background-size: cover;
+    background-position: 35% 50%;
+    pointer-events: none;
     transition:
       max-width 0.4s cubic-bezier(0.4,0,0.2,1),
       width 0.4s cubic-bezier(0.4,0,0.2,1),
-      opacity 0.3s ease 0.05s,
-      transform 0.3s ease 0.05s,
-      border-color 0.3s ease;
-    pointer-events: none;
-    background: var(--navy);
-    flex-shrink: 0;
+      opacity 0.35s ease 0.05s;
+    /* Fade the right 40% of the image into transparency so it blends into the
+       war-room panel next to it. Same pattern as .event-card-bg. */
+    -webkit-mask-image: linear-gradient(to right,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 55%,
+      rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to right,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 55%,
+      rgba(0,0,0,0) 100%);
   }
-  .header-aircraft img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-  }
+  /* Hides the leftover <img> if this file is served before the cache purge
+     for the old implementation. */
+  .header-aircraft img { display: none; }
 
   .sticky-header.minimized .header-aircraft {
-    width: 240px;
-    max-width: 240px;
-    opacity: 1;
-    transform: translateX(0);
-    border-color: rgba(194, 242, 19, 0.25);
-    pointer-events: auto;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    width: 360px;
+    max-width: 360px;
+    opacity: 0.9;
   }
 
   .war-room-panel {
@@ -1178,11 +1179,11 @@
     <!-- Aircraft hero card. Hidden at the top of the page (the big H1 + war-
          room telemetry fill the row then). When the header minimizes on
          scroll it takes the now-empty left side of the dashboard row so the
-         telemetry isn't floating in dead space. Replace aircraft_header.jpg
-         with a higher-res shot any time; no code changes required. -->
-    <div class="header-aircraft" aria-hidden="true">
-      <img src="aircraft_header.jpg" alt="" loading="lazy">
-    </div>
+         telemetry isn't floating in dead space. The image is applied as a
+         background with a right-side gradient mask so it blends into the
+         navy hero rather than sitting in a framed box. Swap the file at
+         aircraft_header.jpg any time; no code change needed. -->
+    <div class="header-aircraft" aria-hidden="true"></div>
     <div class="dashboard-live-area">
 
       <div class="war-room-panel">
