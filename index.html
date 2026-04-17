@@ -966,38 +966,59 @@
     .h1-subtitle { font-size: 15px; font-weight: 300; display: block; margin-top: 4px; line-height: 1.3; text-align: left; }
     .h1-subtitle br { display: none; }
     .dashboard-hero { flex-direction: column; align-items: flex-start; gap: 32px; }
-    .war-room-panel { width: 100%; padding: 16px; }
-    .tel-value { font-size: 20px; }
+    .war-room-panel { width: 100%; padding: 14px; }
+    .tel-label { font-size: 8px; letter-spacing: 1px; margin-bottom: 4px; }
+    .tel-value { font-size: 16px; }
+    .tel-sub { font-size: 7.5px; margin-top: 3px; letter-spacing: 0.5px; }
+    /* Force 3-up on mobile so telemetry fits in a single row and there's no
+       dead space from auto-wrapping the third item onto a second row. */
     .telemetry-grid {
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
     }
+    .telemetry-item { overflow: hidden; }
 
-    .sticky-header.minimized .war-room-panel { padding: 10px 16px; min-width: 0; }
-    .sticky-header.minimized .telemetry-grid { gap: 10px; }
-    .sticky-header.minimized .tel-value { font-size: 14px; }
-    .sticky-header.minimized .tel-value.small { font-size: 14px; }
-    .sticky-header.minimized .tel-label { font-size: 7.5px; }
-
-    .sticky-header.minimized .hero-section { padding: 12px 0 16px; }
-    .sticky-header.minimized .war-room-panel { padding: 10px 16px; }
+    .sticky-header.minimized .war-room-panel { padding: 8px 14px; min-width: 0; }
     .sticky-header.minimized .telemetry-grid { gap: 8px; }
     .sticky-header.minimized .tel-value { font-size: 13px; }
     .sticky-header.minimized .tel-value.small { font-size: 13px; }
     .sticky-header.minimized .tel-label { font-size: 7px; letter-spacing: 0.5px; }
     .sticky-header.minimized .tel-sub { font-size: 6.5px; }
     .sticky-header.minimized .telemetry-status { font-size: 8px; padding: 2px 4px; }
+    .sticky-header.minimized .hero-section { padding: 10px 0 14px; }
 
-    .stats-banner-inner { padding: 8px 20px; }
-    .sticky-header.minimized .stats-banner-inner { padding: 6px 20px; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px 12px; }
+    /* Stats banner: 3 per row (5 stats total → 3 + 2) to reduce menu height. */
+    .stats-banner-inner { padding: 8px 20px; gap: 8px; }
+    .sticky-header.minimized .stats-banner-inner { padding: 6px 20px; gap: 6px; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px 10px; }
     .stat-value { font-size: 14px; }
     .sticky-header.minimized .stat-value { font-size: 12px; }
     .stat-label { font-size: 7px; letter-spacing: 0.8px; }
 
-    .legend-row { flex-wrap: wrap; gap: 4px; padding-top: 4px; padding-bottom: 4px; }
-    .legend-item { font-size: 8px; padding: 2px 6px 2px 0; }
+    /* Filters: all five categories on a single row. Extended label words
+       ("Development", "Milestones", "Major ") collapse via .legend-long so
+       everything fits in the viewport width. */
+    .legend-row {
+      flex-wrap: nowrap;
+      gap: 2px;
+      padding-top: 6px;
+      padding-bottom: 2px;
+      align-items: stretch;
+    }
+    .legend-item {
+      font-size: 8px;
+      padding: 3px 5px;
+      gap: 4px;
+      flex: 1 1 0;
+      min-width: 0;
+      justify-content: center;
+      letter-spacing: 0.3px;
+    }
+    .legend-item:first-child { padding-left: 5px; }
     .legend-dot { width: 6px; height: 6px; }
+    .legend-long { display: none; }
+    .legend-x { margin-left: 2px; }
+    .legend-x svg { width: 7px; height: 7px; }
 
     .timeline-wrapper { padding: 32px 20px 40px; }
     .year-section { grid-template-columns: 60px 1fr; }
@@ -1124,11 +1145,11 @@
       </div>
     </div>
     <div class="legend-row">
-      <div class="legend-item" data-filter="contracts" onclick="toggleFilter('contracts')"><div class="legend-dot contracts"></div>Contracts<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="funding" onclick="toggleFilter('funding')"><div class="legend-dot funding"></div>Funding<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="product" onclick="toggleFilter('product')"><div class="legend-dot product"></div>Product Development<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="defense" onclick="toggleFilter('defense')"><div class="legend-dot defense"></div>Defense Milestones<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="milestone" onclick="toggleFilter('milestone')"><div class="legend-dot milestone"></div>Major Milestones<div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="contracts" onclick="toggleFilter('contracts')"><div class="legend-dot contracts"></div><span class="legend-label">Contracts</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="funding" onclick="toggleFilter('funding')"><div class="legend-dot funding"></div><span class="legend-label">Funding</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="product" onclick="toggleFilter('product')"><div class="legend-dot product"></div><span class="legend-label">Product<span class="legend-long"> Development</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="defense" onclick="toggleFilter('defense')"><div class="legend-dot defense"></div><span class="legend-label">Defense<span class="legend-long"> Milestones</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="milestone" onclick="toggleFilter('milestone')"><div class="legend-dot milestone"></div><span class="legend-label"><span class="legend-long">Major </span>Milestones</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
     </div>
   </div></div>
 </div>
