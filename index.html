@@ -872,6 +872,7 @@
   /* Tag row — tag + sources trigger inline */
   .event-meta {
     display: flex; align-items: center; gap: 12px; margin-top: 4px;
+    flex-wrap: wrap; row-gap: 6px;
   }
 
   .event-tag {
@@ -975,6 +976,74 @@
 
   .source-link + .source-link {
     border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Internal-only source links rendered inside any sources dropdown.
+     Visually distinct (red) so reviewers can spot non-public citations
+     even when they're listed alongside external sources. */
+  .source-link.source-link-internal {
+    color: #d93025;
+  }
+  .source-link.source-link-internal:hover { color: #ff5b4a; }
+
+  /* ═══ Internal-only flagging on event cards ═══
+     - .event-card.internal-only      → no external sources at all
+       Red border + a "NOT APPROVED FOR PUBLIC DISTRIBUTION" stamp banner
+       so the entire card reads as confidential.
+     - .event-card.mixed-internal     → has both internal + external sources
+       A subtler "EVENT CONTAINS INTERNAL ONLY INFORMATION" pill near the
+       sources drawer; detail text stays readable.
+  */
+  .event-card.internal-only {
+    border: 1.5px solid rgba(217,48,37,0.55);
+    background: linear-gradient(180deg, rgba(217,48,37,0.04) 0%, rgba(217,48,37,0.01) 100%), var(--white);
+  }
+  .event-card.internal-only .event-detail {
+    color: #b32218;
+  }
+  .event-card.internal-only .event-title {
+    color: #8a1610;
+  }
+  .internal-flag {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 9.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.6px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .internal-flag-only {
+    background: #d93025;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(217,48,37,0.35);
+  }
+  .internal-flag-mixed {
+    background: rgba(217,48,37,0.1);
+    color: #b32218;
+    border: 1px solid rgba(217,48,37,0.3);
+  }
+  /* Highlight (dark navy) cards: invert the internal-flag colors so they
+     remain legible on the navy background. */
+  .event-card.highlight.internal-only {
+    border-color: rgba(255,80,70,0.6);
+    background: var(--navy);
+  }
+  .event-card.highlight.internal-only .event-title { color: #ff8a82; }
+  .event-card.highlight.internal-only .event-detail { color: #ffb3ad; }
+  .event-card.highlight .internal-flag-mixed {
+    background: rgba(255,80,70,0.15);
+    color: #ff9a8f;
+    border-color: rgba(255,80,70,0.45);
+  }
+
+  /* Mobile: keep flags readable but tighter. */
+  @media (max-width: 720px) {
+    .internal-flag {
+      font-size: 8.5px;
+      padding: 2px 6px;
+      letter-spacing: 0.4px;
+    }
   }
 
   /* Highlights */
@@ -1599,6 +1668,15 @@
     return div.innerHTML;
   }
 
+  // ═══ HELPER: detect if a source label is internal-only ═══
+  // Match anything that begins with "Skyways Internal" or
+  // starts with "[NOT PUBLIC" (used in early flagged-internal entries).
+  function isInternalSource(label) {
+    if (!label) return false;
+    var l = String(label).trim();
+    return l.indexOf('Skyways Internal') === 0 || l.indexOf('[NOT PUBLIC') === 0;
+  }
+
   // ═══ RENDER A SINGLE EVENT CARD ═══
   function renderCard(ev) {
     var cat = ev.category || 'milestone';
@@ -1607,20 +1685,36 @@
     var upcoming = isUpcoming(title);
     var cardClass = 'event-card' + (highlightCard ? ' highlight' : '') + (upcoming ? ' upcoming' : '');
 
-    // Sources
+    // Sources — classify each as internal vs external for visual treatment.
     var sources = ev.sources || [];
     var sourceCount = sources.length;
+    var internalCount = 0;
+    var externalCount = 0;
     var sourceLinks = '';
     for (var s = 0; s < sources.length; s++) {
       var src = sources[s];
-      var label = esc(src.label || 'Source');
-      var url = src.url || '';
+      // src may be a string (from JSON/Firestore array) or {label,url}.
+      var rawLabel = (typeof src === 'string') ? src : (src.label || 'Source');
+      var label = esc(rawLabel);
+      var url = (typeof src === 'string') ? '' : (src.url || '');
+      var isInternal = isInternalSource(rawLabel);
+      if (isInternal) internalCount++; else externalCount++;
+      var linkClass = 'source-link' + (isInternal ? ' source-link-internal' : '');
       if (url && url !== '#' && url.indexOf('http') === 0) {
-        sourceLinks += '<a class="source-link" href="' + esc(url) + '" target="_blank">' + label + '</a>';
+        sourceLinks += '<a class="' + linkClass + '" href="' + esc(url) + '" target="_blank">' + label + '</a>';
       } else {
-        sourceLinks += '<a class="source-link" href="#" onclick="return false">' + label + '</a>';
+        sourceLinks += '<a class="' + linkClass + '" href="#" onclick="return false">' + label + '</a>';
       }
     }
+
+    // Source-classification: drives the red box and the mixed-source note.
+    var sourceState = '';
+    if (internalCount > 0 && externalCount === 0) {
+      sourceState = 'internal-only';
+    } else if (internalCount > 0 && externalCount > 0) {
+      sourceState = 'mixed-internal';
+    }
+    if (sourceState) cardClass += ' ' + sourceState;
 
     var sourcesHTML = '';
     if (sourceCount > 0) {
@@ -1628,6 +1722,14 @@
         '<span class="sources-label">' + sourceCount + ' SOURCE' + (sourceCount > 1 ? 'S' : '') + '</span>' +
         '<span class="sources-icon"><svg viewBox="0 0 12 12"><path d="M2 4.5L6 8.5L10 4.5"/></svg></span>' +
         '<div class="sources-menu">' + sourceLinks + '</div></div>';
+    }
+
+    // Internal-info note (next to source drawer)
+    var internalNoteHTML = '';
+    if (sourceState === 'internal-only') {
+      internalNoteHTML = '<span class="internal-flag internal-flag-only">NOT APPROVED FOR PUBLIC DISTRIBUTION</span>';
+    } else if (sourceState === 'mixed-internal') {
+      internalNoteHTML = '<span class="internal-flag internal-flag-mixed">EVENT CONTAINS INTERNAL ONLY INFORMATION</span>';
     }
 
     // Tag label
@@ -1650,6 +1752,7 @@
         '<div class="event-detail">' + esc(ev.detail || '') + '</div>' +
         '<div class="event-meta">' +
           '<span class="event-tag ' + esc(cat) + '">' + esc(tag) + '</span>' +
+          internalNoteHTML +
           sourcesHTML +
         '</div>' +
       '</div></div>';
