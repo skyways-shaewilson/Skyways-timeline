@@ -1867,6 +1867,24 @@
     updateHeader();
   }
 
+  // ═══ SUPPRESS STAT MENUS WHILE SCROLLING ═══
+  // Prevents the wide contracts breakdown table from repositioning mid-frame
+  // when the sticky header animates between expanded and minimized states.
+  // Adds body.scrolling-active during scroll, clears it 200ms after scroll
+  // stops; CSS handles the visibility toggle.
+  (function() {
+    var scrollEndTimer = null;
+    window.addEventListener('scroll', function() {
+      if (!document.body.classList.contains('scrolling-active')) {
+        document.body.classList.add('scrolling-active');
+      }
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(function() {
+        document.body.classList.remove('scrolling-active');
+      }, 200);
+    }, { passive: true });
+  })();
+
   // ═══ MOBILE TAP SUPPORT FOR $40M+ STAT MENU ═══
   // Touch devices don't fire :hover reliably. Tapping the $40M+ stat toggles
   // .menu-open which forces the contracts-table drawer visible. Tapping
