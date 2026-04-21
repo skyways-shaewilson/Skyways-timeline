@@ -553,6 +553,24 @@
     }
   },
   {
+    "id": 110,
+    "year": "2023",
+    "date": "2023-05",
+    "title": "Navy NAWCAD BWUAS 2.0 Prototype Contract Awarded",
+    "category": "Contracts",
+    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) awarded Skyways the Blue Water Maritime Logistics Unmanned Aircraft System 2.0 (BWUAS 2.0) Prototype Project contract through the Naval Aviation Systems Consortium (NASC). Effective May 4, 2023. This base contract follows on from the original 2019 Blue Water work and focuses on autonomous logistical replenishment from shore-to-ship, ship-to-ship, and ship-to-shore in operationally relevant environments. NAWCAD's Rapid Prototyping and Experimentation Division (RPED) leads the program in partnership with PMA-263. Subsequent modifications added work on Project ULTRA Demonstration (May 2025) and V3 Temperature Controlled Payload Development (May 2025).",
+    "tag": "Contract — U.S. Navy",
+    "sources": [
+      "Skyways Internal — Contract N00421-23-9-0013 ($479,052.96, effective May 4, 2023, not publicly disclosed)"
+    ],
+    "source_urls": {},
+    "sort_date": "2023-05",
+    "source_thumbnails": {
+      "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
+    },
+    "thumbnail_status": "fallback_v2_ship"
+  },
+  {
     "id": 25,
     "year": "2023",
     "date": "2023-06",
