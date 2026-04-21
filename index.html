@@ -333,49 +333,12 @@
     transition: all 0.4s ease;
   }
 
+  /* When the header minimizes, the whole Fleet Flight Telemetry panel
+     hides to free up vertical space. The aircraft-background layer
+     remains visible behind the (now-compact) brand bar + stats row,
+     giving the minimized state a clean, full-bleed feel. */
   .sticky-header.minimized .dashboard-live-area {
-    /* Telemetry panel sits on the LEFT in the minimized state; the aircraft
-       background fills whatever is left to the right. margin-right:auto
-       pushes everything else to the right (nothing else exists here, so the
-       panel just holds the start edge). */
-    flex: 0 0 auto;
-    margin-right: auto;
-  }
-
-  .sticky-header.minimized .war-room-panel {
-    /* Keep the panel at the same width it has in the expanded state; just
-     shrink it vertically and soften the glow/shadow so it sits quietly on
-     top of the aircraft background. */
-    width: auto;
-    min-width: 520px;
-    padding: 10px 20px;
-    box-shadow: none;
-    border-color: rgba(194, 242, 19, 0.25);
-    background: rgba(17, 30, 38, 0.82);
-  }
-
-  .sticky-header.minimized .telemetry-header {
-    margin-bottom: 8px; padding-bottom: 8px;
-  }
-
-  .sticky-header.minimized .telemetry-footer {
     display: none;
-  }
-
-  .sticky-header.minimized .tel-value {
-    font-size: 18px;
-  }
-  .sticky-header.minimized .tel-value.small {
-    font-size: 18px;
-  }
-  .sticky-header.minimized .tel-label {
-    font-size: 8.5px; margin-bottom: 4px;
-  }
-  .sticky-header.minimized .tel-sub {
-    font-size: 8px; margin-top: 4px;
-  }
-  .sticky-header.minimized .telemetry-grid {
-    gap: 14px;
   }
 
   .hero-inner { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
@@ -1545,13 +1508,10 @@
     }
     .telemetry-item { overflow: hidden; }
 
-    .sticky-header.minimized .war-room-panel { padding: 8px 14px; min-width: 0; }
-    .sticky-header.minimized .telemetry-grid { gap: 8px; }
-    .sticky-header.minimized .tel-value { font-size: 13px; }
-    .sticky-header.minimized .tel-value.small { font-size: 13px; }
-    .sticky-header.minimized .tel-label { font-size: 7px; letter-spacing: 0.5px; }
-    .sticky-header.minimized .tel-sub { font-size: 6.5px; }
-    .sticky-header.minimized .telemetry-status { font-size: 8px; padding: 2px 4px; }
+    /* Telemetry panel is hidden in minimized state (display:none on
+       .dashboard-live-area, see base rule), so the per-property mobile
+       overrides that used to shrink tel-value / tel-label / tel-sub /
+       telemetry-status in the minimized state are no longer needed. */
     .sticky-header.minimized .hero-section { padding: 10px 0 14px; }
 
     /* Stats banner: all 5 stats on one row on mobile — tight but it fits. */
