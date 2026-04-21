@@ -2268,16 +2268,17 @@
     var openStat = null;
     var stickyHeader = document.getElementById('stickyHeader');
 
-    // Pins the contracts-table drawer to its stat via position:fixed with
-    // a dynamic top/left and a max-height derived from the drawer's actual
-    // distance from the viewport bottom. Plain CSS position:absolute puts
-    // the drawer ~450px below the viewport top in the expanded header —
-    // max-height: calc(100vh - 200px) then lets the drawer spill past the
-    // viewport bottom, so the inner grid's content fits its max-height and
-    // the grid never needs to scroll. Computing max-height off the actual
-    // top is what makes the grid become scrollable.
-    function pinContractsDrawer(stat) {
-      var menu = stat.querySelector('.stat-menu.contracts-table');
+    // Pins ANY stat's drawer (not just the contracts table) to its stat
+    // via position:fixed with a dynamic top/left-or-right and a max-height
+    // derived from the drawer's actual distance from the viewport bottom.
+    // Plain CSS position:absolute puts the drawer ~450px below the viewport
+    // top in the expanded header — max-height: calc(100vh - Npx) then lets
+    // the drawer spill past the viewport bottom, so the inner grid's
+    // content fits its max-height and the grid never needs to scroll.
+    // Computing max-height off the actual top is what makes every drawer
+    // correctly fit the visible area and scroll internally when needed.
+    function pinDrawer(stat) {
+      var menu = stat.querySelector('.stat-menu');
       if (!menu) return;
       // Mobile already uses position:fixed via its own media query — let
       // that rule keep running and don't double-pin.
@@ -2287,13 +2288,24 @@
       var bottomMargin = 24;
       menu.style.position = 'fixed';
       menu.style.top = top + 'px';
-      menu.style.left = rect.left + 'px';
-      menu.style.right = 'auto';
       menu.style.marginTop = '0';
       menu.style.maxHeight = 'calc(100vh - ' + (top + bottomMargin) + 'px)';
+      // Mirror the left/right anchor that the CSS assigned for this stat's
+      // column. Stats 4 and 5 flip to right-anchor (see the
+      // .stats-row .stat:nth-child(n+4) rule) so the drawer stays inside
+      // the stats-banner container.
+      var siblings = stat.parentElement ? stat.parentElement.children : [];
+      var idx = Array.prototype.indexOf.call(siblings, stat);
+      if (idx >= 3) {
+        menu.style.left = 'auto';
+        menu.style.right = (window.innerWidth - rect.right) + 'px';
+      } else {
+        menu.style.left = rect.left + 'px';
+        menu.style.right = 'auto';
+      }
     }
-    function unpinContractsDrawer(stat) {
-      var menu = stat.querySelector('.stat-menu.contracts-table');
+    function unpinDrawer(stat) {
+      var menu = stat.querySelector('.stat-menu');
       if (!menu) return;
       menu.style.position = '';
       menu.style.top = '';
@@ -2305,7 +2317,7 @@
 
     function show(stat) {
       if (openStat && openStat !== stat) {
-        unpinContractsDrawer(openStat);
+        unpinDrawer(openStat);
         openStat.classList.remove('menu-open');
       }
       stat.classList.add('menu-open');
@@ -2315,10 +2327,10 @@
       // during the minimize animation. CSS rule at the top of the stylesheet
       // zeros the transitions when this class is present.
       if (stickyHeader) stickyHeader.classList.add('drawer-active');
-      if (stat.id === 'contractsStat') pinContractsDrawer(stat);
+      pinDrawer(stat);
     }
     function hide(stat) {
-      unpinContractsDrawer(stat);
+      unpinDrawer(stat);
       stat.classList.remove('menu-open');
       if (openStat === stat) openStat = null;
       if (!openStat && stickyHeader) stickyHeader.classList.remove('drawer-active');
