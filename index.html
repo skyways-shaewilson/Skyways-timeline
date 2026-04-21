@@ -550,6 +550,102 @@
   .stat-menu-info { font-size: 12px; font-weight: 450; line-height: 1.4; color: var(--navy); }
   .stat-menu-source { font-size: 10px; font-weight: 600; color: var(--gray-50); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 
+  /* Wider variant: $40M+ contracts breakdown table */
+  .stat-menu.contracts-table {
+    min-width: 560px; max-width: 640px;
+    padding: 14px 16px;
+  }
+  .stat-menu.contracts-table .contracts-title {
+    font-size: 12px; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin-bottom: 10px;
+  }
+  .contracts-grid {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--gray-15);
+  }
+  .contracts-row {
+    display: grid;
+    grid-template-columns: 2.4fr 1.4fr 0.7fr 0.7fr;
+    gap: 10px;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--gray-15);
+    font-size: 11.5px; font-weight: 450;
+    color: var(--navy);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    align-items: center;
+  }
+  .contracts-row:hover:not(.contracts-head):not(.contracts-total) {
+    background: rgba(0,154,235,0.08);
+  }
+  .contracts-row.contracts-head {
+    font-size: 9.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--gray-50);
+    cursor: default;
+    padding-bottom: 6px;
+  }
+  .contracts-row.contracts-total {
+    font-weight: 700;
+    border-bottom: none;
+    background: var(--gray-05);
+    border-radius: 4px;
+    margin-top: 4px;
+    cursor: default;
+  }
+  .contracts-row .c-name { line-height: 1.3; }
+  .contracts-row .c-amount { font-variant-numeric: tabular-nums; }
+  .contracts-row .c-year { font-variant-numeric: tabular-nums; color: var(--gray-50); font-size: 10.5px; }
+  .src-pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .src-pill.src-public { background: rgba(52,168,83,0.12); color: #1f7a3a; }
+  .src-pill.src-internal { background: rgba(255,144,19,0.12); color: #b86200; }
+  .stat-menu.contracts-table .stat-menu-source {
+    text-transform: none; font-weight: 450; letter-spacing: 0;
+    margin-top: 10px; font-size: 10.5px; line-height: 1.4;
+    color: var(--gray-50);
+  }
+
+  /* Highlight pulse for cards reached via contracts-table click */
+  @keyframes contractJumpPulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,154,235,0.55), 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); }
+    50% { box-shadow: 0 0 0 8px rgba(0,154,235,0.18), 0 2px 12px rgba(0,154,235,0.3), 0 1px 3px rgba(0,0,0,0.08); }
+    100% { box-shadow: 0 0 0 0 rgba(0,154,235,0), 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); }
+  }
+  .event-card.contract-jump-pulse {
+    animation: contractJumpPulse 1.6s ease-out;
+  }
+
+  /* Mobile/touch override: keep the contracts breakdown menu visible after a
+     tap by allowing it to escape the .stat overflow clip on small screens.
+     Also widen and re-anchor so it doesn't blow off-screen. */
+  @media (max-width: 720px) {
+    #contractsStat { overflow: visible; }
+    .stat-menu.contracts-table {
+      position: fixed; top: auto; left: 8px; right: 8px;
+      min-width: 0; max-width: none; width: auto;
+      margin-top: 0;
+    }
+    .stat-menu.contracts-table::before { display: none; }
+    .contracts-row {
+      grid-template-columns: 1.8fr 1.2fr 0.6fr 0.7fr;
+      gap: 6px;
+      font-size: 10.5px;
+    }
+    .contracts-row .c-name { font-size: 10.5px; }
+    .src-pill { padding: 1px 5px; font-size: 8px; }
+  }
+  /* When toggled open via tap, force-show the menu regardless of :hover. */
+  #contractsStat.menu-open .stat-menu.contracts-table {
+    opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+  }
+
   .stat-value {
     /* Desktop metric punch. 22px → 33px (50%) → 41px (+25%) per Shae.
        Label below and minimized-on-scroll size deliberately unchanged. */
@@ -1280,8 +1376,73 @@
   </div></div></div>
   <div class="stats-banner"><div class="stats-banner-inner">
     <div class="stats-row">
-      <div class="stat"><div class="stat-value">$40M+</div><div class="stat-label">Gov&#8217;t Contracts</div>
-        <div class="stat-menu"><div class="stat-menu-info">Sum of all government awards</div><div class="stat-menu-source">Verified Source: DoD Awards</div></div>
+      <div class="stat" id="contractsStat"><div class="stat-value">$40M+</div><div class="stat-label">Gov&#8217;t Contracts</div>
+        <div class="stat-menu contracts-table">
+          <div class="contracts-title">8 verified U.S. government contracts</div>
+          <div class="contracts-grid">
+            <div class="contracts-row contracts-head">
+              <div class="c-name">Contract</div>
+              <div class="c-amount">Amount</div>
+              <div class="c-year">Year</div>
+              <div class="c-source">Source</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(9)">
+              <div class="c-name">Navy OTA Blue Water (N00421-19-9-0007)</div>
+              <div class="c-amount">$575K &rarr; ~$2.3M</div>
+              <div class="c-year">2019&ndash;22</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(14)">
+              <div class="c-name">USAF SBIR Phase I (FA8649-21-P-0539)</div>
+              <div class="c-amount">$47,775</div>
+              <div class="c-year">2021</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(19)">
+              <div class="c-name">DIU/USN OTA (W15QKN-22-9-5005)</div>
+              <div class="c-amount">$1,429,587.50</div>
+              <div class="c-year">2022</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(20)">
+              <div class="c-name">USAF SBIR Phase II (FA8649-22-P-0719)</div>
+              <div class="c-amount">$749,711</div>
+              <div class="c-year">2022</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(110)">
+              <div class="c-name">Navy NAWCAD BWUAS 2.0 base (N00421-23-9-0013)</div>
+              <div class="c-amount">$479,052.96</div>
+              <div class="c-year">2023</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(111)">
+              <div class="c-name">CLIN 0005 Project ULTRA Demo</div>
+              <div class="c-amount">$361,832.40</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(112)">
+              <div class="c-name">CLIN 0006 V3 TCP Development</div>
+              <div class="c-amount">$982,850.39</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(34)">
+              <div class="c-name">USAF STRATFI (FA2280-25-9-9523)</div>
+              <div class="c-amount">$3.55M SBIR / $37M ceiling</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row contracts-total">
+              <div class="c-name">Total quantified</div>
+              <div class="c-amount">~$43.4M (with STRATFI ceiling)</div>
+              <div class="c-year"></div>
+              <div class="c-source"></div>
+            </div>
+          </div>
+          <div class="stat-menu-source">Click any row to jump to its timeline card. Internal = signed contract on file, dollar amount not publicly disclosed.</div>
+        </div>
       </div>
       <!-- km Flown removed — now shown live in the Fleet Flight Telemetry panel -->
       <div class="stat"><div class="stat-value">20+</div><div class="stat-label">Aircraft Iterations</div>
@@ -1479,7 +1640,8 @@
       thumbHTML = '<div class="event-card-bg" style="background-image:url(\'' + esc(thumb) + '\')"></div>';
     }
 
-    return '<div class="' + cardClass + '" data-category="' + esc(cat) + '">' +
+    var cardIdAttr = (ev.id !== undefined && ev.id !== null) ? ' id="event-' + esc(String(ev.id)) + '"' : '';
+    return '<div class="' + cardClass + '"' + cardIdAttr + ' data-category="' + esc(cat) + '">' +
       thumbHTML +
       '<div class="event-dot ' + esc(cat) + '"></div>' +
       '<div class="event-content">' +
@@ -1550,6 +1712,66 @@
     // Update header scroll
     updateHeader();
   }
+
+  // ═══ MOBILE TAP SUPPORT FOR $40M+ STAT MENU ═══
+  // Touch devices don't fire :hover reliably. Tapping the $40M+ stat toggles
+  // .menu-open which forces the contracts-table drawer visible. Tapping
+  // anywhere outside dismisses it.
+  (function() {
+    var stat = document.getElementById('contractsStat');
+    if (!stat) return;
+    var statValue = stat.querySelector('.stat-value');
+    var statLabel = stat.querySelector('.stat-label');
+    function isInsideMenu(target) {
+      var menu = stat.querySelector('.stat-menu.contracts-table');
+      return menu && menu.contains(target);
+    }
+    function toggle(e) {
+      // Don't toggle when the tap is inside the menu (so row clicks work).
+      if (isInsideMenu(e.target)) return;
+      e.stopPropagation();
+      stat.classList.toggle('menu-open');
+    }
+    if (statValue) statValue.addEventListener('click', toggle);
+    if (statLabel) statLabel.addEventListener('click', toggle);
+    // Dismiss on outside tap.
+    document.addEventListener('click', function(e) {
+      if (!stat.contains(e.target)) stat.classList.remove('menu-open');
+    });
+    // Dismiss on scroll (so it doesn't follow the user down the page).
+    window.addEventListener('scroll', function() {
+      stat.classList.remove('menu-open');
+    }, { passive: true });
+  })();
+
+  // ═══ SCROLL TO A CONTRACT CARD (from $40M+ stat-menu) ═══
+  // Triggered by clicks in the contracts-table breakdown drawer.
+  // Scrolls the matching event-card into view and pulses its outline.
+  window.scrollToContract = function(eventId) {
+    var card = document.getElementById('event-' + eventId);
+    if (!card) {
+      console.warn('scrollToContract: no card with id event-' + eventId);
+      return;
+    }
+    // Close the stats hover so it doesn't obstruct the card after scroll.
+    var statEl = document.getElementById('contractsStat');
+    if (statEl) {
+      statEl.classList.remove('menu-open');
+      // Force-collapse the menu by temporarily disabling hover (briefly removing
+      // pointer state via blur on any focused element inside).
+      if (document.activeElement && statEl.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+    }
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Pulse highlight after the scroll lands.
+    card.classList.remove('contract-jump-pulse');
+    void card.offsetWidth; // force reflow so animation can re-trigger
+    card.classList.add('contract-jump-pulse');
+    window.setTimeout(function() {
+      card.classList.remove('contract-jump-pulse');
+    }, 1700);
+  };
 
   // ═══ THUMBNAIL COLOR EXTRACTION ═══
   function extractCardColors() {
