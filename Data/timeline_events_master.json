@@ -1451,5 +1451,25 @@
     },
     "thumbnail_status": "fallback_v3_front",
     "date_display": "2026-04"
+  },
+  {
+    "id": 114,
+    "year": "2026",
+    "date": "2026-12",
+    "title": "V3 Block 2L (V3.2) | Forthcoming",
+    "category": "product",
+    "detail": "Next iteration in the V3 family beyond V3 Block 2. Details TBD; entry will be filled with full specs and milestone context once the build phase begins. This placeholder ensures the iteration list in the '20+ UAVs Built' stat menu is auditable against the timeline.",
+    "tag": "Product | V3",
+    "sources": [
+      "Skyways Internal — Charles Acknin (V3.2 / V3 Block 2L planned for Q4 2026; placeholder pending more information)"
+    ],
+    "charles_corrections": [],
+    "source_urls": {},
+    "sort_date": "2026-12",
+    "source_thumbnails": {
+      "Skyways (V3 hover)": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
+    },
+    "thumbnail_status": "fallback_v3_hover",
+    "date_display": "2026-12"
   }
 ]
