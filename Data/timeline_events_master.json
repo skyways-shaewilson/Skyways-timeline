@@ -138,16 +138,18 @@
   {
     "id": 7,
     "year": "2017",
-    "date": "2017-12",
+    "date": "2017-11",
     "title": "USMC/GTRI | First Purchase Order for Two V2.2 Aircraft",
     "category": "Contracts",
-    "detail": "The United States Marine Corps (USMC), in partnership with the Georgia Institute of Technology / Georgia Tech Research Institute (GTRI), issued Skyways' very first purchase order for two V2.2 aircraft. This was Skyways' first-ever contract and a critical early validation of the platform's readiness for military customers.",
+    "detail": "The United States Marine Corps (USMC), in partnership with the Georgia Institute of Technology / Georgia Tech Research Institute (GTRI), issued Skyways' very first purchase order for two V2.2 aircraft under federal prime contract FA8075-14-D-0018-0018 (USAF AFLCMC). PO #0000441708 (Nov 2, 2017): two V2.2 UAS, integration and flight tests, USMC training, test support, crating and shipping. PO #0000498568 (Jun 1, 2018): CDR Preparation, CDR Execution, two sets aircraft containers and auxiliary equipment containers. Combined value $272,711.48 across the two POs. This was Skyways' first-ever contract and a critical early validation of the platform's readiness for military customers.",
     "tag": "Contract — USMC",
     "sources": [
-      "Skyways Internal — Charles Acknin"
+      "Skyways Internal — Charles Acknin",
+      "Skyways Internal — GTRI POs #0000441708 ($213,967.48, Nov 2, 2017) + #0000498568 ($58,744.00, Jun 1, 2018) under FA8075-14-D-0018-0018, not publicly disclosed"
     ],
     "charles_corrections": [
-      "Round III: This happened end of 2017 — first ever contract/PO. Navy Blue Water program only happened later in 2019."
+      "Round III: This happened end of 2017 — first ever contract/PO. Navy Blue Water program only happened later in 2019.",
+      "Date corrected from 2017-12 to 2017-11 per signed PO #0000441708 dated Nov 2, 2017"
     ],
     "source_urls": {},
     "sort_date": "2017-12",
@@ -184,7 +186,7 @@
     "date": "2019-08",
     "title": "Navy OTA Contract Awarded | Blue Water Maritime Logistics UAS",
     "category": "Contracts",
-    "detail": "Following the ANTX 2019 competition win, the U.S. Navy awarded an Other Transaction Authority (OTA) contract to Skyways ($575,141) for the Blue Water Maritime Logistics Unmanned Aircraft System (UAS) program. Contract number N00421-19-9-0007, awarded August 29, 2019. This first Navy contract specifically funded the development of hybrid propulsion for the V2 platform.",
+    "detail": "Following the ANTX 2019 competition win, the U.S. Navy awarded an Other Transaction Authority (OTA) contract to Skyways ($575,141 base) for the Blue Water Maritime Logistics Unmanned Aircraft System (UAS) program. Contract number N00421-19-9-0007, awarded August 29, 2019 by NAWCAD. This first Navy contract specifically funded the development of hybrid propulsion for the V2 platform. Through subsequent modifications including P00003 (Spiral Dev V2.6, Sep 2020), P00005 (AV3, Dec 2020), P00006 (SATCOM Link, Jan 2022), and P00007 (extension and SLINs, Jul 2022), the funded value grew to $2,066,701.73 by July 2022 (Total Potential Amount including CMG Fee: $2,476,005.91).",
     "tag": "Contract — U.S. Navy",
     "sources": [
       "NASC (Naval Aviation Systems Consortium) — N00421-19-9-0007",
@@ -417,11 +419,11 @@
     "date": "2022-02",
     "title": "DIU/USN Blue Water Maritime Logistics UAS Contract",
     "category": "Contracts",
-    "detail": "Skyways secured a contract through the Defense Innovation Unit (DIU) for the Blue Water Maritime Logistics UAS program in partnership with the U.S. Navy, Naval Air Warfare Center Aircraft Division (NAWCAD), and Military Sealift Command. The award contract was directly issued by Army Contracting Command, New Jersey (ACC-NJ). The Blue Water program targets delivery of payloads up to 50 pounds across distances of 250 miles for ship-based logistics — addressing approximately 95% of critical parts needs by weight. DIU partnered with the 4th Fleet and Marine Corps Warfighting Laboratory to develop computer vision technology enabling autonomous navigation and intelligent landing without beacon assistance.",
+    "detail": "Skyways secured a contract through the Defense Innovation Unit (DIU) for the Blue Water Maritime Logistics UAS program in partnership with the U.S. Navy, Naval Air Warfare Center Aircraft Division (NAWCAD), and Military Sealift Command. The award contract was directly issued by Army Contracting Command, New Jersey (ACC-NJ). Base contract $1,429,587.50 (Feb 3, 2022). Through subsequent modifications including P00001 (Temperature Controlled Payload, Nov 2022), P00006 (SATCOM), and P00004 (III MEF demonstration, Mar 2024, +$145,161.72), the funded value grew to $1,807,149.22 as of March 2024. The Blue Water program targets delivery of payloads up to 50 pounds across distances of 250 miles for ship-based logistics — addressing approximately 95% of critical parts needs by weight. DIU partnered with the 4th Fleet and Marine Corps Warfighting Laboratory to develop computer vision technology enabling autonomous navigation and intelligent landing without beacon assistance.",
     "tag": "Contract — DIU / U.S. Navy",
     "sources": [
       "Skyways Internal — Charles Acknin",
-      "Skyways Internal — Contract W15QKN-22-9-5005 ($1,429,587.50, signed Feb 3, 2022, not publicly disclosed)",
+      "Skyways Internal — Contract W15QKN-22-9-5005 (base $1,429,587.50 Feb 3, 2022; P00004 mod brought funded total to $1,807,149.22 as of Mar 20, 2024; not publicly disclosed)",
       "Inside Unmanned Systems — Navy Demonstrating Programs for Drone Delivery at Sea",
       "Potomac Officers Club — US Naval Components Test Skyways Blue Water Logistics UAS"
     ],
@@ -641,10 +643,11 @@
     "date": "2024-06",
     "title": "USAF SBIR Phase 3 IDIQ Contract & STRATFI Selection",
     "category": "Contracts",
-    "detail": "After submitting the Strategic Funding Increase (STRATFI) package in approximately September 2023, United States Air Force (USAF) Air Force Works (AFWERX) issued a Request for Proposal (RFP) to Skyways in early 2024 to begin V3 development. In June 2024, Skyways was awarded a Small Business Innovation Research (SBIR) Phase 3 Indefinite Delivery/Indefinite Quantity (IDIQ) contract to start turning V3 into a product. In the same month, Skyways received notification it had been selected for STRATFI funding, which would ultimately be awarded as the $37M contract in May 2025.",
+    "detail": "After submitting the Strategic Funding Increase (STRATFI) package in approximately September 2023, United States Air Force (USAF) Air Force Works (AFWERX) issued a Request for Proposal (RFP) to Skyways in early 2024 to begin V3 development. On June 19, 2024, Skyways was awarded the basic SBIR Phase 3 Indefinite Delivery/Indefinite Quantity (IDIQ) contract FA228024D0003 with a 5-year ordering period and a Government Obligation to Order maximum of $4,999,999. The first Task Order FA228024F0013 was awarded simultaneously with initial obligations growing to approximately $2.2M through Mods #1 (Jun 24, 2024) and #2 (Jul 30, 2024). Mod #3 (Jan 6, 2025) extended CLIN performance dates without changing dollar value. In the same month as the IDIQ award, Skyways received notification it had been selected for STRATFI funding, which would ultimately be awarded as the $37M contract in May 2025.",
     "tag": "Contract — U.S. Air Force",
     "sources": [
-      "SBIR.gov"
+      "SBIR.gov",
+      "Skyways Internal — Contract FA228024D0003 / Task Order FA228024F0013 (~$2.2M obligated as of Jul 2024 across Mods #1 and #2; $4.99M IDIQ ceiling; not publicly disclosed)"
     ],
     "charles_corrections": [
       "Round III: Cleaned up 'initial millions' language."
