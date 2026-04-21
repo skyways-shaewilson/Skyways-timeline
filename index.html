@@ -2283,8 +2283,46 @@
     var openStat = null;
     var stickyHeader = document.getElementById('stickyHeader');
 
+    // Pins the contracts-table drawer to its stat via position:fixed with
+    // a dynamic top/left and a max-height derived from the drawer's actual
+    // distance from the viewport bottom. Plain CSS position:absolute puts
+    // the drawer ~450px below the viewport top in the expanded header —
+    // max-height: calc(100vh - 200px) then lets the drawer spill past the
+    // viewport bottom, so the inner grid's content fits its max-height and
+    // the grid never needs to scroll. Computing max-height off the actual
+    // top is what makes the grid become scrollable.
+    function pinContractsDrawer(stat) {
+      var menu = stat.querySelector('.stat-menu.contracts-table');
+      if (!menu) return;
+      // Mobile already uses position:fixed via its own media query — let
+      // that rule keep running and don't double-pin.
+      if (window.matchMedia('(max-width: 720px)').matches) return;
+      var rect = stat.getBoundingClientRect();
+      var top = rect.bottom + 8;
+      var bottomMargin = 24;
+      menu.style.position = 'fixed';
+      menu.style.top = top + 'px';
+      menu.style.left = rect.left + 'px';
+      menu.style.right = 'auto';
+      menu.style.marginTop = '0';
+      menu.style.maxHeight = 'calc(100vh - ' + (top + bottomMargin) + 'px)';
+    }
+    function unpinContractsDrawer(stat) {
+      var menu = stat.querySelector('.stat-menu.contracts-table');
+      if (!menu) return;
+      menu.style.position = '';
+      menu.style.top = '';
+      menu.style.left = '';
+      menu.style.right = '';
+      menu.style.marginTop = '';
+      menu.style.maxHeight = '';
+    }
+
     function show(stat) {
-      if (openStat && openStat !== stat) openStat.classList.remove('menu-open');
+      if (openStat && openStat !== stat) {
+        unpinContractsDrawer(openStat);
+        openStat.classList.remove('menu-open');
+      }
       stat.classList.add('menu-open');
       openStat = stat;
       // Freeze layout-affecting header transitions while a drawer is up so
@@ -2292,8 +2330,10 @@
       // during the minimize animation. CSS rule at the top of the stylesheet
       // zeros the transitions when this class is present.
       if (stickyHeader) stickyHeader.classList.add('drawer-active');
+      if (stat.id === 'contractsStat') pinContractsDrawer(stat);
     }
     function hide(stat) {
+      unpinContractsDrawer(stat);
       stat.classList.remove('menu-open');
       if (openStat === stat) openStat = null;
       if (!openStat && stickyHeader) stickyHeader.classList.remove('drawer-active');
