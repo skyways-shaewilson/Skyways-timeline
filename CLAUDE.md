@@ -30,13 +30,21 @@
 ## Technical Lessons (Mobile Safari / iOS)
 - NEVER put `overflow-x: hidden` on `html` or `body` — it breaks `position: sticky`
 - NEVER put `overflow: hidden` on `.event-card` — it clips source dropdown menus. Put it on `.event-card-bg` instead.
+- NEVER put `overflow: hidden` on `.stat` — it clips the `.stat-menu` drawer. The drawer is absolutely positioned and needs to escape its parent.
 - Use `overflow-x: clip` on individual content containers instead
 - Touch devices need explicit `click`/`touchstart` handlers — CSS `:hover` doesn't work
-- Source dropdown menus need: tap to open, tap-outside to close, scroll to dismiss
 - `min-width` on absolutely positioned elements can cause horizontal scroll — constrain with `calc(100vw - Npx)` or `max-width`
 - Always include `-webkit-sticky` for Safari sticky positioning support
 - Mobile stats/filter section: keep compact (~40% smaller than desktop)
-- Year label sticky offset must clear the header fade gradient (currently 210px in minimized mode)
+- Year label sticky offset tracks the animated header height via a ResizeObserver, not per-scroll-frame getBoundingClientRect
+
+## Sticky Header Scroll Behavior
+- **Threshold:** `scrollY > 4` minimizes; `scrollY <= 4` restores. No hysteresis — low threshold feels "fast enough" per Shae.
+- **No scroll compensation.** The old `scrollBy(0, -delta)` bounce-loop-prevention pattern was removed so the threshold could be this low. Content does shift once on minimize; at 4px scroll the user doesn't notice.
+- **Animated layout transitions:** `.brand-bar` height, `.logo-wrap` height, `.hero-section` padding, `.stats-banner-inner` padding, `.stat-value` font-size all animate 220ms `cubic-bezier(0.4,0,0.2,1)`. Was instant snap (required by scroll compensation); compensation is gone so these can animate smoothly.
+- **Year-label sync:** `ResizeObserver` on `#stickyHeader` calls `syncYearLabelOffset()` whenever the animated height actually changes. Do NOT call sync per scroll frame — that forces layout and causes stutter at zoom/narrow viewports.
+- **`updateYearLabels` read/write batching:** three passes (read all rects → compute all target styles → write all styles). Interleaved read/write loops cause per-label layout thrash on scroll.
+- **Cached NodeLists:** `getYearLabels()` / `getYearSections()` memoize `querySelectorAll` between scroll frames. `renderTimeline()` calls `invalidateYearLabelCache()` + `invalidateYearSectionCache()` after `innerHTML =`.
 
 ## Search System
 - **Always-visible search bar** in header — white background, navy text, placeholder "Search events..."
@@ -45,9 +53,12 @@
 - Styled to match header in both expanded and minimized (scrolled) states
 
 ## Hero Section
-- **Heading:** `HISTORY & TIMELINE` — all caps (`text-transform: uppercase; letter-spacing: 3px`)
-- **Subtitle:** `9 Years of Flying. Built for the Mission.` — separated by `|` divider
-- **Layout:** `<h1>HISTORY & TIMELINE <span class="h1-divider">|</span> <span class="h1-subtitle">...</span></h1>`
+- **Layout:** three stacked block elements inside `.dashboard-title-area-inner`:
+  1. `.dashboard-eyebrow` — "AUTONOMOUS AIR NETWORK" (plain block, no pulse-dot; dot was removed because its inline-flow offset pushed the eyebrow text out of alignment with the h1/subtitle below)
+  2. `<h1>HISTORY & TIMELINE</h1>` — 48px desktop, `text-transform: uppercase; letter-spacing: 1px; word-spacing: -0.05em` (both tightened so the ampersand doesn't render with big visible gaps)
+  3. `.h1-subtitle` — "9 Years of Flying. Built for the Mission."
+- All three share the same x — no `|` divider, no horizontal indents, no decorative elements that would push any line's text off alignment.
+- **Next to hero:** `.war-room-panel` (live flight telemetry). Stays inline with the title down to 720px (~50% of a 1440px desktop window). Below 720px stacks vertically via a dedicated `@media (max-width: 720px)` block — the earlier 1024px break was too eager and made tablet feel empty.
 - Page title: "Skyways — History & Timeline" (removed "Company Timeline" branding)
 
 ## Legend Note
@@ -77,6 +88,20 @@
 - Legend items in `.legend-row` use `data-filter` attribute matching `data-category` on event cards
 - JS `toggleFilter()` function reads `data-category` from `.event-card` elements
 - When adding new categories: update legend HTML, add CSS for `.legend-dot`, `.event-dot`, `.event-tag`, and highlight states
+- **Layout:** `.legend-row` is a 5-column CSS grid (`grid-template-columns: repeat(5, 1fr)`) — matches `.stats-row` above so each filter sits directly under its stat counterpart. Flex layout with `flex-wrap` was wrapping on narrow desktops and misaligning with the stats.
+- **No horizontal padding on `.legend-item`** — grid gap handles spacing. Horizontal padding would offset the filter text from the stat text above.
+- Keyboard a11y: each legend-item has `role="button"`, `tabindex="0"`, `aria-pressed`, Enter/Space handlers, and a `:focus-visible` outline. `toggleFilter()` updates `aria-pressed` when state changes.
+
+## Stat Source Drawers (`$46M+` table + four source lists)
+- **Unified hover + tap handler** in JS (bindStatMenus IIFE near the bottom of `<script>`):
+  - Desktop hover: mouseenter on `.stat-value` / `.stat-label` / `.stat-menu` opens the drawer; mouseleave on all three schedules a 120ms hide. The delay lets the cursor traverse the 8px gap between stat text and drawer. CSS `:hover` couldn't solve this — `visibility: hidden` on the hidden menu blocks pointer-events on the `::after` bridge.
+  - Tap: same value/label target toggles the drawer. Tap outside closes. Contract-row clicks in the contracts-table call `scrollToContract()` which closes the drawer directly.
+  - **No scroll-close.** Fires of `classList.remove('menu-open')` during the browser's scroll animation caused the drawer to stutter-then-close on slow trackpad scroll. The drawer lives in a sticky header so it travels with the viewport — auto-close on scroll solves a problem we don't have.
+- **`.drawer-active` class on `#stickyHeader`** (set in `show()`, cleared in `hide()`): zeros the layout-affecting transitions on `.brand-bar`, `.logo-wrap`, `.hero-section`, `.stats-banner-inner`, `.stat-value` while a drawer is open. The drawer's `top: 100%` anchor re-computes every frame during the 220ms minimize transition; snapping instead of animating makes the drawer's anchor jump once cleanly instead of sliding under the cursor.
+- **Hover zone = text ink only.** `.stat-value` and `.stat-label` have explicit `width: max-content; max-width: 100%;` — block children of a flex-column don't always shrink to content even with `align-items: flex-start`. Without this the hover zone was the full 1/5 grid column, and hovering empty space to the right of "$46M+" would open the drawer.
+- **Drawer positioning per breakpoint:**
+  - Desktop/tablet: `position: absolute; top: 100%; left: 0` inside its `.stat`. Width 220–260px on source drawers so they fit inside a single stat cell (~262px desktop / ~180px tablet). The 4th and 5th stat flip to `left: auto; right: 0` (with the `::before` tail pointer flipped too) so the drawer doesn't overflow the stats-banner's right edge.
+  - Mobile (≤720px): non-contracts drawers still anchor to their stat (`position: absolute`, `width: min(240px, calc(100vw - 20px))`) so they emanate from the tapped stat instead of snapping to a fixed viewport position. Right-half stats (nth-child 4–5) flip to `right: 0`. The contracts-table drawer is the only one wide enough to need viewport-fixed behavior (`position: fixed; left: 8px; right: 8px`).
 - **5 categories** with colors:
   - `contracts` — Blue (`--blue: #009AEB`)
   - `funding` — Green (`--green: #34A853`)
@@ -231,6 +256,10 @@ service cloud.firestore {
 - **Card shadow:** `box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08)` — strengthened after thumbnail tinting made lighter shadows invisible. Cards MUST have explicit `background: var(--white)` for shadow visibility.
 - **Thumbnail color ≠ shadow color:** When adding color tinting to cards, apply to `backgroundColor` not `borderLeft` or gradient overlays — those look like colored shadows instead of card tinting
 - **Font weight interpolation:** `font-weight: 450` works to interpolate between 400/500 weight stops — useful when swapping font families that render at different visual weights
+- **Drawer anchored by `top: 100%` slides when parent animates.** The `.stat-menu`'s top recalculates every frame during a `.stat` height transition, so the drawer visually slides under the cursor. Fix: freeze the layout transitions on the header (`.drawer-active` class) while a drawer is open — the minimize snap becomes instant but only happens once.
+- **Grid cells block-level children don't always shrink to content** even with `align-items: flex-start` on a flex column. When the hover/click zone needs to match the text ink, use explicit `width: max-content`.
+- **CSS `:hover` bridges don't work when the target has `visibility: hidden` + `pointer-events: none`.** The `::after` invisible bridge between a trigger and a hidden menu can't catch the cursor crossing the gap. Switch to JS `mouseenter`/`mouseleave` with a short hide delay.
+- **Internal banner alignment:** the red "INTERNAL ONLY" banner is a direct child of `.event-card` with `grid-column: 1 / -1` and negative horizontal margins equal to the card's horizontal padding. Previously it was nested inside `.event-content` (grid col 2) with only enough negative margin to reach the content column's edges — it stopped short of the card's true left edge.
 
 ## Spreadsheet Formatting Preferences
 - Related columns must be adjacent
