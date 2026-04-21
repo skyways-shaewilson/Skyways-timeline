@@ -671,24 +671,6 @@
     opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
   }
 
-  /* While the user is actively scrolling, suppress the contracts breakdown
-     drawer (and any other stat-menu) so the wide table doesn't follow the
-     mouse jitter or animate alongside the sticky-header minimize transition.
-     The .scrolling-active body class is toggled by JS on scroll + cleared
-     200ms after scroll stops. */
-  body.scrolling-active .stat-menu {
-    opacity: 0 !important; visibility: hidden !important;
-    pointer-events: none !important;
-    transition: none !important;
-  }
-  /* Belt-and-suspenders: while the header is mid-collapse to its minimized
-     state, hide the wide contracts table so it doesn't reposition mid-frame
-     as the .stat container resizes (font-size 41px → 16px is animated). */
-  .sticky-header.minimized .stat-menu.contracts-table {
-    opacity: 0 !important; visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
   .stat-value {
     /* Desktop metric punch. 22px → 33px (50%) → 41px (+25%) per Shae.
        Label below and minimized-on-scroll size deliberately unchanged. */
@@ -1730,12 +1712,30 @@
   }
 
   // ═══ HELPER: detect if a source label is internal-only ═══
-  // Match anything that begins with "Skyways Internal" or
-  // starts with "[NOT PUBLIC" (used in early flagged-internal entries).
+  // Approved-for-public-use sources (do NOT trigger the red banner):
+  //   - "Skyways Internal — Charles Acknin" (CEO direct attribution = OK to share)
+  //   - "Skyways Internal — No Source" (general internal info, no sensitive contract data)
+  //   - "Skyways Internal — Not Published" (internal note, not contract data)
+  // Internal-only sources (DO trigger the red banner):
+  //   - "[NOT PUBLIC..." explicit not-public flag
+  //   - Any "Skyways Internal" source that references a government contract
+  //     number, CLIN, mod, or PO without a corresponding press release
   function isInternalSource(label) {
     if (!label) return false;
     var l = String(label).trim();
-    return l.indexOf('Skyways Internal') === 0 || l.indexOf('[NOT PUBLIC') === 0;
+    // Explicit not-public flag — always internal
+    if (l.indexOf('[NOT PUBLIC') === 0) return true;
+    // Charles Acknin attribution — approved for public use
+    if (l.indexOf('Skyways Internal — Charles Acknin') === 0) return false;
+    if (l.indexOf('Skyways Internal - Charles Acknin') === 0) return false;
+    if (l.indexOf('Skyways Internal — No Source') === 0) return false;
+    if (l.indexOf('Skyways Internal - No Source') === 0) return false;
+    if (l.indexOf('Skyways Internal — Not Published') === 0) return false;
+    if (l.indexOf('Skyways Internal - Not Published') === 0) return false;
+    // Any other "Skyways Internal" source (typically with a contract # or CLIN)
+    // = government-agency citation without a public press release. Internal.
+    if (l.indexOf('Skyways Internal') === 0) return true;
+    return false;
   }
 
   // ═══ RENDER A SINGLE EVENT CARD ═══
