@@ -293,7 +293,7 @@
     "date": "2021-02",
     "title": "Carrier Deck Trials | USS Gerald R. Ford (CVN-78)",
     "category": "defense",
-    "detail": "Two weeks of autonomous Vertical Takeoff and Landing (VTOL) operations on the Navy's newest and most advanced aircraft carrier. V2.5 drone tested on the flight deck of USS Gerald R. Ford. Demonstrated the ability to operate from a carrier environment with hybrid-electric design, AI-driven flight system, 500-mile range, and 30-lb payload capacity. After evaluating 65 candidate Unmanned Aircraft Systems (UAS) in 2019, the Navy selected Skyways for its ability to carry 24 pounds of cargo up to 65 miles, covering roughly 80% of critical spare parts needs.",
+    "detail": "Two weeks of autonomous Vertical Takeoff and Landing (VTOL) operations on the Navy's newest and most advanced aircraft carrier. V2.5 drone tested on the flight deck of USS Gerald R. Ford.",
     "tag": "Defense | U.S. Navy",
     "sources": [
       "The War Zone (Feb 2021)",
@@ -313,7 +313,16 @@
       "The Maritime Executive (Aug 2021)": "https://maritime-executive.com/media/images/article/Photos/Warships/Aircraft-Carriers/ford-skyways.3f7ab6.jpg",
       "FlightGlobal (Aug 2021)": "https://www.flightglobal.com/military-uavs/us-navy-eyes-programme-of-record-for-cargo-drones-to-resupply-ships/144776.article"
     },
-    "date_display": "2021-02"
+    "date_display": "2021-02",
+    "bullets": [
+      "Hybrid-electric + AI-driven flight system",
+      "500-mile range, 30-lb payload capacity (V2.5)",
+      "Selected from 65 candidate UAS evaluated by Navy (Aug 2019)",
+      "24-lb cargo / 65-mile range covers ~80% of critical spare parts needs"
+    ],
+    "charles_corrections": [
+      "Round IV: 500 mi range and 30-lb V2.5 payload claims are per Charles internal — not directly confirmed in publicly verified sources (Maritime Executive verified the 65-UAS / 24 lbs / 65 mi / 80% figures)."
+    ]
   },
   {
     "id": 14,
@@ -437,7 +446,7 @@
     "date": "2022-02",
     "title": "$1,807,149 | DIU/USN OTA (Blue Water + Spiral Mods)",
     "category": "contracts",
-    "detail": "Skyways secured a contract through the Defense Innovation Unit (DIU) for the Blue Water Maritime Logistics UAS program in partnership with the U.S. Navy, Naval Air Warfare Center Aircraft Division (NAWCAD), and Military Sealift Command. The award contract was directly issued by Army Contracting Command, New Jersey (ACC-NJ). Base contract $1,429,587.50 (Feb 3, 2022). Through subsequent modifications including P00001 (Temperature Controlled Payload, Nov 2022), P00006 (SATCOM), and P00004 (III MEF demonstration, Mar 2024, +$145,161.72), the funded value grew to $1,807,149.22 as of March 2024. The Blue Water program targets delivery of payloads up to 50 pounds across distances of 250 miles for ship-based logistics, addressing approximately 95% of critical parts needs by weight. DIU partnered with the 4th Fleet and Marine Corps Warfighting Laboratory to develop computer vision technology enabling autonomous navigation and intelligent landing without beacon assistance.",
+    "detail": "Skyways secured a contract through the Defense Innovation Unit (DIU) for the Blue Water Maritime Logistics UAS program in partnership with the U.S. Navy, Naval Air Warfare Center Aircraft Division (NAWCAD), and Military Sealift Command. The award contract was directly issued by Army Contracting Command, New Jersey (ACC-NJ). DIU partnered with the 4th Fleet and Marine Corps Warfighting Laboratory to develop computer vision technology enabling autonomous navigation and intelligent landing without beacon assistance.",
     "tag": "Contract | DIU / U.S. Navy",
     "sources": [
       "Skyways Internal — Charles Acknin",
@@ -447,7 +456,8 @@
     ],
     "charles_corrections": [
       "Round III: Corrected from ~2023 to 2022. Charles confirmed: 'We won the DIU contract/OTA in 2022.'",
-      "Date corrected from 2022-01 to 2022-02 per signed contract W15QKN-22-9-5005 effective Feb 3, 2022 (signed by Charles Acknin and Norman R. Bonano, Army Contracting Command NJ)"
+      "Date corrected from 2022-01 to 2022-02 per signed contract W15QKN-22-9-5005 effective Feb 3, 2022 (signed by Charles Acknin and Norman R. Bonano, Army Contracting Command NJ)",
+      "Round IV: DIU Blue Water program target (50 lbs over 250 mi for ~95% of critical parts) is per Charles internal — public sources confirm contract structure but not the specific program target percentage."
     ],
     "source_urls": {
       "Inside Unmanned Systems — Navy Demonstrating Programs for Drone Delivery at Sea": "https://insideunmannedsystems.com/navy-demonstrating-programs-for-drone-delivery-at-sea/",
@@ -458,7 +468,15 @@
       "Skyways (fallback)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
     },
     "thumbnail_status": "fallback_skyways",
-    "date_display": "2022-02"
+    "date_display": "2022-02",
+    "bullets": [
+      "Base: $1,429,587.50 (Feb 3, 2022)",
+      "P00001: Temperature Controlled Payload (Nov 2022)",
+      "P00006: SATCOM",
+      "P00004: III MEF demonstration (Mar 2024, +$145,161.72)",
+      "Final value: $1,807,149.22 (Mar 2024)",
+      "Program target (per Charles): 50 lbs over 250 mi for ship-based logistics — covers ~95% of critical parts by weight"
+    ]
   },
   {
     "id": 20,
@@ -509,7 +527,7 @@
     "date": "2022-12",
     "title": "200+ NM Cargo Delivery Demonstrations",
     "category": "defense",
-    "detail": "Multi-mode operations at Naval Air Station (NAS) Patuxent River: ship-to-ship, ship-to-shore, shore-to-ship cargo delivery over 200 nautical miles. Skyways and Martin UAV demonstrated Vertical Takeoff and Landing (VTOL) cargo delivery capabilities. The Naval Air Warfare Center Aircraft Division (NAWCAD) found that 90% of critical mission failures can be repaired with payloads under 20 pounds, well within the capacity of the Skyways platform.",
+    "detail": "Multi-mode cargo delivery operations at Naval Air Station (NAS) Patuxent River. Skyways and Martin UAV demonstrated Vertical Takeoff and Landing (VTOL) cargo delivery capabilities.",
     "tag": "Defense",
     "sources": [
       "Skyways Internal — Charles Acknin (NAWCAD finding: 90% of critical mission failures repairable with under 20 lb payloads — public sources cite a separate 50 lb threshold for general logistics)",
@@ -531,7 +549,14 @@
       "DroneDJ (Dec 2022)": "https://i0.wp.com/dronedj.com/wp-content/uploads/sites/2/2022/12/combined.jpeg?resize=1200%2C628&quality=82&strip=all&ssl=1",
       "DroneXL (Jan 2023)": "https://dronexl.co/wp-content/uploads/2023/01/Screenshot-2023-01-04-at-11.21.52-AM.jpg"
     },
-    "date_display": "2022-12"
+    "date_display": "2022-12",
+    "bullets": [
+      "Ship-to-ship cargo delivery",
+      "Ship-to-shore cargo delivery",
+      "Shore-to-ship cargo delivery",
+      "Over 200 nautical miles total",
+      "Per NAWCAD (Charles internal): 90% of critical mission failures repairable with under-20-lb payloads"
+    ]
   },
   {
     "id": 23,
@@ -580,7 +605,7 @@
     "date": "2023-05",
     "title": "$479,053 | Navy NAWCAD BWUAS 2.0 Prototype",
     "category": "contracts",
-    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) awarded Skyways the Blue Water Maritime Logistics Unmanned Aircraft System 2.0 (BWUAS 2.0) Prototype Project contract through the Naval Aviation Systems Consortium (NASC). Effective May 4, 2023. This base contract follows on from the original 2019 Blue Water work and focuses on autonomous logistical replenishment from shore-to-ship, ship-to-ship, and ship-to-shore in operationally relevant environments. NAWCAD's Rapid Prototyping and Experimentation Division (RPED) leads the program in partnership with PMA-263. Subsequent modifications added work on Project ULTRA Demonstration (May 2025) and V3 Temperature Controlled Payload Development (May 2025).",
+    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) awarded Skyways the Blue Water Maritime Logistics Unmanned Aircraft System 2.0 (BWUAS 2.0) Prototype Project contract through the Naval Aviation Systems Consortium (NASC), effective May 4, 2023.",
     "tag": "Contract | U.S. Navy",
     "sources": [
       "Skyways Internal — Contract N00421-23-9-0013 ($479,052.96, effective May 4, 2023, not publicly disclosed)"
@@ -591,7 +616,14 @@
       "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
     },
     "thumbnail_status": "fallback_v2_ship",
-    "date_display": "2023-05"
+    "date_display": "2023-05",
+    "bullets": [
+      "Lead division: NAWCAD Rapid Prototyping and Experimentation Division (RPED)",
+      "Partner: PMA-263",
+      "Focus: autonomous logistical replenishment (shore-to-ship, ship-to-ship, ship-to-shore)",
+      "Builds on: 2019 Blue Water work",
+      "Mods added: Project ULTRA Demonstration (May 2025), V3 TCP Development (May 2025)"
+    ]
   },
   {
     "id": 25,
@@ -667,7 +699,7 @@
     "date": "2024-06",
     "title": "$2,200,000 Obligated / $4,999,999 Ceiling | USAF SBIR Phase 3 IDIQ + STRATFI Selection",
     "category": "contracts",
-    "detail": "After submitting the Strategic Funding Increase (STRATFI) package in approximately September 2023, United States Air Force (USAF) Air Force Works (AFWERX) issued a Request for Proposal (RFP) to Skyways in early 2024 to begin V3 development. On June 19, 2024, Skyways was awarded the basic SBIR Phase 3 Indefinite Delivery/Indefinite Quantity (IDIQ) contract FA228024D0003 with a 5-year ordering period and a Government Obligation to Order maximum of $4,999,999. The first Task Order FA228024F0013 was awarded simultaneously with initial obligations growing to approximately $2.2M through Mods #1 (Jun 24, 2024) and #2 (Jul 30, 2024). Mod #3 (Jan 6, 2025) extended CLIN performance dates without changing dollar value. In the same month as the IDIQ award, Skyways received notification it had been selected for STRATFI funding, which would ultimately be awarded as the $37M contract in May 2025.",
+    "detail": "After submitting the Strategic Funding Increase (STRATFI) package, USAF AFWERX awarded Skyways the basic SBIR Phase 3 IDIQ contract FA228024D0003 in June 2024. The first Task Order FA228024F0013 was awarded simultaneously. STRATFI selection was announced in the same month and ultimately led to the $37M contract in May 2025.",
     "tag": "Contract | U.S. Air Force",
     "sources": [
       "SBIR.gov",
@@ -684,7 +716,15 @@
       "Skyways (hero)": "https://www.skyways.com/_astro/hero.DmMP60zO_Z1mKK4i.webp"
     },
     "thumbnail_status": "fallback_hero",
-    "date_display": "2024-06"
+    "date_display": "2024-06",
+    "bullets": [
+      "Sept 2023: STRATFI package submitted",
+      "Early 2024: USAF AFWERX issued RFP for V3 development",
+      "Jun 19, 2024: IDIQ contract FA228024D0003 awarded; 5-year ordering period; $4,999,999 ceiling",
+      "Mods #1 + #2: Task Order FA228024F0013 obligations grew to ~$2.2M",
+      "Jan 6, 2025: Mod #3 extended CLIN dates (no $ change)",
+      "June 2024: STRATFI selection announced → $37M contract awarded May 2025"
+    ]
   },
   {
     "id": 29,
@@ -844,7 +884,7 @@
     "date": "2025-05",
     "title": "$361,832 | Navy CLIN 0005 (Project ULTRA Demonstration)",
     "category": "contracts",
-    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) added Contract Line Item 0005 (CLIN 0005) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025. CLIN 0005 funded Skyways' Project ULTRA Demonstration: shore-to-shore long-range autonomous cargo flights between Grand Forks Air Force Base and Cavalier Space Force Station, North Dakota, in support of the Office of the Under Secretary of Defense's (OUSD) Project ULTRA program. Skyways operated both Government-furnished V2.6B (Government Owned/Contractor Operated) and Skyways-owned V3.0 (Contractor Owned/Contractor Operated). Project ULTRA's overall task order is $3.5M from OUSD and Grand Forks County, with the program ceiling raised from $18.25M to $100M in July 2025.",
+    "detail": "U.S. Navy NAWCAD added Contract Line Item 0005 (CLIN 0005) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025, funding Skyways' Project ULTRA Demonstration.",
     "tag": "Contract | U.S. Navy / OUSD",
     "sources": [
       "Skyways Internal — Contract N00421-23-9-0013 Mod P00002, CLIN 0005 ($361,832.40, signed May 23, 2025, not publicly disclosed)"
@@ -855,7 +895,15 @@
       "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
     },
     "thumbnail_status": "fallback_v2_ship",
-    "date_display": "2025-05"
+    "date_display": "2025-05",
+    "bullets": [
+      "Mission: shore-to-shore long-range autonomous cargo flights",
+      "Route: Grand Forks AFB ↔ Cavalier SFS, North Dakota",
+      "Aircraft: V2.6B (Government-furnished, GO/CO) + V3.0 (Skyways-owned, CO/CO)",
+      "Sponsor: OUSD Project ULTRA",
+      "Total task order: $3.5M (OUSD + Grand Forks County)",
+      "Program ceiling: $18.25M → $100M (July 2025)"
+    ]
   },
   {
     "id": 112,
@@ -863,7 +911,7 @@
     "date": "2025-05",
     "title": "$982,850 | Navy CLIN 0006 (V3 Temperature-Controlled Payload)",
     "category": "contracts",
-    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) added Contract Line Item 0006 (CLIN 0006) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025. CLIN 0006 funds the design and build of a proof of concept of an actively temperature-controlled payload for the V3 Block 2 aircraft. The system is required to maintain 1 to 6 degrees Celsius (with 4 degree Celsius tolerance) for up to 8 hours at external temperatures up to 35 degrees Celsius, and integrate as an end-to-end system powered by an onboard alternator. Deliverables include Preliminary Design Review (PDR) within 6 months and Critical Design Review (CDR) thereafter.",
+    "detail": "U.S. Navy NAWCAD added Contract Line Item 0006 (CLIN 0006) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025. CLIN 0006 funds the design and build of an actively temperature-controlled payload proof of concept for the V3 Block 2 aircraft.",
     "tag": "Contract | U.S. Navy",
     "sources": [
       "Skyways Internal — Contract N00421-23-9-0013 Mod P00002, CLIN 0006 ($982,850.39, signed May 23, 2025, not publicly disclosed)"
@@ -874,7 +922,15 @@
       "Skyways (V3 hover)": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
     },
     "thumbnail_status": "fallback_v3_hover",
-    "date_display": "2025-05"
+    "date_display": "2025-05",
+    "bullets": [
+      "Aircraft: V3 Block 2",
+      "Temperature: maintain 1-6°C (4°C tolerance)",
+      "Duration: up to 8 hours",
+      "External temp tolerance: up to 35°C",
+      "System: end-to-end, powered by onboard alternator",
+      "Deliverables: PDR within 6 months, CDR thereafter"
+    ]
   },
   {
     "id": 35,
@@ -907,7 +963,7 @@
     "date": "2025-08",
     "title": "Project ULTRA | 20 Operational Flights for DoD",
     "category": "defense",
-    "detail": "Sole Unmanned Aircraft System (UAS) provider for Project ULTRA (UAS Logistics, Traffic, Response and Autonomy), sponsored by the Office of the Under Secretary of Defense (OUSD). 20 operational flights (10 round trips) between Grand Forks Air Force Base and Cavalier Space Force Station, ND, over 12 days. Delivered 230 lbs of cargo (23 lbs per round trip) including temperature-controlled blood. Per Skyways: first unmanned, fully autonomous Beyond Visual Line of Sight (BVLOS) cargo flights between two U.S. airports, conducted in controlled airspace at 3,500 feet altitude.",
+    "detail": "Sole Unmanned Aircraft System (UAS) provider for Project ULTRA (UAS Logistics, Traffic, Response and Autonomy), sponsored by the Office of the Under Secretary of Defense (OUSD).",
     "tag": "Defense | DoD",
     "sources": [
       "BusinessWire (Aug 2025)",
@@ -921,7 +977,14 @@
     "source_thumbnails": {
       "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
     },
-    "date_display": "2025-08"
+    "date_display": "2025-08",
+    "bullets": [
+      "20 operational flights (10 round trips) over 12 days",
+      "Route: Grand Forks AFB ↔ Cavalier Space Force Station, ND",
+      "Cargo: 230 lbs total (23 lbs per round trip), including temperature-controlled blood",
+      "Altitude: 3,500 ft in controlled airspace",
+      "Milestone (per Skyways): first unmanned, fully autonomous BVLOS cargo flights between two U.S. airports"
+    ]
   },
   {
     "id": 37,
@@ -950,7 +1013,7 @@
     "date": "2025-09",
     "title": "11 Consecutive Resupply Flights in One Day",
     "category": "product",
-    "detail": "V2 operational record: 11 flights, 9.4 hrs, 466 NM, zero human intervention, 8-min average turnarounds. Demonstrated the operational tempo required for fleet-scale logistics.",
+    "detail": "V2 operational record demonstrating the operational tempo required for fleet-scale logistics.",
     "tag": "Product",
     "sources": [
       "Skyways Internal — Charles Acknin (V2 operational record: 11 flights / 9.4 hrs / 466 NM / 8-min turnarounds, Sept 2025)"
@@ -961,7 +1024,14 @@
       "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
     },
     "date_display": "2025-09",
-    "thumbnail_status": "fallback_v2_ship"
+    "thumbnail_status": "fallback_v2_ship",
+    "bullets": [
+      "11 flights in a single day",
+      "9.4 hours total flight time",
+      "466 nautical miles flown",
+      "8-minute average turnaround",
+      "Zero human intervention"
+    ]
   },
   {
     "id": 113,
