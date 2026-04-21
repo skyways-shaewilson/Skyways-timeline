@@ -625,6 +625,17 @@
     max-width: 260px;
   }
 
+  /* Right-side stats: flip the drawer to right-anchor so it doesn't
+     overflow past the right edge of the stats banner (at tablet widths
+     the last stat sits ~36px from the right edge, which is less than
+     the drawer's min-width). */
+  .stats-row .stat:nth-child(n+4) .stat-menu:not(.contracts-table) {
+    left: auto; right: 0;
+  }
+  .stats-row .stat:nth-child(n+4) .stat-menu:not(.contracts-table)::before {
+    left: auto; right: 16px;
+  }
+
   /* Wider variant: $46M+ contracts breakdown table.
      Constrained to fit the user's viewport — header and footer text stays
      pinned while the contracts grid scrolls if there's not enough vertical
@@ -718,19 +729,36 @@
     animation: contractJumpPulse 1.6s ease-out;
   }
 
-  /* Mobile/touch override: re-anchor every stat drawer to a viewport-fixed
-     position so it can't blow off-screen (each .stat cell is only ~68px
-     wide on a phone, but the drawers are 280–560px). Works for the
-     contracts breakdown and the four source-list drawers alike. */
+  /* Mobile: keep every stat drawer anchored DIRECTLY UNDER its own stat
+     (not viewport-fixed) so a tap on stat N reveals a drawer that
+     visually emanates from stat N, not always from the left of the
+     screen. The contracts-table drawer is the only one wide enough to
+     benefit from being re-anchored to the viewport — hold that one
+     special. */
   @media (max-width: 720px) {
     .stat { overflow: visible; }
     .stat-menu {
-      position: fixed; top: auto; left: 8px; right: 8px;
-      min-width: 0; max-width: none; width: auto;
+      /* Shrink + clamp so the drawer fits the viewport. Width is the
+         narrower of 240px or (viewport - 20px gutter). */
+      min-width: 0;
+      width: min(240px, calc(100vw - 20px));
+      max-width: calc(100vw - 20px);
       margin-top: 8px;
     }
-    .stat-menu::before { display: none; }
-    .stat-menu.contracts-table { margin-top: 0; }
+    /* Stats in the right half of the row: right-anchor the drawer so it
+       doesn't extend off the right edge of the viewport. 1st through
+       3rd keep left-anchor, 4th and 5th flip. */
+    .stats-row .stat:nth-child(n+4) .stat-menu {
+      left: auto; right: 0;
+    }
+    /* Contracts-table drawer stays a full-width sheet because its
+       internal table needs the extra horizontal room. */
+    .stat-menu.contracts-table {
+      position: fixed; top: auto; left: 8px; right: 8px;
+      min-width: 0; max-width: none; width: auto;
+      margin-top: 0;
+    }
+    .stat-menu.contracts-table::before { display: none; }
     .contracts-row {
       grid-template-columns: 1.8fr 1.2fr 0.6fr 0.7fr;
       gap: 6px;
