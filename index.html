@@ -2396,17 +2396,18 @@
 
   function updateHeader() {
     // Hysteresis on the minimize trigger:
-    //   • Collapse to minimized once scrollY > 250 (well past the header's
-    //     own height ~200px — must be larger than the cumulative header
-    //     shrink amount, otherwise the scroll-compensation step below would
-    //     push scrollY into the "restore" zone, expand the header, retrigger
-    //     minimize, and bounce-loop. With threshold > shrink amount, the
-    //     compensation always lands safely above the restore boundary.)
-    //   • Restore to expanded only once scrollY <= 60 (well above the post-
-    //     compensation landing zone, plus generous hysteresis).
+    //   • Collapse once scrollY > MINIMIZE_AT — kept low so the header
+    //     minimizes as soon as the user starts scrolling.
+    //   • Restore only once scrollY <= RESTORE_AT so brief bounces near the
+    //     threshold don't cause flicker.
+    //   • Scroll compensation is capped so it never lands inside the restore
+    //     zone (that would re-expand the header on the next event and
+    //     ping-pong between states).
+    var MINIMIZE_AT = 100;
+    var RESTORE_AT = 20;
     var scrollY = (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
     var isCurrentlyMinimized = header.classList.contains('minimized');
-    var shouldMinimize = isCurrentlyMinimized ? scrollY > 60 : scrollY > 250;
+    var shouldMinimize = isCurrentlyMinimized ? scrollY > RESTORE_AT : scrollY > MINIMIZE_AT;
 
     if (shouldMinimize === isCurrentlyMinimized) return;
 
@@ -2434,7 +2435,14 @@
       // be back to the visual jump).
       var prevBehavior = document.documentElement.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = 'auto';
-      window.scrollBy(0, -delta);
+      // Cap the upward compensation when minimizing so scrollY doesn't end
+      // up in the restore zone and cause a bounce-loop. Leave a small
+      // buffer above RESTORE_AT.
+      var compensation = delta;
+      if (shouldMinimize && scrollY - compensation <= RESTORE_AT) {
+        compensation = Math.max(0, scrollY - RESTORE_AT - 5);
+      }
+      window.scrollBy(0, -compensation);
       document.documentElement.style.scrollBehavior = prevBehavior;
     }
     setTimeout(syncYearLabelOffset, 50);
