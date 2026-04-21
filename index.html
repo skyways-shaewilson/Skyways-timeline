@@ -2380,16 +2380,22 @@
   }
 
   function updateHeader() {
-    // Minimize on essentially any scroll down (threshold lowered from 30 → 4
-    // so the header transitions almost immediately rather than triggering a
-    // late, jarring animation mid-scroll).
-    var shouldMinimize = (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0) > 4;
+    // Hysteresis on the minimize trigger:
+    //   • Collapse to minimized once the user has scrolled past 40px (clear
+    //     intent to scroll, not an accidental wheel-tap).
+    //   • Restore to expanded only once they're back near the very top
+    //     (within 8px). Without this gap, scroll positions hovering around
+    //     a single threshold rapidly toggle the .minimized class, which
+    //     reflows the header height each toggle and fights with the
+    //     browser's scroll anchoring — producing the bounce-back-to-top
+    //     behavior under the mouse cursor.
+    var scrollY = (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
     var isCurrentlyMinimized = header.classList.contains('minimized');
+    var shouldMinimize = isCurrentlyMinimized ? scrollY > 8 : scrollY > 40;
 
     if (shouldMinimize && !isCurrentlyMinimized) {
       header.classList.add('minimized');
-      // Sync year label offset shortly after — transitions are now ~150ms
-      // instead of 350ms, so we don't need to wait as long.
+      // Year label offset settles after the 150ms transition window.
       setTimeout(syncYearLabelOffset, 200);
     } else if (!shouldMinimize && isCurrentlyMinimized) {
       header.classList.remove('minimized');
