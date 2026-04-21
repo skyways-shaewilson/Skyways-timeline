@@ -49,7 +49,14 @@
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none; z-index: 0;
     opacity: 0.45;
-    transition: background 1s ease;
+    /* Full-viewport fixed overlay. JS interpolates the gradient per
+       scroll frame, so do NOT also put a CSS transition on background
+       — every write would fire a 1-second animated repaint of the
+       whole viewport under it, which is a major scroll-stutter source.
+       Promote to its own compositor layer so bg writes don't force
+       everything below it to repaint. */
+    transform: translateZ(0);
+    will-change: background;
   }
 
   .timeline-wrapper, .footer { position: relative; z-index: 1; }
@@ -243,19 +250,17 @@
   .hero-section {
     position: relative; /* anchors .header-aircraft-bg / .header-aircraft-wash */
     background: var(--navy);
-    /* Landing hero capped at ~25% of the viewport height so it doesn't
-       dominate the fold. Padding is tight; the title-area + telemetry
-       panel determine the actual content height, but the section never
-       tries to exceed 25vh on tall windows. Overflow is clipped so an
-       unusually tall telemetry panel doesn't blow past the ceiling. */
-    padding: 20px 0 24px;
-    height: 25vh;
-    min-height: 200px;
-    overflow: hidden;
-    /* Hero image: V3 in flight (aircraft_header.jpg), rendered at 400%
-       of its natural fill size so the aircraft dominates the right side
-       of the hero. A horizontal navy gradient keeps the title readable
-       on the left and fades to reveal the aircraft on the right. */
+    /* Landing hero: at LEAST 25% of the viewport, but grows with
+       content so the telemetry panel's LAST PULL footer can breathe
+       at the bottom. (Earlier height: 25vh + overflow: hidden was
+       clipping the telemetry footer on shorter windows — that was
+       the "spacing between flight data and the bottom" issue.) */
+    padding: 28px 0 36px;
+    min-height: 25vh;
+    /* Hero image: V3 in flight, shown as the hero background at 400%
+       of its natural fill so the aircraft itself dominates the right
+       side. Horizontal navy gradient keeps the title legible on the
+       left, fades to reveal the aircraft on the right. */
     background-image:
       linear-gradient(
         to right,
@@ -268,11 +273,10 @@
     background-size: cover, 400%;
     background-position: center, 65% 55%;
     background-repeat: no-repeat;
+    /* Only compositor-only properties transition on minimize (transform,
+       opacity). All layout-affecting transitions on the header were
+       removed — they were the scroll-stutter source. */
     transform: translateY(0); opacity: 1;
-    /* Padding + height snap instantly on minimize (layout-affecting
-       transitions across the whole header were the scroll-stutter
-       source). Transform + opacity can still transition — they're
-       compositor-only. */
     transition: transform 0.4s cubic-bezier(0.4,0,0.2,1),
                 opacity 0.25s ease;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -294,7 +298,11 @@
   .dashboard-title-area {
     display: grid;
     grid-template-rows: 1fr;
-    transition: grid-template-rows 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+    /* grid-template-rows transition removed — it's a 400ms layout
+       animation on every minimize and showed up as slow-trackpad
+       stutter at the threshold crossing. Opacity transition stays
+       because it's compositor-only. */
+    transition: opacity 0.3s ease;
     opacity: 1;
   }
   
@@ -360,7 +368,9 @@
   .sticky-header.minimized .header-aircraft-wash { opacity: 1; }
 
   .war-room-panel {
-    transition: all 0.4s ease;
+    /* Scoped from "transition: all" to compositor-only properties so
+       any layout changes on the panel snap instead of animating. */
+    transition: opacity 0.3s ease, transform 0.4s ease;
   }
 
   /* When the header minimizes, the whole Fleet Flight Telemetry panel
@@ -375,7 +385,9 @@
   
   .dashboard-hero {
     display: flex; justify-content: space-between; align-items: center; gap: 48px;
-    transition: gap 0.4s cubic-bezier(0.4,0,0.2,1);
+    /* Flex gap snaps on minimize — animating gap forces a layout
+       pass on every transition frame, which was part of the slow-
+       trackpad stutter at the threshold crossing. */
   }
   
   .sticky-header.minimized .dashboard-hero {
@@ -1032,10 +1044,16 @@
   .year-label {
     /* Dialed down from 800/−1px to 700/−0.5px to match the h1 refinement
        — less shouty, more composed. Still reads as a strong marker
-       against the white body. */
+       against the white body.
+       IMPORTANT: no CSS transition on opacity/transform here. The
+       scroll handler's updateYearLabels writes these properties every
+       scroll frame; a CSS transition would kick off a 150ms animation
+       on every write, stacking 60+ simultaneous animations per second
+       — a real and confirmed scroll-stutter source. JS interpolates
+       the values directly, so the values move smoothly without any
+       CSS help. */
     font-size: 32px; font-weight: 700; color: var(--navy);
     letter-spacing: -0.5px; position: -webkit-sticky; position: sticky; line-height: 1;
-    transition: opacity 0.15s ease, transform 0.15s ease;
     will-change: opacity, transform;
   }
 
@@ -1542,9 +1560,9 @@
     .header-aircraft-bg,
     .header-aircraft-wash { display: none; }
 
-    /* Mobile hero: same 25vh cap as desktop but a smaller absolute
-       floor so it doesn't eat the phone viewport. */
-    .hero-section { padding: 14px 0 18px; height: 25vh; min-height: 170px; }
+    /* Mobile hero: at least 25vh, grows with content so the telemetry
+       footer always has room to render below the grid. */
+    .hero-section { padding: 20px 0 24px; min-height: 25vh; }
     .hero-inner { padding: 0 20px; }
     .dashboard-eyebrow { font-size: 9px; margin-bottom: 8px; }
     .hero-inner h1 { font-size: 28px; letter-spacing: 1px; display: block; }
