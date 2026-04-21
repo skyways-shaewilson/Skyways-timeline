@@ -74,8 +74,13 @@
 
   .brand-bar {
     background: var(--navy); height: 80px;
-    transition: height 0.15s ease-out,
-                background 0.15s ease-out,
+    /* Height MUST snap instantly (no transition) so updateHeader() can
+       measure the new height immediately and scroll-compensate. A gradual
+       height transition would interpolate over 150ms during which the
+       browser pulls body content upward in real time, causing the user's
+       cursor to feel like the page is "bouncing." Background and border
+       can still animate since they don't affect layout. */
+    transition: background 0.15s ease-out,
                 border-bottom 0.15s ease;
     border-bottom: 1px solid transparent;
   }
@@ -98,8 +103,8 @@
     height: 57px;
     flex-shrink: 0;
     margin-left: -16px;
-    transition: height 0.15s ease-out,
-                margin-left 0.15s ease-out;
+    /* No transition on height/margin — these affect layout and would
+       fight with scroll-compensation. */
   }
 
   .sticky-header.minimized .logo-wrap {
@@ -502,7 +507,7 @@
   .stats-banner-inner {
     max-width: 1440px; margin: 0 auto; padding: 16px 64px;
     display: flex; flex-direction: column; gap: 10px;
-    transition: padding 0.15s ease-out;
+    /* Padding affects layout — snap instantly so scroll-compensation works. */
   }
 
   .sticky-header.minimized .stats-banner-inner { padding: 10px 64px; }
@@ -695,11 +700,11 @@
   .stat-value {
     /* Desktop metric punch. 22px → 33px (50%) → 41px (+25%) per Shae.
        Label below and minimized-on-scroll size deliberately unchanged.
-       Font-size transitions trigger full layout + repaint each frame, so
-       this is intentionally fast (0.1s) to minimize the stutter window. */
+       Font-size affects layout (line-height, container height), so it
+       must snap instantly to play nicely with the updateHeader() scroll
+       compensation. */
     font-size: 41px; font-weight: 800; color: var(--thrust-green);
     letter-spacing: -0.5px; line-height: 1.05;
-    transition: font-size 0.1s ease-out;
   }
 
   .sticky-header.minimized .stat-value { font-size: 16px; }
@@ -2381,26 +2386,44 @@
 
   function updateHeader() {
     // Hysteresis on the minimize trigger:
-    //   • Collapse to minimized once the user has scrolled past 40px (clear
-    //     intent to scroll, not an accidental wheel-tap).
+    //   • Collapse to minimized once the user has scrolled past 40px.
     //   • Restore to expanded only once they're back near the very top
-    //     (within 8px). Without this gap, scroll positions hovering around
-    //     a single threshold rapidly toggle the .minimized class, which
-    //     reflows the header height each toggle and fights with the
-    //     browser's scroll anchoring — producing the bounce-back-to-top
-    //     behavior under the mouse cursor.
+    //     (within 8px).
+    // The hysteresis prevents rapid toggling near a single boundary.
     var scrollY = (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
     var isCurrentlyMinimized = header.classList.contains('minimized');
     var shouldMinimize = isCurrentlyMinimized ? scrollY > 8 : scrollY > 40;
 
-    if (shouldMinimize && !isCurrentlyMinimized) {
+    if (shouldMinimize === isCurrentlyMinimized) return;
+
+    // Scroll compensation: when the header height changes, the body content
+    // below it physically reflows by the same delta. Without compensation,
+    // the user's cursor would feel like the page is "bouncing" — content
+    // jumping under their pointer while they're trying to scroll. We measure
+    // the header height immediately before and after the class toggle, then
+    // scroll the page by the negative delta so visual position stays fixed.
+    // This is why the layout-affecting CSS transitions (height, padding,
+    // font-size) are intentionally instant: a gradual transition would
+    // interpolate the height over time, which we can't compensate for in a
+    // single scrollBy() call.
+    var oldHeight = header.offsetHeight;
+    if (shouldMinimize) {
       header.classList.add('minimized');
-      // Year label offset settles after the 150ms transition window.
-      setTimeout(syncYearLabelOffset, 200);
-    } else if (!shouldMinimize && isCurrentlyMinimized) {
+    } else {
       header.classList.remove('minimized');
-      setTimeout(syncYearLabelOffset, 200);
     }
+    var newHeight = header.offsetHeight; // forces layout recompute
+    var delta = oldHeight - newHeight;
+    if (Math.abs(delta) > 1) {
+      // Disable smooth scroll briefly so the compensation is instant
+      // (otherwise the "smooth" behavior would animate the snap and we'd
+      // be back to the visual jump).
+      var prevBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollBy(0, -delta);
+      document.documentElement.style.scrollBehavior = prevBehavior;
+    }
+    setTimeout(syncYearLabelOffset, 50);
   }
 
   // Set initial year label offset on load
