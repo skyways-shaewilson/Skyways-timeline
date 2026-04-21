@@ -241,14 +241,26 @@
   .hero-section {
     position: relative; /* anchors .header-aircraft-bg / .header-aircraft-wash */
     background: var(--navy);
-    /* Expanded-state padding is 4x the previous values (48/64 → 192/256)
-       so the hero image section has real presence. Content sits in the
-       middle; the extra space top and bottom lets the background photo
-       carry visual weight. */
-    padding: 192px 0 256px;
-    background-image: linear-gradient(rgba(17, 30, 38, 0.65), rgba(17, 30, 38, 0.92)), url('nasa_bg.png');
-    background-size: cover;
-    background-position: center left;
+    /* Padding restored to original — the main header keeps its compact
+       footprint before the menu minimizes. The V3 aircraft image itself
+       (below) is what carries the visual weight. */
+    padding: 48px 0 64px;
+    /* Hero image: V3 in flight (aircraft_header.jpg), rendered at 400%
+       of its natural fill size so the aircraft dominates the right side
+       of the hero. A horizontal navy gradient keeps the title readable
+       on the left and fades to reveal the aircraft on the right. */
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(17, 30, 38, 0.94) 0%,
+        rgba(17, 30, 38, 0.78) 35%,
+        rgba(17, 30, 38, 0.38) 70%,
+        rgba(17, 30, 38, 0.22) 100%
+      ),
+      url('aircraft_header.jpg');
+    background-size: cover, 400%;
+    background-position: center, 65% 55%;
+    background-repeat: no-repeat;
     transform: translateY(0); opacity: 1;
     transition: padding 0.22s cubic-bezier(0.4,0,0.2,1),
                 transform 0.4s cubic-bezier(0.4,0,0.2,1),
@@ -1516,9 +1528,9 @@
     .header-aircraft-bg,
     .header-aircraft-wash { display: none; }
 
-    /* Mobile hero is 4x its old padding too (28/32 → 112/128) so the
-       hero image section stays proportionally tall on phones. */
-    .hero-section { padding: 112px 0 128px; }
+    /* Mobile hero padding back to original so the compact phone hero
+       stays compact. */
+    .hero-section { padding: 28px 0 32px; }
     .hero-inner { padding: 0 20px; }
     .dashboard-eyebrow { font-size: 9px; margin-bottom: 8px; }
     .hero-inner h1 { font-size: 28px; letter-spacing: 1px; display: block; }
