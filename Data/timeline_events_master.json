@@ -823,6 +823,24 @@
     "thumbnail_status": "fallback_v2_ship"
   },
   {
+    "id": 112,
+    "year": "2025",
+    "date": "2025-05",
+    "title": "Navy NAWCAD CLIN 0006 | V3 Temperature Controlled Payload Development Contract",
+    "category": "Contracts",
+    "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) added Contract Line Item 0006 (CLIN 0006) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025. CLIN 0006 funds the design and build of a proof of concept of an actively temperature-controlled payload for the V3 Block 2 aircraft. The system is required to maintain 1 to 6 degrees Celsius (with 4 degree Celsius tolerance) for up to 8 hours at external temperatures up to 35 degrees Celsius, and integrate as an end-to-end system powered by an onboard alternator. Deliverables include Preliminary Design Review (PDR) within 6 months and Critical Design Review (CDR) thereafter.",
+    "tag": "Contract — U.S. Navy",
+    "sources": [
+      "Skyways Internal — Contract N00421-23-9-0013 Mod P00002, CLIN 0006 ($982,850.39, signed May 23, 2025, not publicly disclosed)"
+    ],
+    "source_urls": {},
+    "sort_date": "2025-05",
+    "source_thumbnails": {
+      "Skyways (V3 hover)": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
+    },
+    "thumbnail_status": "fallback_v3_hover"
+  },
+  {
     "id": 35,
     "year": "2025",
     "date": "2025-06",
