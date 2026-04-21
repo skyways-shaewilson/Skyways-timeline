@@ -2395,55 +2395,27 @@
   }
 
   function updateHeader() {
-    // Hysteresis on the minimize trigger:
-    //   • Collapse once scrollY > MINIMIZE_AT — kept low so the header
-    //     minimizes as soon as the user starts scrolling.
-    //   • Restore only once scrollY <= RESTORE_AT so brief bounces near the
-    //     threshold don't cause flicker.
-    //   • Scroll compensation is capped so it never lands inside the restore
-    //     zone (that would re-expand the header on the next event and
-    //     ping-pong between states).
-    var MINIMIZE_AT = 100;
-    var RESTORE_AT = 20;
+    // "Hide on scroll, expand only at the absolute top" pattern:
+    //   • The header minimizes the moment the user scrolls past a few px.
+    //   • It stays minimized all the way through the page — including on
+    //     the scroll BACK UP from the bottom — until scrollY reaches 0.
+    //     This avoids the jarring re-expansion that used to fire near the
+    //     top when scrolling up from the lower half of the page.
+    //   • No scroll compensation: the header height change causes a small
+    //     one-time content shift which is acceptable with such a low
+    //     threshold (the user has barely scrolled). Skipping compensation
+    //     also eliminates the bounce-loop that capped how low the trigger
+    //     threshold could go.
     var scrollY = (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
     var isCurrentlyMinimized = header.classList.contains('minimized');
-    var shouldMinimize = isCurrentlyMinimized ? scrollY > RESTORE_AT : scrollY > MINIMIZE_AT;
+    var shouldMinimize = scrollY > 4;
 
     if (shouldMinimize === isCurrentlyMinimized) return;
 
-    // Scroll compensation: when the header height changes, the body content
-    // below it physically reflows by the same delta. Without compensation,
-    // the user's cursor would feel like the page is "bouncing" — content
-    // jumping under their pointer while they're trying to scroll. We measure
-    // the header height immediately before and after the class toggle, then
-    // scroll the page by the negative delta so visual position stays fixed.
-    // This is why the layout-affecting CSS transitions (height, padding,
-    // font-size) are intentionally instant: a gradual transition would
-    // interpolate the height over time, which we can't compensate for in a
-    // single scrollBy() call.
-    var oldHeight = header.offsetHeight;
     if (shouldMinimize) {
       header.classList.add('minimized');
     } else {
       header.classList.remove('minimized');
-    }
-    var newHeight = header.offsetHeight; // forces layout recompute
-    var delta = oldHeight - newHeight;
-    if (Math.abs(delta) > 1) {
-      // Disable smooth scroll briefly so the compensation is instant
-      // (otherwise the "smooth" behavior would animate the snap and we'd
-      // be back to the visual jump).
-      var prevBehavior = document.documentElement.style.scrollBehavior;
-      document.documentElement.style.scrollBehavior = 'auto';
-      // Cap the upward compensation when minimizing so scrollY doesn't end
-      // up in the restore zone and cause a bounce-loop. Leave a small
-      // buffer above RESTORE_AT.
-      var compensation = delta;
-      if (shouldMinimize && scrollY - compensation <= RESTORE_AT) {
-        compensation = Math.max(0, scrollY - RESTORE_AT - 5);
-      }
-      window.scrollBy(0, -compensation);
-      document.documentElement.style.scrollBehavior = prevBehavior;
     }
     setTimeout(syncYearLabelOffset, 50);
   }
