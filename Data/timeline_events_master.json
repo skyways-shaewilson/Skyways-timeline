@@ -786,9 +786,10 @@
     "date": "2025-05",
     "title": "$37M U.S. Air Force STRATFI Contract",
     "category": "Contracts",
-    "detail": "Skyways awarded a $37M contract through Air Force Works (AFWERX) Strategic Funding Increase (STRATFI), one of the largest STRATFI awards ever given to an autonomous drone company. Funds V3 transition from prototype to full-rate production. STRATFI is a pathway to a Program of Record (PoR), a formal Department of Defense (DoD) acquisition designation that unlocks large-scale, long-term procurement. Achieving PoR status would represent a major validation of Skyways as a defense platform and open the door to sustained government contracts at scale.",
+    "detail": "Skyways awarded a $37M ceiling contract through Air Force Works (AFWERX) Strategic Funding Increase (STRATFI), one of the largest STRATFI awards ever given to an autonomous drone company. SBIR Phase II contract number FA2280-25-9-9523, awarded May 6, 2025 with period of performance through May 6, 2029, project title 'SKYWAYS V3 300LB Vertical Takeoff and Landing (VTOL) Unmanned Aerial System (UAS) Strategic Funding Increase (STRATFI)'. The SBIR Phase II portion is $3,550,613, with the full $37M ceiling reached through STRATFI's 1:1:2 Government:SBIR:Private matching structure. Funds V3 transition from prototype to full-rate production. STRATFI is a pathway to a Program of Record (PoR), a formal Department of Defense (DoD) acquisition designation that unlocks large-scale, long-term procurement.",
     "tag": "Contract — U.S. Air Force",
     "sources": [
+      "SBIR.gov — Award #220016",
       "BusinessWire (Jun 2025)",
       "DroneLife (Jun 2025)"
     ],
@@ -796,6 +797,7 @@
       "Round III: Added Program of Record context. STRATFI is a pathway to PoR, which is a big deal for Skyways."
     ],
     "source_urls": {
+      "SBIR.gov — Award #220016": "https://www.sbir.gov/awards/220016",
       "BusinessWire (Jun 2025)": "https://www.businesswire.com/news/home/20250609862238/en/",
       "DroneLife (Jun 2025)": "https://dronelife.com/2025/06/09/skyways-afwerx-contract/"
     },
