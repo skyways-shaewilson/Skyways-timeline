@@ -399,26 +399,6 @@
     gap: 0;
   }
   
-  .dashboard-eyebrow {
-    /* Plain block element — eyebrow text starts at the same x as the h1
-       and subtitle below. No decorative elements inline; the HUD energy
-       comes from the telemetry panel, scroll progress line, and panel
-       corners elsewhere in the layout. */
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: var(--thrust-green); margin-bottom: 16px;
-  }
-  /* 28px lime hairline UNDER the h1 (between "HISTORY & TIMELINE" and
-     the subtitle) — flush-left so the h1 itself stays aligned with the
-     eyebrow and subtitle above/below it. Reads as a HUD separator
-     without pushing any text out of alignment. */
-  .hero-inner h1::after {
-    content: '';
-    display: block;
-    width: 28px; height: 1px;
-    margin-top: 12px;
-    background: var(--thrust-green);
-    opacity: 0.75;
-  }
 
   .hero-inner h1 {
     /* 56px / semibold gives the display presence of "building the future"
@@ -430,6 +410,7 @@
     word-spacing: -0.05em;
     line-height: 1.05; color: var(--white);
     text-transform: uppercase;
+    margin: 0 0 12px 0;
   }
 
   .h1-divider {
@@ -1071,9 +1052,9 @@
   .events-col { padding: 0 0 48px 40px; display: flex; flex-direction: column; gap: 16px; }
 
   .event-card {
-    display: grid; grid-template-columns: 12px 1fr;
-    gap: 16px; align-items: start;
-    padding: 16px 20px; border-radius: 8px;
+    display: grid; grid-template-columns: 1fr;
+    align-items: start;
+    padding: 16px 20px 16px 24px; border-radius: 8px;
     transition: background 0.2s ease, transform 0.25s ease, opacity 0.25s ease, box-shadow 0.2s ease;
     cursor: default;
     opacity: 1;
@@ -1081,6 +1062,7 @@
     z-index: 1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     background: var(--white);
+    overflow: visible;
   }
 
   @keyframes filterPulse {
@@ -1109,45 +1091,37 @@
 
   .event-card:hover .event-card-bg { opacity: 0.38; }
 
-  .event-card > .event-dot,
   .event-card > .event-content { position: relative; z-index: 1; }
 
   .event-card:hover { transform: translateX(4px); }
 
+  /* Category accent: a 4px colored line running the full height of the
+     card on its left edge. Replaces the old round dot — cleaner, reads
+     as a design element, and the color still carries the category. On
+     hover the bar widens to 6px and picks up a soft outward glow in
+     the category's own color. */
   .event-dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    margin-top: 4px; flex-shrink: 0; position: relative;
-    /* Subtle scale + glow on card hover — reads as a targeting pulse in
-       the category's own color. Works with the existing card shift
-       (translateX 4px) to give the whole row a "lit" feel without a
-       loud color change on the card body. */
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 4px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    z-index: 2;
+    transition: width 0.25s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.25s ease;
   }
-  .event-card:hover .event-dot {
-    transform: scale(1.2);
-  }
-  .event-card[data-category="contracts"]:hover .event-dot { box-shadow: 0 0 0 3px rgba(0,154,235,0.2), 0 0 12px rgba(0,154,235,0.55); }
-  .event-card[data-category="funding"]:hover .event-dot   { box-shadow: 0 0 0 3px rgba(52,168,83,0.2),  0 0 12px rgba(52,168,83,0.55); }
-  .event-card[data-category="product"]:hover .event-dot   { box-shadow: 0 0 0 3px rgba(111,82,174,0.2), 0 0 12px rgba(111,82,174,0.55); }
-  .event-card[data-category="milestone"]:hover .event-dot { box-shadow: 0 0 0 3px rgba(66,198,193,0.2), 0 0 12px rgba(66,198,193,0.55); }
-  .event-card[data-category="defense"]:hover .event-dot   { box-shadow: 0 0 0 3px rgba(255,144,19,0.2), 0 0 12px rgba(255,144,19,0.55); }
-
-  .event-dot::after {
-    content: ''; position: absolute;
-    top: -3px; left: -3px; width: 18px; height: 18px;
-    border-radius: 50%; opacity: 0.15;
-  }
+  .event-card:hover .event-dot { width: 6px; }
+  .event-card[data-category="contracts"]:hover .event-dot { box-shadow: 6px 0 18px -4px rgba(0,154,235,0.55); }
+  .event-card[data-category="funding"]:hover .event-dot   { box-shadow: 6px 0 18px -4px rgba(52,168,83,0.55); }
+  .event-card[data-category="product"]:hover .event-dot   { box-shadow: 6px 0 18px -4px rgba(111,82,174,0.55); }
+  .event-card[data-category="milestone"]:hover .event-dot { box-shadow: 6px 0 18px -4px rgba(66,198,193,0.55); }
+  .event-card[data-category="defense"]:hover .event-dot   { box-shadow: 6px 0 18px -4px rgba(255,144,19,0.55); }
 
   .event-dot.contracts { background: var(--blue); }
-  .event-dot.contracts::after { background: var(--blue); }
-  .event-dot.funding { background: var(--green); }
-  .event-dot.funding::after { background: var(--green); }
-  .event-dot.product { background: var(--purple); }
-  .event-dot.product::after { background: var(--purple); }
+  .event-dot.funding   { background: var(--green); }
+  .event-dot.product   { background: var(--purple); }
   .event-dot.milestone { background: var(--teal); }
-  .event-dot.milestone::after { background: var(--teal); }
-  .event-dot.defense { background: var(--orange); }
-  .event-dot.defense::after { background: var(--orange); }
+  .event-dot.defense   { background: var(--orange); }
 
   .event-content { display: flex; flex-direction: column; gap: 4px; }
 
@@ -1308,12 +1282,15 @@
      No red border, no red title/detail text. The banner is the only
      red treatment so the rest of the card reads clean. */
   .internal-banner {
-    /* Sibling of .event-content within the card grid; spans both grid
-       columns so the banner's left and right edges align with the card's
-       outer edges (not just the content column). Negative margins cancel
-       the card's horizontal padding and the grid row gap. */
+    /* Spans full card width via negative horizontal margins that cancel
+       the card's padding. Left margin matches the enlarged left padding
+       that makes room for the category accent bar (24px / 28px highlight
+       / 20px mobile / 22px mobile highlight). Banner sits above the bar
+       visually via z-index since the bar is z-index:2 — the banner's own
+       relative layer without z-index lets the bar's bottom-left rounded
+       corner show through cleanly at the intersection. */
     grid-column: 1 / -1;
-    margin: -4px -20px -16px -20px;
+    margin: -4px -20px -16px -24px;
     padding: 6px 20px;
     background: #d93025;
     color: #fff;
@@ -1324,7 +1301,7 @@
     line-height: 1.2;
   }
   .event-card.highlight .internal-banner {
-    margin: -4px -24px -20px -24px;
+    margin: -4px -24px -20px -28px;
     padding: 8px 24px;
     border-radius: 0 0 10px 10px;
   }
@@ -1333,20 +1310,26 @@
   @media (max-width: 720px) {
     .internal-banner {
       font-size: 9px;
-      margin-left: -16px;
+      margin-left: -20px;
       margin-right: -16px;
       padding: 5px 16px;
       letter-spacing: 0.4px;
     }
     .event-card.highlight .internal-banner {
-      margin-left: -18px;
+      margin-left: -22px;
       margin-right: -18px;
     }
   }
 
   /* Highlights */
   .event-card.highlight {
-    background: var(--navy); border-radius: 10px; padding: 20px 24px;
+    background: var(--navy); border-radius: 10px;
+    padding: 20px 24px 20px 28px;
+  }
+  /* Highlight-card bar matches the 10px card radius on its left corners. */
+  .event-card.highlight > .event-dot {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 
   .event-card.highlight:hover { background: #1a2d38; transform: translateX(4px); }
@@ -1665,8 +1648,11 @@
     .year-label { font-size: 22px; }
     .events-col { padding-left: 20px; }
 
-    .event-card { grid-template-columns: 10px 1fr; gap: 12px; padding: 12px 16px; }
-    .event-card.highlight { padding: 16px 18px; }
+    /* Mobile: single-column card with a slightly tighter left inset for the
+       accent bar. Bar is the same 4px/6px on hover, just less padding
+       around it since we're in the compact mobile layout. */
+    .event-card { grid-template-columns: 1fr; padding: 12px 16px 12px 20px; }
+    .event-card.highlight { padding: 16px 18px 16px 22px; }
     .event-card-bg { width: 35%; opacity: 0.2; }
     .event-title { font-size: 19px; }
     .event-detail { font-size: 12px; }
@@ -1726,7 +1712,6 @@
     <div class="hero-inner dashboard-hero">
     <div class="dashboard-title-area">
       <div class="dashboard-title-area-inner">
-        <div class="dashboard-eyebrow">AUTONOMOUS AIR NETWORK</div>
         <h1>History & Timeline</h1>
         <div class="h1-subtitle">9 Years of Flying.<br class="subtitle-break"> Built for the Mission.</div>
       </div>
