@@ -580,6 +580,21 @@
      gap, so the menu collapsed before the user reached it. JS applies
      .menu-open on mouseenter and clears it after a short delay on
      mouseleave, which gives the cursor time to traverse the gap. */
+
+  /* While a drawer is open, freeze the layout-affecting transitions on
+     the header. The drawer anchors to its .stat via top: 100%, so any
+     animated height/padding/font-size on the way to minimized re-computes
+     the drawer's top every frame and visually slides the drawer up under
+     the cursor. Disabling the transition makes the minimize state change
+     snap instantly, so the drawer's anchor jumps ONCE instead of
+     stuttering across 220ms — no more trackpad-slow-scroll stutter. */
+  .sticky-header.drawer-active .brand-bar,
+  .sticky-header.drawer-active .logo-wrap,
+  .sticky-header.drawer-active .hero-section,
+  .sticky-header.drawer-active .stats-banner-inner,
+  .sticky-header.drawer-active .stat-value {
+    transition: none;
+  }
   .stat-menu-info { font-size: 12px; font-weight: 450; line-height: 1.4; color: var(--navy); }
   .stat-menu-source { font-size: 10px; font-weight: 600; color: var(--gray-50); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
   .stat-menu-links {
@@ -778,7 +793,12 @@
   }
 
   .legend-row {
-    display: flex; gap: 12px; align-items: center; flex-wrap: nowrap;
+    /* Grid match with .stats-row above: 5 equal columns so each filter
+       lines up directly under its stat counterpart. */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0 12px;
+    align-items: center;
     border-top: 1px solid rgba(255,255,255,0.14); padding-top: 10px;
     transition: padding-top 0.35s ease;
   }
@@ -787,19 +807,21 @@
 
 
   .legend-item {
+    /* No horizontal padding — each filter is a grid cell, so it already
+       shares the stats row's 5-column layout. Keeping padding:0 here lets
+       the filter text line up directly under its stat counterpart above. */
     display: flex; align-items: center; gap: 7px;
     font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
     text-transform: uppercase; color: rgba(255,255,255,0.78);
     cursor: pointer;
-    padding: 5px 12px;
+    padding: 5px 0;
     border-radius: 4px;
     border: 1px solid transparent;
     transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
     user-select: none;
     position: relative;
+    min-width: 0;
   }
-
-  .legend-item:first-child { padding-left: 0; }
 
   .legend-item:hover {
     background: rgba(255,255,255,0.1);
@@ -1308,10 +1330,10 @@
        its neighbor in the narrower tablet columns. */
     .stat-value { font-size: 30px; }
     .stat-label { font-size: 8px; }
-    /* Keep every filter on one line — was wrap, which stacked the
-       legend on narrow desktops. Shrink gap and let items flex down. */
-    .legend-row { flex-wrap: nowrap; gap: 6px; }
-    .legend-item { flex: 0 1 auto; white-space: nowrap; }
+    /* Keep the 5-column grid at tablet so each filter stays under its
+       stat counterpart. Shrink horizontal gap to fit. */
+    .legend-row { gap: 0 8px; }
+    .legend-item { white-space: nowrap; }
     .legend-long { display: none; }
     .timeline-wrapper { padding: 40px 32px 48px; }
     .year-section { grid-template-columns: 80px 1fr; }
@@ -1440,29 +1462,23 @@
       max-width: 100%;
     }
 
-    /* Filters: all five categories on a single row. Extended label words
-       ("Development", "Milestones", "Major ") collapse via .legend-long so
-       everything fits in the viewport width. */
+    /* Filters: same 5-column grid as the stats row so each filter sits
+       directly under its stat. Extended label words ("Development",
+       "Milestones", "Major ") collapse via .legend-long so everything
+       fits in the viewport width. */
     .legend-row {
-      flex-wrap: nowrap;
-      gap: 2px;
+      gap: 0 6px;
       padding-top: 6px;
       padding-bottom: 2px;
-      align-items: stretch;
     }
     .legend-item {
       font-size: 8px;
-      padding: 3px 5px;
+      padding: 3px 0;
       gap: 4px;
-      flex: 0 1 auto;
       min-width: 0;
       justify-content: flex-start;
       letter-spacing: 0.3px;
     }
-    /* Flush the first filter against the container's left padding so it
-       lines up with the stats row above — no extra left padding on the
-       leading item. */
-    .legend-item:first-child { padding-left: 0; }
     .legend-dot { width: 6px; height: 6px; }
     .legend-long { display: none; }
     .legend-x { margin-left: 2px; }
@@ -2072,15 +2088,22 @@
     if (!stats.length) return;
 
     var openStat = null;
+    var stickyHeader = document.getElementById('stickyHeader');
 
     function show(stat) {
       if (openStat && openStat !== stat) openStat.classList.remove('menu-open');
       stat.classList.add('menu-open');
       openStat = stat;
+      // Freeze layout-affecting header transitions while a drawer is up so
+      // the drawer's top: 100% anchor doesn't slide as the stat shrinks
+      // during the minimize animation. CSS rule at the top of the stylesheet
+      // zeros the transitions when this class is present.
+      if (stickyHeader) stickyHeader.classList.add('drawer-active');
     }
     function hide(stat) {
       stat.classList.remove('menu-open');
       if (openStat === stat) openStat = null;
+      if (!openStat && stickyHeader) stickyHeader.classList.remove('drawer-active');
     }
 
     stats.forEach(function(stat) {
