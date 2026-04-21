@@ -397,13 +397,15 @@
     font-size: 11px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 2px; color: var(--thrust-green); margin-bottom: 16px;
   }
-  /* Thin hairline UNDER the eyebrow, flush-left so it reads as a HUD
-     underline without pushing any text out of alignment with the h1. */
-  .dashboard-eyebrow::after {
+  /* 28px lime hairline UNDER the h1 (between "HISTORY & TIMELINE" and
+     the subtitle) — flush-left so the h1 itself stays aligned with the
+     eyebrow and subtitle above/below it. Reads as a HUD separator
+     without pushing any text out of alignment. */
+  .hero-inner h1::after {
     content: '';
     display: block;
     width: 28px; height: 1px;
-    margin-top: 6px;
+    margin-top: 12px;
     background: var(--thrust-green);
     opacity: 0.75;
   }
@@ -584,6 +586,17 @@
   .stat {
     display: flex; flex-direction: column; align-items: flex-start;
     position: relative; cursor: default;
+  }
+  /* Subtle vertical hairline between stat cells — reads as a data-panel
+     separator (common in HUD-style readouts). First cell has no leading
+     divider so the row aligns flush-left with the banner's padding. */
+  .stats-row > .stat + .stat::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 10%; bottom: 10%;
+    width: 1px;
+    background: rgba(255,255,255,0.08);
+    pointer-events: none;
   }
   /* Hover-to-open zone is the text ink only, not the full-width grid
      cell. Explicit width:max-content guarantees the value/label boxes
@@ -971,8 +984,11 @@
   .year-label-col { position: relative; padding: 0 0 48px 0; }
 
   .year-label {
-    font-size: 32px; font-weight: 800; color: var(--navy);
-    letter-spacing: -1px; position: -webkit-sticky; position: sticky; line-height: 1;
+    /* Dialed down from 800/−1px to 700/−0.5px to match the h1 refinement
+       — less shouty, more composed. Still reads as a strong marker
+       against the white body. */
+    font-size: 32px; font-weight: 700; color: var(--navy);
+    letter-spacing: -0.5px; position: -webkit-sticky; position: sticky; line-height: 1;
     transition: opacity 0.15s ease, transform 0.15s ease;
     will-change: opacity, transform;
   }
