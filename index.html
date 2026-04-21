@@ -986,62 +986,37 @@
   }
   .source-link.source-link-internal:hover { color: #ff5b4a; }
 
-  /* ═══ Internal-only flagging on event cards ═══
-     - .event-card.internal-only      → no external sources at all
-       Red border + a "NOT APPROVED FOR PUBLIC DISTRIBUTION" stamp banner
-       so the entire card reads as confidential.
-     - .event-card.mixed-internal     → has both internal + external sources
-       A subtler "EVENT CONTAINS INTERNAL ONLY INFORMATION" pill near the
-       sources drawer; detail text stays readable.
-  */
-  .event-card.internal-only {
-    border: 1.5px solid rgba(217,48,37,0.55);
-    background: linear-gradient(180deg, rgba(217,48,37,0.04) 0%, rgba(217,48,37,0.01) 100%), var(--white);
-  }
-  .event-card.internal-only .event-detail {
-    color: #b32218;
-  }
-  .event-card.internal-only .event-title {
-    color: #8a1610;
-  }
-  .internal-flag {
-    display: inline-flex; align-items: center;
-    padding: 3px 8px;
-    border-radius: 3px;
-    font-size: 9.5px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.6px;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-  .internal-flag-only {
+  /* ═══ Non-public information banner ═══
+     A single clean red banner at the bottom of any event card whose
+     sources include internal-only material. Two message variants:
+     - .internal-banner.internal-banner-only   → no external sources
+       at all. Reads "NOT APPROVED FOR PUBLIC DISTRIBUTION".
+     - .internal-banner.internal-banner-mixed  → has both kinds of
+       sources. Reads "EVENT CONTAINS INTERNAL ONLY INFORMATION".
+     No red border, no red title/detail text. The banner is the only
+     red treatment so the rest of the card reads clean. */
+  .internal-banner {
+    margin: 12px -20px -16px -20px;
+    padding: 6px 20px;
     background: #d93025;
     color: #fff;
-    box-shadow: 0 1px 3px rgba(217,48,37,0.35);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.7px;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+    line-height: 1.2;
   }
-  .internal-flag-mixed {
-    background: rgba(217,48,37,0.1);
-    color: #b32218;
-    border: 1px solid rgba(217,48,37,0.3);
-  }
-  /* Highlight (dark navy) cards: invert the internal-flag colors so they
-     remain legible on the navy background. */
-  .event-card.highlight.internal-only {
-    border-color: rgba(255,80,70,0.6);
-    background: var(--navy);
-  }
-  .event-card.highlight.internal-only .event-title { color: #ff8a82; }
-  .event-card.highlight.internal-only .event-detail { color: #ffb3ad; }
-  .event-card.highlight .internal-flag-mixed {
-    background: rgba(255,80,70,0.15);
-    color: #ff9a8f;
-    border-color: rgba(255,80,70,0.45);
+  .event-card.highlight .internal-banner {
+    margin: 16px -24px -20px -24px;
+    padding: 8px 24px;
+    border-radius: 0 0 10px 10px;
   }
 
-  /* Mobile: keep flags readable but tighter. */
+  /* Mobile: tighten the banner padding so it stays in proportion. */
   @media (max-width: 720px) {
-    .internal-flag {
-      font-size: 8.5px;
-      padding: 2px 6px;
+    .internal-banner {
+      font-size: 9px;
+      padding: 5px 16px;
       letter-spacing: 0.4px;
     }
   }
@@ -1445,7 +1420,7 @@
   </div></div></div>
   <div class="stats-banner"><div class="stats-banner-inner">
     <div class="stats-row">
-      <div class="stat" id="contractsStat"><div class="stat-value">$40M+</div><div class="stat-label">Gov&#8217;t Contracts</div>
+      <div class="stat" id="contractsStat"><div class="stat-value">$43M+</div><div class="stat-label">Gov&#8217;t Contracts</div>
         <div class="stat-menu contracts-table">
           <div class="contracts-title">8 verified U.S. government contracts</div>
           <div class="contracts-grid">
@@ -1707,14 +1682,14 @@
       }
     }
 
-    // Source-classification: drives the red box and the mixed-source note.
-    var sourceState = '';
+    // Source-classification drives the red bottom banner only — no other
+    // visual changes to the card so it reads clean.
+    var bannerHTML = '';
     if (internalCount > 0 && externalCount === 0) {
-      sourceState = 'internal-only';
+      bannerHTML = '<div class="internal-banner internal-banner-only">NOT APPROVED FOR PUBLIC DISTRIBUTION</div>';
     } else if (internalCount > 0 && externalCount > 0) {
-      sourceState = 'mixed-internal';
+      bannerHTML = '<div class="internal-banner internal-banner-mixed">EVENT CONTAINS INTERNAL ONLY INFORMATION</div>';
     }
-    if (sourceState) cardClass += ' ' + sourceState;
 
     var sourcesHTML = '';
     if (sourceCount > 0) {
@@ -1722,14 +1697,6 @@
         '<span class="sources-label">' + sourceCount + ' SOURCE' + (sourceCount > 1 ? 'S' : '') + '</span>' +
         '<span class="sources-icon"><svg viewBox="0 0 12 12"><path d="M2 4.5L6 8.5L10 4.5"/></svg></span>' +
         '<div class="sources-menu">' + sourceLinks + '</div></div>';
-    }
-
-    // Internal-info note (next to source drawer)
-    var internalNoteHTML = '';
-    if (sourceState === 'internal-only') {
-      internalNoteHTML = '<span class="internal-flag internal-flag-only">NOT APPROVED FOR PUBLIC DISTRIBUTION</span>';
-    } else if (sourceState === 'mixed-internal') {
-      internalNoteHTML = '<span class="internal-flag internal-flag-mixed">EVENT CONTAINS INTERNAL ONLY INFORMATION</span>';
     }
 
     // Tag label
@@ -1752,9 +1719,9 @@
         '<div class="event-detail">' + esc(ev.detail || '') + '</div>' +
         '<div class="event-meta">' +
           '<span class="event-tag ' + esc(cat) + '">' + esc(tag) + '</span>' +
-          internalNoteHTML +
           sourcesHTML +
         '</div>' +
+        bannerHTML +
       '</div></div>';
   }
 
