@@ -74,13 +74,12 @@
 
   .brand-bar {
     background: var(--navy); height: 80px;
-    /* Height MUST snap instantly (no transition) so updateHeader() can
-       measure the new height immediately and scroll-compensate. A gradual
-       height transition would interpolate over 150ms during which the
-       browser pulls body content upward in real time, causing the user's
-       cursor to feel like the page is "bouncing." Background and border
-       can still animate since they don't affect layout. */
-    transition: background 0.15s ease-out,
+    /* Smooth height + background transition when the header toggles between
+       expanded and minimized. Scroll compensation was removed, so a gradual
+       height animation is now safe — and smooths out the visual shift that
+       used to feel like a stutter when the class flipped. */
+    transition: height 0.22s cubic-bezier(0.4,0,0.2,1),
+                background 0.15s ease-out,
                 border-bottom 0.15s ease;
     border-bottom: 1px solid transparent;
   }
@@ -103,8 +102,8 @@
     height: 57px;
     flex-shrink: 0;
     margin-left: -16px;
-    /* No transition on height/margin — these affect layout and would
-       fight with scroll-compensation. */
+    transition: height 0.22s cubic-bezier(0.4,0,0.2,1),
+                margin-left 0.22s cubic-bezier(0.4,0,0.2,1);
   }
 
   .sticky-header.minimized .logo-wrap {
@@ -157,7 +156,8 @@
     border-color: var(--blue);
     box-shadow: 0 0 0 3px rgba(0,154,235,0.15);
   }
-  .search-input::placeholder { color: var(--gray-50); }
+  /* gray-75 on white = 7.8:1 — AA pass. gray-50 was 3.37:1, AA fail. */
+  .search-input::placeholder { color: var(--gray-75); opacity: 0.75; }
 
   .search-nav {
     position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
@@ -245,7 +245,9 @@
     background-size: cover;
     background-position: center left;
     transform: translateY(0); opacity: 1;
-    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+    transition: padding 0.22s cubic-bezier(0.4,0,0.2,1),
+                transform 0.4s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.25s ease;
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   /* Dashboard inner row sits above the background layers. */
@@ -507,7 +509,7 @@
   .stats-banner-inner {
     max-width: 1440px; margin: 0 auto; padding: 16px 64px;
     display: flex; flex-direction: column; gap: 10px;
-    /* Padding affects layout — snap instantly so scroll-compensation works. */
+    transition: padding 0.22s cubic-bezier(0.4,0,0.2,1);
   }
 
   .sticky-header.minimized .stats-banner-inner { padding: 10px 64px; }
@@ -531,9 +533,15 @@
     display: flex; flex-direction: column; align-items: flex-start;
     position: relative; cursor: default;
   }
-  /* Hovered stat gets a local stacking bump so its drawer wins against
-     any later-painted stat drawer too. */
-  .stat:hover { z-index: 5; }
+  /* Hover-to-open zone should match the actual text, not the full-width
+     grid cell. We scope hover to the value/label elements and the menu
+     itself (plus its invisible bridge pseudo-element) — see the visibility
+     rule below that uses the `~` sibling combinator. */
+  .stat-value, .stat-label { cursor: pointer; }
+  /* Stacking bump while the tap-opened menu is displayed so the drawer
+     wins against any later-painted sibling stat's drawer. Hover-opened
+     menus don't need this since only one can be hovered at a time. */
+  .stat.menu-open { z-index: 5; }
 
   .stat-menu {
     position: absolute; top: 100%; left: 0; margin-top: 8px;
@@ -561,7 +569,13 @@
     height: 12px; /* slightly larger than the 8px margin to be safe */
     background: transparent;
   }
-  .stat:hover .stat-menu {
+  /* Hover triggers confined to the text elements and the menu itself (plus
+     its ::after bridge) so the empty grid-cell area doesn't spuriously open
+     the drawer. The `~` combinator works because .stat-menu is a later
+     sibling of .stat-value / .stat-label inside .stat. */
+  .stat-value:hover ~ .stat-menu,
+  .stat-label:hover ~ .stat-menu,
+  .stat-menu:hover {
     opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
   }
   .stat-menu-info { font-size: 12px; font-weight: 450; line-height: 1.4; color: var(--navy); }
@@ -702,19 +716,21 @@
     .contracts-row .c-name { font-size: 10.5px; }
     .src-pill { padding: 1px 5px; font-size: 8px; }
   }
-  /* When toggled open via tap, force-show the menu regardless of :hover. */
-  #contractsStat.menu-open .stat-menu.contracts-table {
+  /* When toggled open via tap (or click on desktop), force-show the menu
+     regardless of :hover. Applies to every stat, not just contracts — touch
+     devices don't fire :hover, and hover targets shrink to near-invisible in
+     the minimized header state. */
+  .stat.menu-open .stat-menu {
     opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
   }
 
   .stat-value {
     /* Desktop metric punch. 22px → 33px (50%) → 41px (+25%) per Shae.
-       Label below and minimized-on-scroll size deliberately unchanged.
-       Font-size affects layout (line-height, container height), so it
-       must snap instantly to play nicely with the updateHeader() scroll
-       compensation. */
+       Animated shrink when the header minimizes; scroll compensation was
+       removed, so font-size can transition smoothly. */
     font-size: 41px; font-weight: 800; color: var(--thrust-green);
     letter-spacing: -0.5px; line-height: 1.05;
+    transition: font-size 0.22s cubic-bezier(0.4,0,0.2,1);
   }
 
   .sticky-header.minimized .stat-value { font-size: 16px; }
@@ -751,6 +767,11 @@
   .legend-item:hover {
     background: rgba(255,255,255,0.1);
     color: var(--white);
+  }
+
+  .legend-item:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
   }
 
   .legend-item:active {
@@ -918,8 +939,9 @@
   .event-content { display: flex; flex-direction: column; gap: 4px; }
 
   .event-date {
+    /* gray-75 on white = 7.8:1 — AA pass. gray-50 was 3.37:1, AA fail. */
     font-size: 11px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-50);
+    text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-75);
   }
 
   .event-title {
@@ -1073,7 +1095,12 @@
      No red border, no red title/detail text. The banner is the only
      red treatment so the rest of the card reads clean. */
   .internal-banner {
-    margin: 12px -20px -16px -20px;
+    /* Sibling of .event-content within the card grid; spans both grid
+       columns so the banner's left and right edges align with the card's
+       outer edges (not just the content column). Negative margins cancel
+       the card's horizontal padding and the grid row gap. */
+    grid-column: 1 / -1;
+    margin: -4px -20px -16px -20px;
     padding: 6px 20px;
     background: #d93025;
     color: #fff;
@@ -1084,7 +1111,7 @@
     line-height: 1.2;
   }
   .event-card.highlight .internal-banner {
-    margin: 16px -24px -20px -24px;
+    margin: -4px -24px -20px -24px;
     padding: 8px 24px;
     border-radius: 0 0 10px 10px;
   }
@@ -1093,8 +1120,14 @@
   @media (max-width: 720px) {
     .internal-banner {
       font-size: 9px;
+      margin-left: -16px;
+      margin-right: -16px;
       padding: 5px 16px;
       letter-spacing: 0.4px;
+    }
+    .event-card.highlight .internal-banner {
+      margin-left: -18px;
+      margin-right: -18px;
     }
   }
 
@@ -1430,7 +1463,7 @@
     <div class="brand-bar-divider"></div>
     <div class="brand-bar-inline-title"><span class="bbit-line">History &amp;</span> <span class="bbit-line">Timeline</span></div>
     <div class="search-wrap">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search events..." oninput="handleSearch()" onkeydown="handleSearchKeydown(event)">
+      <input type="search" class="search-input" id="searchInput" placeholder="Search events..." aria-label="Search timeline events" autocomplete="off" oninput="handleSearch()" onkeydown="handleSearchKeydown(event)">
       <div class="search-nav" id="searchNav">
         <span class="search-count" id="searchCount"></span>
         <button class="search-nav-btn" onclick="prevSearchMatch()">&#9650;</button>
@@ -1623,11 +1656,11 @@
       </div>
     </div>
     <div class="legend-row">
-      <div class="legend-item" data-filter="contracts" onclick="toggleFilter('contracts')"><div class="legend-dot contracts"></div><span class="legend-label">Contracts</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="funding" onclick="toggleFilter('funding')"><div class="legend-dot funding"></div><span class="legend-label">Funding</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="product" onclick="toggleFilter('product')"><div class="legend-dot product"></div><span class="legend-label">Product<span class="legend-long"> Development</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="defense" onclick="toggleFilter('defense')"><div class="legend-dot defense"></div><span class="legend-label">Defense<span class="legend-long"> Milestones</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
-      <div class="legend-item" data-filter="milestone" onclick="toggleFilter('milestone')"><div class="legend-dot milestone"></div><span class="legend-label"><span class="legend-long">Major </span>Milestones</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="contracts" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Contracts" onclick="toggleFilter('contracts')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('contracts');}"><div class="legend-dot contracts"></div><span class="legend-label">Contracts</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="funding" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Funding" onclick="toggleFilter('funding')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('funding');}"><div class="legend-dot funding"></div><span class="legend-label">Funding</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="product" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Product Development" onclick="toggleFilter('product')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('product');}"><div class="legend-dot product"></div><span class="legend-label">Product<span class="legend-long"> Development</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="defense" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Defense Milestones" onclick="toggleFilter('defense')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('defense');}"><div class="legend-dot defense"></div><span class="legend-label">Defense<span class="legend-long"> Milestones</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+      <div class="legend-item" data-filter="milestone" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Major Milestones" onclick="toggleFilter('milestone')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('milestone');}"><div class="legend-dot milestone"></div><span class="legend-label"><span class="legend-long">Major </span>Milestones</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
     </div>
   </div></div>
 </div>
@@ -1878,8 +1911,9 @@
           '<span class="event-tag ' + esc(cat) + '">' + esc(tag) + '</span>' +
           sourcesHTML +
         '</div>' +
-        bannerHTML +
-      '</div></div>';
+      '</div>' +
+      bannerHTML +
+      '</div>';
   }
 
   // ═══ RENDER FULL TIMELINE ═══
@@ -1936,38 +1970,57 @@
     // Extract thumbnail colors
     extractCardColors();
 
+    // Cached NodeLists in the scroll handlers are now stale; drop them so
+    // the next scroll frame re-queries against the freshly rendered DOM.
+    invalidateYearLabelCache();
+    invalidateYearSectionCache();
+
     // Update header scroll
     updateHeader();
   }
 
-  // ═══ MOBILE TAP SUPPORT FOR $40M+ STAT MENU ═══
-  // Touch devices don't fire :hover reliably. Tapping the $40M+ stat toggles
-  // .menu-open which forces the contracts-table drawer visible. Tapping
-  // anywhere outside dismisses it.
+  // ═══ TAP-TO-OPEN FOR ALL STAT MENUS ═══
+  // Touch devices don't fire :hover reliably, and in the minimized header
+  // the hover targets shrink to a few pixels — so every stat gets an
+  // explicit click/tap toggle. Tapping the value or label toggles
+  // .menu-open on the parent .stat, which force-shows the drawer via CSS
+  // (.stat.menu-open .stat-menu { visibility: visible; ... }). Tapping
+  // anywhere else, or scrolling, dismisses every open drawer.
   (function() {
-    var stat = document.getElementById('contractsStat');
-    if (!stat) return;
-    var statValue = stat.querySelector('.stat-value');
-    var statLabel = stat.querySelector('.stat-label');
-    function isInsideMenu(target) {
-      var menu = stat.querySelector('.stat-menu.contracts-table');
-      return menu && menu.contains(target);
+    var stats = document.querySelectorAll('.stats-row .stat');
+    if (!stats.length) return;
+
+    function closeAll(except) {
+      for (var i = 0; i < stats.length; i++) {
+        if (stats[i] !== except) stats[i].classList.remove('menu-open');
+      }
     }
-    function toggle(e) {
-      // Don't toggle when the tap is inside the menu (so row clicks work).
-      if (isInsideMenu(e.target)) return;
-      e.stopPropagation();
-      stat.classList.toggle('menu-open');
-    }
-    if (statValue) statValue.addEventListener('click', toggle);
-    if (statLabel) statLabel.addEventListener('click', toggle);
-    // Dismiss on outside tap.
-    document.addEventListener('click', function(e) {
-      if (!stat.contains(e.target)) stat.classList.remove('menu-open');
+
+    stats.forEach(function(stat) {
+      var value = stat.querySelector('.stat-value');
+      var label = stat.querySelector('.stat-label');
+      var menu = stat.querySelector('.stat-menu');
+      if (!menu) return;
+      function toggle(e) {
+        // Don't toggle when the tap is inside the menu itself (so link/row
+        // clicks still work — e.g. the contracts-table rows).
+        if (menu.contains(e.target)) return;
+        e.stopPropagation();
+        var willOpen = !stat.classList.contains('menu-open');
+        closeAll(stat);
+        stat.classList.toggle('menu-open', willOpen);
+      }
+      if (value) value.addEventListener('click', toggle);
+      if (label) label.addEventListener('click', toggle);
     });
-    // Dismiss on scroll (so it doesn't follow the user down the page).
+
+    document.addEventListener('click', function(e) {
+      for (var i = 0; i < stats.length; i++) {
+        if (!stats[i].contains(e.target)) stats[i].classList.remove('menu-open');
+      }
+    });
     window.addEventListener('scroll', function() {
-      stat.classList.remove('menu-open');
+      closeAll(null);
     }, { passive: true });
   })();
 
@@ -2055,21 +2108,23 @@
       };
       img.src = url;
     });
+  }
 
-    // Hover enhancement using extracted color
+  // Hover enhancement using the extracted thumbnail color. Delegated on
+  // document ONCE at module scope — previously these listeners were inside
+  // extractCardColors() and would stack an extra pair on every re-render.
+  (function bindCardHoverTint() {
     document.addEventListener('mouseover', function(e) {
       var card = e.target.closest('.event-card');
       if (!card || !card.dataset.tintR) return;
-      var r = card.dataset.tintR, g = card.dataset.tintG, b = card.dataset.tintB;
-      card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.13)';
+      card.style.backgroundColor = 'rgba(' + card.dataset.tintR + ',' + card.dataset.tintG + ',' + card.dataset.tintB + ',0.13)';
     });
     document.addEventListener('mouseout', function(e) {
       var card = e.target.closest('.event-card');
       if (!card || !card.dataset.tintR) return;
-      var r = card.dataset.tintR, g = card.dataset.tintG, b = card.dataset.tintB;
-      card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.09)';
+      card.style.backgroundColor = 'rgba(' + card.dataset.tintR + ',' + card.dataset.tintG + ',' + card.dataset.tintB + ',0.09)';
     });
-  }
+  })();
 
   // ═══ GLOBAL SOURCE CLOSER ═══
   function closeAllSourceMenus(except) {
@@ -2350,6 +2405,7 @@
       activeFilter = null;
       for (var i = 0; i < items.length; i++) {
         items[i].className = 'legend-item';
+        items[i].setAttribute('aria-pressed', 'false');
       }
       for (var i = 0; i < cards.length; i++) {
         cards[i].style.display = '';
@@ -2363,7 +2419,9 @@
       activeFilter = category;
       for (var j = 0; j < items.length; j++) {
         var f = items[j].getAttribute('data-filter');
-        items[j].className = f === category ? 'legend-item active-filter' : 'legend-item dimmed';
+        var isActive = f === category;
+        items[j].className = isActive ? 'legend-item active-filter' : 'legend-item dimmed';
+        items[j].setAttribute('aria-pressed', isActive ? 'true' : 'false');
       }
       for (var k = 0; k < cards.length; k++) {
         var isMatch = cards[k].getAttribute('data-category') === category;
@@ -2388,10 +2446,16 @@
   // ═══ HEADER SCROLL BEHAVIOR ═══
   var header = document.getElementById('stickyHeader');
 
+  // Keeps the sticky offset of every .year-label aligned with the bottom
+  // of the (animating) header. Skips writes when the offset hasn't changed
+  // so it's cheap to call on every scroll frame.
+  var _lastYearOffset = null;
   function syncYearLabelOffset() {
-    var headerRect = header.getBoundingClientRect();
-    var offset = (headerRect.height + 16) + 'px';
-    document.querySelectorAll('.year-label').forEach(function(l) { l.style.top = offset; });
+    var offset = (header.getBoundingClientRect().height + 16) + 'px';
+    if (offset === _lastYearOffset) return;
+    _lastYearOffset = offset;
+    var labels = getYearLabels();
+    for (var i = 0; i < labels.length; i++) labels[i].style.top = offset;
   }
 
   function updateHeader() {
@@ -2417,7 +2481,15 @@
     } else {
       header.classList.remove('minimized');
     }
-    setTimeout(syncYearLabelOffset, 50);
+    // The header height animates over ~220ms; keep syncing the year-label
+    // sticky offset each frame until we're past the transition so the
+    // labels don't end up stranded at a stale offset if the user happens
+    // to stop scrolling mid-animation.
+    var start = performance.now();
+    (function tick() {
+      syncYearLabelOffset();
+      if (performance.now() - start < 260) requestAnimationFrame(tick);
+    })();
   }
 
   // Set initial year label offset on load
@@ -2429,41 +2501,51 @@
   });
 
   // ═══ YEAR LABEL SCROLL TRANSITION ═══
+  // Caches the NodeList between calls and skips style writes when the
+  // computed values haven't changed (via the _lastState stash on each
+  // label) — cheaper per scroll frame, smoother feel.
+  var _cachedYearLabels = null;
+  function getYearLabels() {
+    if (!_cachedYearLabels || _cachedYearLabels.length === 0) {
+      _cachedYearLabels = document.querySelectorAll('.year-label');
+    }
+    return _cachedYearLabels;
+  }
+  function invalidateYearLabelCache() { _cachedYearLabels = null; }
+
   function updateYearLabels() {
-    var labels = document.querySelectorAll('.year-label');
+    var labels = getYearLabels();
     if (!labels.length) return;
     var stickyTop = header.getBoundingClientRect().bottom + 16;
     var fadeZone = 50;
 
     for (var i = 0; i < labels.length; i++) {
+      var label = labels[i];
+      var opacity, transform;
       if (i === labels.length - 1) {
-        // Last year — never needs to fade out
-        labels[i].style.opacity = '1';
-        labels[i].style.transform = 'translateY(0) scale(1)';
-        continue;
-      }
-
-      // Get the next year label's natural (non-sticky) position
-      var nextLabelRect = labels[i + 1].getBoundingClientRect();
-      var nextLabelTop = nextLabelRect.top;
-
-      // The current label is stuck at stickyTop. When the next label
-      // scrolls up to meet it, the gap closes to 0.
-      var gap = nextLabelTop - stickyTop;
-
-      if (gap < 0) {
-        // Next label has passed — this one is fully gone
-        labels[i].style.opacity = '0';
-        labels[i].style.transform = 'translateY(-12px) scale(0.92)';
-      } else if (gap < fadeZone) {
-        // In the fade zone
-        var progress = gap / fadeZone;
-        labels[i].style.opacity = progress;
-        labels[i].style.transform = 'translateY(' + (-12 * (1 - progress)) + 'px) scale(' + (0.92 + 0.08 * progress) + ')';
+        opacity = '1';
+        transform = 'translateY(0) scale(1)';
       } else {
-        // Fully visible
-        labels[i].style.opacity = '1';
-        labels[i].style.transform = 'translateY(0) scale(1)';
+        var gap = labels[i + 1].getBoundingClientRect().top - stickyTop;
+        if (gap < 0) {
+          opacity = '0';
+          transform = 'translateY(-12px) scale(0.92)';
+        } else if (gap < fadeZone) {
+          var progress = gap / fadeZone;
+          opacity = String(progress);
+          transform = 'translateY(' + (-12 * (1 - progress)) + 'px) scale(' + (0.92 + 0.08 * progress) + ')';
+        } else {
+          opacity = '1';
+          transform = 'translateY(0) scale(1)';
+        }
+      }
+      if (label._lastOpacity !== opacity) {
+        label.style.opacity = opacity;
+        label._lastOpacity = opacity;
+      }
+      if (label._lastTransform !== transform) {
+        label.style.transform = transform;
+        label._lastTransform = transform;
       }
     }
   }
@@ -2493,45 +2575,61 @@
     };
   }
 
+  // Caches the year-section NodeList + the per-section year numbers so the
+  // gradient updater only does getBoundingClientRect + lerp + one style
+  // write per scroll frame. Also skips the write when the gradient string
+  // hasn't changed since the previous frame.
+  var _cachedYearSections = null;
+  var _cachedSectionYears = null;
+  var _lastGradientBg = null;
+  function getYearSections() {
+    if (!_cachedYearSections || _cachedYearSections.length === 0) {
+      _cachedYearSections = document.querySelectorAll('.year-section');
+      _cachedSectionYears = [];
+      for (var i = 0; i < _cachedYearSections.length; i++) {
+        var lbl = _cachedYearSections[i].querySelector('.year-label');
+        _cachedSectionYears.push(lbl ? parseInt(lbl.textContent, 10) : NaN);
+      }
+    }
+    return _cachedYearSections;
+  }
+  function invalidateYearSectionCache() {
+    _cachedYearSections = null;
+    _cachedSectionYears = null;
+    _lastGradientBg = null;
+  }
+
   function updateYearGradient() {
-    var sections = document.querySelectorAll('.year-section');
+    var sections = getYearSections();
     if (!sections.length) return;
     var viewMid = window.innerHeight * 0.4;
-    var currentSection = null;
-    var nextSection = null;
+    var currentIdx = -1;
     var blendProgress = 0;
 
     for (var i = 0; i < sections.length; i++) {
       var rect = sections[i].getBoundingClientRect();
       if (rect.top <= viewMid && rect.bottom > viewMid) {
-        currentSection = sections[i];
-        nextSection = sections[i + 1] || null;
+        currentIdx = i;
         var sectionHeight = rect.bottom - rect.top;
-        var scrolledInto = viewMid - rect.top;
-        blendProgress = Math.min(scrolledInto / sectionHeight, 1);
+        blendProgress = sectionHeight > 0 ? Math.min((viewMid - rect.top) / sectionHeight, 1) : 0;
         break;
       }
     }
 
-    if (!currentSection) return;
-    var yearText = currentSection.querySelector('.year-label');
-    if (!yearText) return;
-    var year = parseInt(yearText.textContent);
+    if (currentIdx < 0) return;
+    var year = _cachedSectionYears[currentIdx];
+    var nextYear = _cachedSectionYears[currentIdx + 1];
     var c1 = yearColors[year] || { r: 200, g: 200, b: 200 };
-    var c2 = c1;
-
-    if (nextSection) {
-      var nextLabel = nextSection.querySelector('.year-label');
-      if (nextLabel) {
-        var nextYear = parseInt(nextLabel.textContent);
-        c2 = yearColors[nextYear] || c1;
-      }
-    }
+    var c2 = (nextYear != null && yearColors[nextYear]) ? yearColors[nextYear] : c1;
 
     var blended = lerpColor(c1, c2, blendProgress);
     var topColor = 'rgba(' + blended.r + ',' + blended.g + ',' + blended.b + ',0.3)';
     var bottomColor = 'rgba(' + blended.r + ',' + blended.g + ',' + blended.b + ',0.08)';
-    gradientEl.style.background = 'linear-gradient(180deg, ' + topColor + ' 0%, ' + bottomColor + ' 70%, transparent 100%)';
+    var bg = 'linear-gradient(180deg, ' + topColor + ' 0%, ' + bottomColor + ' 70%, transparent 100%)';
+    if (bg !== _lastGradientBg) {
+      gradientEl.style.background = bg;
+      _lastGradientBg = bg;
+    }
   }
 
   var ticking = false;
@@ -2540,6 +2638,9 @@
       ticking = true;
       requestAnimationFrame(function() {
         try { updateHeader(); } catch(e) { console.error('updateHeader error', e); }
+        // Re-sync the sticky offset every frame so year labels track the
+        // header's animated height smoothly during minimize/restore.
+        try { syncYearLabelOffset(); } catch(e) { console.error('syncYearLabelOffset error', e); }
         try { updateYearLabels(); } catch(e) { console.error('updateYearLabels error', e); }
         try { updateYearGradient(); } catch(e) { console.error('updateYearGradient error', e); }
         ticking = false;
@@ -2559,9 +2660,9 @@
   // sync with the most recent run of update_live_stats.py to avoid showing
   // stale numbers if the site is opened while Airtable is unreachable.
   var STATS_FALLBACK = {
-    lifetimeFlights: 1561,
-    flightTimeSec:   1808773,
-    kmFlown:         42895.3,
+    lifetimeFlights: 1565,
+    flightTimeSec:   1811862,
+    kmFlown:         42967.5,
     updatedAt:       null
   };
 

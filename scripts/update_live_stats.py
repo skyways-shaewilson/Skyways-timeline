@@ -145,6 +145,30 @@ def main() -> int:
         f"Airtable base {base_id} — Merged flights + Flights delta (dedup by Flight #)"
     )
 
+    # Monotonic-decrease sanity guard: lifetime counters should never shrink.
+    # If Airtable returns a smaller number (corrupted fetch, a table getting
+    # wiped, rows deleted by mistake) we refuse to overwrite the snapshot so
+    # the site keeps serving the last known-good numbers. Pass --force to
+    # override (e.g. after a legitimate correction).
+    force = "--force" in sys.argv
+    if OUTPUT_FILE.exists() and not force:
+        try:
+            prev = json.loads(OUTPUT_FILE.read_text())
+        except Exception:
+            prev = {}
+        for key in ("lifetimeFlights", "flightTimeSec", "kmFlown"):
+            prev_v = prev.get(key)
+            new_v = totals.get(key)
+            if prev_v is None or new_v is None:
+                continue
+            if new_v < prev_v:
+                print(
+                    f"ERROR: refusing to write — {key} decreased "
+                    f"({prev_v} → {new_v}). Re-run with --force if intentional.",
+                    file=sys.stderr,
+                )
+                return 4
+
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_text(json.dumps(totals, indent=2) + "\n")
     print(f"Wrote {OUTPUT_FILE.relative_to(REPO_ROOT)}:")
