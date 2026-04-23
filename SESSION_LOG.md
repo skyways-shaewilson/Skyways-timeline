@@ -4,6 +4,95 @@ Running chronicle of meaningful work on the Skyways Timeline site. One entry per
 
 ---
 
+## 2026-04-23 (evening) — Tier 1 + Tier 2 UX improvements, era chapters, Scan toggle
+
+Plan mode produced a tiered UX roadmap (`~/.claude/plans/now-using-any-ui-ux-front-end-design-smooth-pudding.md`). Shipped all five Tier-1 quick wins and all four Tier-2 features in two consecutive sessions.
+
+### What shipped (Tier 1 — commit b799ccb)
+
+**1.2 `prefers-reduced-motion` pass**
+- Consolidated `@media (prefers-reduced-motion: reduce)` block neutralizes the contract-jump halo, year-section fade-in, card-hover translate, filter-pulse, and long transitions. JS also checks a cached `_reduceMotion` flag inside `updateYearGradient()` and writes a single neutral gradient instead of per-scroll-frame lerping.
+
+**1.7 Loading skeleton**
+- Replaced plain "Loading timeline..." text with three placeholder year sections matching the real grid shape. Shimmer keyframe paused by the reduced-motion universal override. Container gets `aria-busy="true"` until `renderTimeline()` replaces innerHTML.
+
+**1.6 aria-live announcer**
+- Hidden sr-only `#a11y-announcer` with `role="status" aria-live="polite" aria-atomic="true"`. `announce()` helper debounces 250ms to prevent typing-as-you-search spam. Wired to search match count, filter state + visible count, and stat drawer opens.
+
+**1.3 Empty-state guidance**
+- New `.empty-state-panel` with title + detail + primary/secondary action buttons. `showEmptyState()` / `hideEmptyState()` DOM helpers. `handleSearch` injects the panel when matches = 0, with context-aware detail (mentions active filter if present) and a secondary "Clear filter" button when applicable.
+
+**1.4 URL hash deep-linking**
+- `#year-YYYY`, `#event-N`, `#filter=category` hashes all supported. `parseLocationHash` + `applyLocationHash` called after renderTimeline and on window `popstate`. Year jumps use `scrollIntoView`; event jumps reuse `scrollToContract`'s pulsing halo. `toggleFilter` writes the filter hash via `history.replaceState` (not pushState — avoids polluting back-button on toggle).
+- Per-card `.card-link-btn` injected in `renderCard` — top-right corner. Desktop: fades in on hover. Mobile: always at 45% opacity. Click copies `location.origin + location.pathname + '#event-<id>'` to clipboard via `navigator.clipboard` (with `execCommand` fallback), announces "Link copied", and flashes a `.copied` state for 1.5s.
+
+### What shipped (Tier 2 — commit aab373d)
+
+**2.1 Era chapters with narrative dividers**
+- Five chapters break the timeline into acts:
+  - Founding (2016-2018)
+  - **DoW Operation Molding** (2019-2022) — renamed from "Stealth Years" per Shae: "stealth" is inaccurate post-Series-A. "Heads Down" was my bridge proposal; Shae directed the final label to DoW Operation Molding (Department of War framing of what shaped Skyways).
+  - **Platform Improvements** (2023-2024) — renamed from "Scaling" per Shae: "scaling will happen when we enter into production."
+  - Public Emergence (2025-2026)
+  - **Scaling** (2027 | beyond) — NEW upcoming/dashed forward-looking chapter added at Shae's request to relocate the "scaling" framing to its proper future phase. Renders with `.era-divider.upcoming` variant (dashed top rule, muted palette, reduced opacity).
+- `renderEraDivider()` helper + `ERAS` config array. Era boundaries injected between year-sections in `renderTimeline()`.
+- Saved `feedback_no_stealth_in_investor_copy.md` (now broadened to cover both stealth AND scaling as reserved terms). Memory index updated.
+
+**2.4 Annual summary strips**
+- One-line count + curated headline above each year's cards.
+- Example: "2024 EVENTS 12 | RIMPAC Hawaii | III MEF TCP Okinawa | Phase 3 IDIQ"
+- `YEAR_HEADLINES` config in script block; count auto-computed from yearGroups.
+- Hidden in `body.search-focused` so match results aren't competed with.
+
+**2.2 Density toggle (Scan / Full)**
+- Button with three iterations of placement:
+  1. Initially at the end of the stats-banner `.density-row` → Shae: "expanding the menu drawer unnecessarily."
+  2. Moved to standalone `.timeline-toolbar` row between header and timeline → Shae: "you added another menu layer."
+  3. Final: single `.density-toggle.floating` pill, `position: fixed; top: var(--header-height); right: 32px; transform: translateY(-50%)` so half the pill overlaps the header's bottom edge and reads as "poking out of the menu."
+- Color iteration: white/navy → thrust-green-when-active → Shae: "pill should be Blue and change to lime green if implemented." Final: solid blue (var(--blue) #009AEB, white text, blue shadow) default; thrust-green lime (#C2F213, navy text, lime shadow) when pressed.
+- `body.density-compact` class collapses each card to date + title. Tapping a compact card adds `.expanded` so the user can dip into detail without leaving scan mode. State persists in `localStorage["skyways-density"]`. Search's `navigateMatch` auto-expands any hit card.
+- Button is hidden in `body.search-focused` mobile state.
+
+**2.3 Contracts-table sort + CSV export**
+- Clickable column heads on Contract / Amount / Year in each Commercial and Defense section. Asc/desc toggle with a glyph indicator (▲ / ▼). `parseContractAmount` handles exact values ("$272,711.48"), approximations ("~$2.2M obligated"), and non-numeric labels ("Lease (no $)") — non-numeric sorts to the bottom on descending, top on ascending. Per-section sort leaves section headers + subtotals anchored.
+- Export CSV button at the bottom of the drawer writes `skyways_contracts_YYYY-MM.csv` in current sort order. RFC-4180 quoting via `Blob` + `URL.createObjectURL` + ephemeral anchor click.
+- Sort action + CSV export both announce to the aria-live region.
+
+### Sticky + gap polish (commits 84b5809 → 7f97668)
+
+After shipping the density toggle, Shae iterated the placement through three rounds:
+- "Put it in a better location easier to see than in the menu" → extracted to a `.timeline-toolbar` row.
+- "Scan should be sticky with the menu right?" → `syncYearLabelOffset()` now publishes `--header-height` on `:root`, toolbar became `position: sticky; top: var(--header-height)`.
+- "You added another menu layer. Button that sticks out but not a full layer" → removed toolbar wrapper entirely, made button `position: fixed` with a `translateY(-50%)` lift so it overlaps the header edge.
+- "Close the gap between founding line and menu bar" → `.timeline-wrapper` top padding 56px → 16px desktop (40px → 12px mobile), `.era-divider:first-child` margin-top 32px → 8px (mobile 4px).
+- "Pill should be Blue and change to lime green if implemented" → default solid blue, active lime.
+
+### Lessons learned
+
+1. **Marketing voice is load-bearing and iterative.** "Stealth" was the default instinct; it took one correction to learn the Series-A nuance. "Scaling" was the default instinct for the 2023-24 era; same lesson — production-phase terminology. Both now live in `feedback_no_stealth_in_investor_copy.md` (broader "investor copy framing rules"). New pattern for future copy work: ALWAYS offer the term to Shae as a draft proposal if it's specific industry terminology (stealth, scaling, pivot, pre-revenue, etc.) rather than shipping and getting corrected.
+
+2. **"Sticks out from the menu" ≠ "sits below the menu."** Shae's mental model of a toolbar is: a distinct, interactive element that visually attaches to the menu without being a second row of it. Full-width toolbars read as "another menu layer" even if they only hold one button. The `position: fixed + translateY(-50%)` pattern (single pill overlapping the header's bottom edge) is the right primitive. Saved to `reference_timeline_css_quirks.md`.
+
+3. **CSS custom properties are the right bridge between sticky JS and sticky CSS.** When the sticky header's height animates (expand ↔ minimize), anything pinned below it needs to track that height. Two paths: (a) inline `.style.top = height + 'px'` on every element, per scroll frame; (b) publish `--header-height` once per resize on `:root`, let sibling elements consume via CSS `top: var(--header-height)`. Path (b) avoids per-scroll-frame JS and respects the browser's paint scheduling. See `reference_timeline_css_quirks.md` "CSS custom property as a sticky-offset bridge."
+
+4. **Tier-2 era chapters transformed "64 cards" into "a story in five acts."** Before: flat chronological list. After: clear narrative arc with an explicit forward-looking chapter (Scaling 2027+). Shae's response when she saw it working: immediate requests to relocate "Scaling" to 2027 so it reads accurately today but sets the expectation for what's coming. The era abstraction was worth the implementation cost.
+
+5. **Placement is never one-shot.** Scan button landed in the right place on round 4. Each round was a small win but Shae's phrasing is precise — "better location easier to see" (move), "sticky with the menu" (pin), "sticks out but not a full layer" (single element, not a row). Pay close attention to the WORDS she uses for mental model ("menu layer", "sticks out", "another layer") before moving HTML.
+
+6. **Pre-commit scans are the compound-interest investment.** The em-dash / arrow / forbidden-word / mobile-drawer-rule grep suite caught 0 regressions in this session, but ALSO meant I could ship without any of the usual "wait, is there an em dash?" second-guessing. Adding a memory-rule grep to the same suite (e.g. "no 'stealth' in user-visible copy") makes the rule self-enforcing in future sessions.
+
+### Memory files updated
+- `feedback_no_stealth_in_investor_copy.md` — expanded to cover "scaling" as a reserved term; documented the DoW Operation Molding + Platform Improvements decisions.
+- `MEMORY.md` — index line updated to reflect the broader scope.
+- `reference_timeline_css_quirks.md` — added floating-pill pattern + `--header-height` CSS custom property bridge section (pending update below).
+- `project_timeline_frontend.md` — added Tier-1 and Tier-2 feature state (pending update below).
+
+### Follow-ups queued
+- Tier 3 items from the plan (two-panel master-detail on wide screens, alternate visualization modes, polished print/PDF export) — deferred until Shae signals she wants them.
+- Consider a CSS-only check: `body.density-compact .card-link-btn { display: none }` already hides the per-card copy-link icon in Scan mode, so deep-link sharing works best in Full mode. Document in user-facing help text if/when we add one.
+
+---
+
 ## 2026-04-23 (afternoon) — Mobile UX overhaul, CRADA reclassification
 
 ### What shipped
