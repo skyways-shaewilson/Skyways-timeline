@@ -806,6 +806,32 @@
   .stat-menu.contracts-table .contracts-grid::-webkit-scrollbar-thumb:hover {
     background: var(--gray-50);
   }
+  /* Mobile: iOS Safari auto-hides scrollbars, so the user has no visual
+     cue that there's more content to scroll inside the cramped drawer.
+     Force a 10px persistent scrollbar with a high-contrast navy thumb
+     so the affordance reads even on the first open. */
+  @media (max-width: 720px) {
+    .stat-menu.contracts-table .contracts-grid {
+      scrollbar-color: var(--navy) var(--gray-05);
+      scrollbar-width: thin;
+    }
+    .stat-menu.contracts-table .contracts-grid::-webkit-scrollbar {
+      width: 10px;
+      -webkit-appearance: none;
+    }
+    .stat-menu.contracts-table .contracts-grid::-webkit-scrollbar-track {
+      background: var(--gray-05);
+      border-radius: 5px;
+    }
+    .stat-menu.contracts-table .contracts-grid::-webkit-scrollbar-thumb {
+      background: var(--navy);
+      border-radius: 5px;
+      border: 2px solid var(--gray-05);
+    }
+    .stat-menu.contracts-table .contracts-grid::-webkit-scrollbar-thumb:active {
+      background: var(--blue);
+    }
+  }
   .stat-menu.contracts-table .contracts-title {
     font-size: 12px; font-weight: 700; color: var(--navy);
     text-transform: uppercase; letter-spacing: 0.6px;
@@ -3921,6 +3947,18 @@
       // during the minimize animation. CSS rule at the top of the stylesheet
       // zeros the transitions when this class is present.
       if (stickyHeader) stickyHeader.classList.add('drawer-active');
+      // Mobile contracts-table drawer: snap the sticky header to its
+      // minimized state before measuring, so the drawer gets the maximum
+      // possible vertical room below the stat. The .drawer-active class
+      // already zeroed transitions, so the snap is instantaneous (no
+      // animation-vs-position race). Force a sync layout so pinDrawer
+      // measures the post-snap stat.bottom.
+      var isMobile = window.matchMedia('(max-width: 720px)').matches;
+      var isContracts = stat.querySelector('.stat-menu.contracts-table') != null;
+      if (isMobile && isContracts && stickyHeader) {
+        stickyHeader.classList.add('minimized');
+        void document.body.offsetHeight;  // sync layout
+      }
       pinDrawer(stat);
       // Announce drawer open via the stat's label (e.g. "Contracts", "UAVs Built").
       var _lbl = stat.querySelector('.stat-label');
