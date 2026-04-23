@@ -2543,9 +2543,46 @@
     function pinDrawer(stat) {
       var menu = stat.querySelector('.stat-menu');
       if (!menu) return;
-      // Mobile already uses position:fixed via its own media query — let
-      // that rule keep running and don't double-pin.
-      if (window.matchMedia('(max-width: 720px)').matches) return;
+
+      var isMobile = window.matchMedia('(max-width: 720px)').matches;
+      if (isMobile) {
+        // Mobile: CSS max-height: calc(100dvh - N) can't account for WHERE
+        // the drawer starts — a stat low in the header leaves less room
+        // below it than dvh suggests, and the drawer spills past the
+        // visible viewport into Safari's URL-bar area. Compute max-height
+        // dynamically from visualViewport so the drawer always fits above
+        // whatever browser chrome is currently showing.
+        var vv = window.visualViewport;
+        var visibleH = (vv && vv.height) || window.innerHeight;
+        var vTop = (vv && vv.offsetTop) || 0;
+        var visibleBottom = vTop + visibleH;
+        var isContracts = menu.classList.contains('contracts-table');
+
+        if (isContracts) {
+          // Contracts table: too wide to anchor under a single stat. Pin
+          // it as an explicit bottom sheet — fixed to bottom of visible
+          // viewport with a top gap for the sticky header area.
+          menu.style.position = 'fixed';
+          menu.style.top = 'auto';
+          menu.style.bottom = '16px';
+          menu.style.left = '8px';
+          menu.style.right = '8px';
+          menu.style.width = 'auto';
+          menu.style.marginTop = '0';
+          menu.style.maxHeight = Math.max(320, visibleH - 140) + 'px';
+        } else {
+          // Source-list drawer: stays absolute-positioned under its stat
+          // (per CSS) — only override max-height so it can't extend past
+          // the visible viewport bottom.
+          var rectM = stat.getBoundingClientRect();
+          var drawerTop = rectM.bottom + 8; // matches CSS margin-top
+          var available = Math.max(160, visibleBottom - drawerTop - 20);
+          menu.style.maxHeight = available + 'px';
+        }
+        return;
+      }
+
+      // Desktop: fixed-pin to the stat with calc-based max-height.
       var rect = stat.getBoundingClientRect();
       var top = rect.bottom + 8;
       var bottomMargin = 24;
@@ -2572,8 +2609,10 @@
       if (!menu) return;
       menu.style.position = '';
       menu.style.top = '';
+      menu.style.bottom = '';
       menu.style.left = '';
       menu.style.right = '';
+      menu.style.width = '';
       menu.style.marginTop = '';
       menu.style.maxHeight = '';
     }
