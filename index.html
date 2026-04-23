@@ -855,11 +855,12 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 12px 8px 6px;
+    padding: 10px 12px 8px;
     margin-top: 10px;
-    border-top: 1px solid var(--gray-15);
-    border-bottom: none;
-    font-size: 11px;
+    background: rgba(194, 242, 19, 0.28);
+    border-left: 3px solid var(--thrust-green);
+    border-radius: 4px;
+    font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -867,16 +868,16 @@
     cursor: default;
   }
   .contracts-section-head:first-child {
-    border-top: none;
     margin-top: 0;
-    padding-top: 4px;
   }
   .contracts-section-head .sh-amount {
     font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0;
-    color: var(--gray-50);
+    color: var(--navy);
+    opacity: 0.75;
     font-variant-numeric: tabular-nums;
+    text-transform: none;
   }
   .contracts-row.contracts-grand-total {
     margin-top: 8px;
@@ -915,48 +916,56 @@
     animation: contractJumpPulse 1.6s ease-out;
   }
 
-  /* Mobile: keep every stat drawer anchored DIRECTLY UNDER its own stat
-     (not viewport-fixed) so a tap on stat N reveals a drawer that
-     visually emanates from stat N, not always from the left of the
-     screen. The contracts-table drawer is the only one wide enough to
-     benefit from being re-anchored to the viewport — hold that one
-     special. */
+  /* Mobile: every stat drawer pins as a bottom sheet. Two reasons the old
+     anchored-under-stat approach broke:
+       1. Safari's dynamic URL bar eats ~80px of the bottom of the layout
+          viewport — `calc(100vh - N)` includes that area so the drawer's
+          bottom scrollbar ended up behind browser chrome.
+       2. The stat sits inside the minimizing sticky header; its y-position
+          changes as the header animates, and an absolutely-positioned
+          drawer anchored to it either slid mid-scroll or started off-screen.
+     Bottom-sheet positioning sidesteps both — pinned to the visible
+     viewport, dvh tracks browser chrome, scrolls internally if content is
+     taller than the sheet. */
   @media (max-width: 720px) {
     .stat { overflow: visible; }
     .stat-menu {
-      /* Shrink + clamp so the drawer fits the viewport. Width is the
-         narrower of 240px or (viewport - 20px gutter). Vertical height
-         caps at the viewport minus a gutter so long drawers scroll
-         internally on mobile too, and overscroll-behavior: contain
-         prevents the wheel/touch chain from scrolling the page
-         underneath when the user hits the drawer's top or bottom. */
+      position: fixed;
+      top: auto;
+      bottom: 16px;
+      left: 8px;
+      right: 8px;
+      width: auto;
       min-width: 0;
-      width: min(240px, calc(100vw - 20px));
-      max-width: calc(100vw - 20px);
-      max-height: calc(100vh - 140px);
+      max-width: none;
+      /* vh fallback first, dvh override for engines that support it
+         (iOS 15.4+). dvh excludes the dynamic toolbar so the sheet
+         always fits the visible area. */
+      max-height: calc(100vh - 180px);
+      max-height: calc(100dvh - 120px);
       overflow-y: auto;
       overscroll-behavior: contain;
-      margin-top: 8px;
+      margin-top: 0;
       /* Top padding makes room for the close-X that only renders on mobile */
       padding-top: 32px;
+      z-index: 200;
     }
+    /* Tail pointer only made sense when the drawer emanated from a stat.
+       On mobile it's a detached bottom sheet, so hide the pointer. */
+    .stat-menu::before { display: none; }
     /* Show the close-X on mobile (desktop already has hover-dismiss) */
     .stat-menu-close { display: flex; }
-    .stat-menu.contracts-table { padding-top: 34px; }
-    /* Stats in the right half of the row: right-anchor the drawer so it
-       doesn't extend off the right edge of the viewport. 1st through
-       3rd keep left-anchor, 4th and 5th flip. */
-    .stats-row .stat:nth-child(n+4) .stat-menu {
-      left: auto; right: 0;
-    }
-    /* Contracts-table drawer stays a full-width sheet because its
-       internal table needs the extra horizontal room. */
+    /* nth-child(n+4) right-anchor rule from desktop is irrelevant for a
+       full-width bottom sheet. Explicit override in case it cascades. */
+    .stats-row .stat:nth-child(n+4) .stat-menu { left: 8px; right: 8px; }
+    /* Contracts table needs the same bottom-sheet treatment as every other
+       drawer. The desktop rule's higher specificity (two classes) would
+       otherwise win the max-height cascade, so restate it here. */
     .stat-menu.contracts-table {
-      position: fixed; top: auto; left: 8px; right: 8px;
-      min-width: 0; max-width: none; width: auto;
-      margin-top: 0;
+      padding-top: 34px;
+      max-height: calc(100vh - 180px);
+      max-height: calc(100dvh - 120px);
     }
-    .stat-menu.contracts-table::before { display: none; }
     .contracts-row {
       grid-template-columns: 1.8fr 1.2fr 0.6fr 0.7fr;
       gap: 6px;
@@ -1647,7 +1656,12 @@
     }
     .search-nav { right: 26px; }
     .search-count { display: none; } /* Hide count on narrow screens to save space */
-    .search-input { font-size: 12px; padding: 6px 74px 6px 10px; }
+    /* font-size: 16px prevents iOS Safari from auto-zooming the page when the
+       input gets focus. Anything < 16px triggers Safari's "readability zoom"
+       which magnifies the whole viewport by ~1.33x, cutting off the left edge
+       of every card and making the layout unusable. Keeping the input at the
+       iOS minimum keeps the page at its natural scale. */
+    .search-input { font-size: 16px; padding: 8px 74px 8px 10px; }
 
     /* Aircraft background not useful on mobile — hero stacks vertically. */
     .header-aircraft-bg,
@@ -1757,50 +1771,20 @@
     body.search-focused .sticky-header::after,
     .sticky-header.search-focused::after { opacity: 0 !important; }
 
-    /* ── MOBILE COMPACT CARDS (search-focused) ──
-       When the query is active, shrink every event card down to just its
-       date + title so the full match list can sit above the keyboard.
-       Thumbnails, detail prose, bullets, tag row, sources trigger, and
-       internal banners are hidden; year labels and column gutter shrink
-       too. Scrolling through next/prev matches keeps surrounding cards
-       on-screen for context. */
+    /* ── MOBILE SEARCH-FOCUSED CARD TRIM ──
+       When the query is active, strip just the chrome that makes cards
+       taller (thumbnail background, bullets, large value numbers, internal
+       banner) but keep title + detail + tag at their normal mobile sizes
+       so the user can READ each match in full. Hero + stats are already
+       collapsed by the rules above; that and the removed chrome gets
+       ~4 full cards visible above the keyboard on a standard iPhone. */
     body.search-focused .sticky-header { z-index: 150; }
-    body.search-focused .timeline-wrapper { padding: 12px 14px 24px; }
-    body.search-focused .year-section { grid-template-columns: 40px 1fr; }
-    body.search-focused .year-label-col { padding-top: 4px; }
-    body.search-focused .year-label { font-size: 14px; letter-spacing: -0.3px; }
-    body.search-focused .events-col { gap: 4px; padding: 0 0 16px 12px; }
-    body.search-focused .event-card { padding: 6px 12px 6px 14px; }
-    body.search-focused .event-card.highlight { padding: 7px 14px 7px 16px; }
+    body.search-focused .events-col { gap: 10px; }
     body.search-focused .event-card-bg { display: none; }
-    body.search-focused .event-title {
-      font-size: 13px; line-height: 1.25; letter-spacing: -0.2px;
-    }
-    body.search-focused .event-card.highlight .event-title { font-size: 14px; }
-    body.search-focused .event-date { font-size: 9px; }
-    /* Keep one truncated line of detail so matches that only land in detail
-       text still show their highlight (otherwise "5 matches" could read as
-       5 identical-looking title-only cards). Bullets, meta, and banners
-       collapse entirely. */
-    body.search-focused .event-detail {
-      font-size: 10.5px;
-      line-height: 1.3;
-      margin-top: 1px;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
     body.search-focused .event-bullets,
-    body.search-focused .event-meta,
     body.search-focused .event-value,
     body.search-focused .event-card .internal-banner { display: none; }
     body.search-focused .event-card:hover { transform: none; }
-    body.search-focused .event-dot {
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
-    }
 
     .timeline-wrapper { padding: 32px 20px 40px; }
     .year-section { grid-template-columns: 60px 1fr; }
@@ -1819,7 +1803,34 @@
     .event-value { font-size: 20px; }
     .event-card.highlight .event-title { font-size: 20px; }
 
-    .sources-menu { min-width: 0; max-width: calc(100vw - 80px); width: max-content; }
+    /* Source drawer on event cards — pin as a bottom sheet on mobile. The
+       previous absolute-positioned dropdown inherited `left: 0` from desktop
+       and could extend off the right edge when the `.sources-trigger` sat
+       mid-card. Bottom sheet avoids the positioning cascade entirely;
+       max-height uses dvh so Safari's toolbar can't clip the bottom. */
+    .sources-menu {
+      position: fixed;
+      top: auto;
+      bottom: 16px;
+      left: 8px;
+      right: 8px;
+      margin-top: 0;
+      min-width: 0;
+      max-width: none;
+      width: auto;
+      max-height: calc(100vh - 180px);
+      max-height: calc(100dvh - 120px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      z-index: 200;
+    }
+    .sources-menu::before { display: none; }
+    /* Links wrap inside the bottom sheet — no more ellipsis on small screens */
+    .sources-menu .source-link {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
 
     .footer { padding: 0 20px; }
     .press-contact { padding: 0 20px; }
@@ -3020,8 +3031,14 @@
   function clearSearch() {
     var input = document.getElementById('searchInput');
     input.value = '';
+    // Blur before handleSearch so the search-focused class clears on the
+    // subsequent sync — otherwise re-focusing here kept compact mode alive
+    // after the user tapped the X to exit, leaving hero + stats collapsed.
+    input.blur();
     handleSearch();
-    input.focus();
+    if (typeof window._syncSearchFocusClass === 'function') {
+      window._syncSearchFocusClass();
+    }
   }
 
   // Toggle body.search-focused (and the matching sticky-header class) based
