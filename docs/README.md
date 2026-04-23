@@ -15,6 +15,7 @@ Project-level rules and architecture live in the root-level [CLAUDE.md](../CLAUD
 | [TIMELINE_REVIEW.md](TIMELINE_REVIEW.md) | Standing review criteria for event copy: voice, acronyms, date format, source quality, categorization rules. | Before committing any event-detail edit or adding a new card. |
 | [SITE_VERIFICATION.md](SITE_VERIFICATION.md) | Post-deploy verification checklist: stats banner values, filter categories, mobile layout, source drawers, contract totals. | After any Firestore sync, banner update, or Vercel deploy. Run through this before declaring a change shipped. |
 | [SOURCE_VISIBILITY_RULES.md](SOURCE_VISIBILITY_RULES.md) | Canonical four-state source classification (internal / mixed / charles-approved / fully public) with banner colors (red / orange / beige / none) and the classifier regex. | Any time you add a new event, a new source, or change how a card is flagged for public distribution. Authoritative reference paired with `memory/feedback_internal_marking_style.md`. |
+| [CARD_STYLING_RULES.md](CARD_STYLING_RULES.md) | Standing rules for event card content: bullets vs. prose, bullet patterns, arrow prohibition, content-relevance rule (Skyways-centric only), version designations, V3 capability claim rule, review checklist. | Any time you add a new card, restructure an existing card's detail, add bullets, or review a card before shipping. |
 
 ## Working ledgers (scope-specific, kept for history)
 

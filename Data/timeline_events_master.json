@@ -1035,7 +1035,7 @@
       "Jun 19, 2024: IDIQ contract FA228024D0003 awarded; 5-year ordering period; $4,999,999 ceiling",
       "Mods #1 + #2: Task Order FA228024F0013 obligations grew to ~$2.2M",
       "Jan 6, 2025: Mod #3 extended CLIN dates (no $ change)",
-      "June 2024: STRATFI selection announced \u2192 $37M contract awarded May 2025"
+      "June 2024: STRATFI selection announced leading to the $37M contract awarded May 2025"
     ],
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/6293b2075bb369a21ee620760faa68c79a25c69a-4875x2775.jpg?w=1600&fit=max&auto=format"
   },
@@ -1269,11 +1269,10 @@
     "date_display": "2025-05",
     "bullets": [
       "Mission: shore-to-shore long-range autonomous cargo flights",
-      "Route: Grand Forks AFB \u2194 Cavalier SFS, North Dakota",
+      "Route: Grand Forks AFB to Cavalier SFS, North Dakota",
       "Aircraft: V2.6B (Government-furnished, GO/CO) + V3.0 (Skyways-owned, CO/CO)",
       "Sponsor: OUSD Project ULTRA",
-      "Total task order: $3.5M (OUSD + Grand Forks County)",
-      "Program ceiling: $18.25M \u2192 $100M (July 2025)"
+      "Total task order: $3.5M (OUSD + Grand Forks County)"
     ],
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/09e89784c737bfe05418e71b1906801403e39695-1911x1070.png?w=1600&fit=max&auto=format"
   },
@@ -1354,7 +1353,7 @@
     "date_display": "2025-08",
     "bullets": [
       "20 operational flights (10 round trips) over 12 days",
-      "Route: Grand Forks AFB \u2194 Cavalier Space Force Station, ND",
+      "Route: Grand Forks AFB to Cavalier Space Force Station, ND",
       "Cargo: 230 lbs total (23 lbs per round trip), including temperature-controlled blood",
       "Altitude: 3,500 ft in controlled airspace",
       "Milestone (per Skyways): first unmanned, fully autonomous Beyond Visual Line of Sight (BVLOS) cargo flights between two U.S. airports"
@@ -1607,7 +1606,7 @@
     "id": 114,
     "year": "2026",
     "date": "2026-12",
-    "title": "V3 Block 2L (V3.2) | Forthcoming",
+    "title": "V3.2 | Forthcoming",
     "category": "product",
     "detail": "Next iteration in the V3 family beyond V3 Block 2. Details TBD; entry will be filled with full specs and milestone context once the build phase begins. This placeholder ensures the iteration list in the '20+ UAVs Built' stat menu is auditable against the timeline.",
     "tag": "Product | V3",
