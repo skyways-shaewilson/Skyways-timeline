@@ -1280,6 +1280,184 @@
     animation: filterPulse 0.35s ease-out;
   }
 
+  /* Per-card copy-link icon — lets a user grab a #event-<id> URL for any
+     card so they can paste it into email / Slack and have the recipient
+     land directly on that event. Small, subtle, lives in the top-right
+     corner of each card. Desktop: fades in on card hover. Mobile: always
+     rendered at 45% opacity so it's discoverable but not noisy. Accessible
+     name via aria-label; click handler in copyEventLink() flashes a
+     "copied" state and announces to the aria-live region. */
+  .card-link-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(0,0,0,0.08);
+    color: var(--gray-50);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .event-card:hover .card-link-btn,
+  .card-link-btn:focus-visible { opacity: 1; }
+  .card-link-btn:hover, .card-link-btn:focus-visible {
+    color: var(--blue);
+    background: var(--white);
+    outline: none;
+  }
+  .card-link-btn svg { width: 13px; height: 13px; }
+  .card-link-btn.copied {
+    color: var(--white);
+    background: var(--navy);
+    border-color: var(--navy);
+    opacity: 1 !important;
+  }
+  .event-card.highlight .card-link-btn {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .event-card.highlight .card-link-btn:hover,
+  .event-card.highlight .card-link-btn:focus-visible {
+    color: var(--navy); background: var(--white);
+  }
+  @media (max-width: 720px) {
+    /* Touch devices have no hover — show the icon at reduced opacity
+       so users discover it without it screaming for attention. */
+    .card-link-btn { opacity: 0.45; top: 8px; right: 10px; }
+    .event-card:hover .card-link-btn { opacity: 0.7; }
+  }
+
+  /* Visually-hidden utility — content present for screen readers but
+     clipped from visual layout. Standard a11y pattern. */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+
+  /* Empty-state panel — shown when search returns 0 matches or filter
+     returns 0 visible events. Replaces the previous silent "nothing to
+     see here" state that looked like a load failure. Recovery actions
+     ("Clear search", "Clear filter") live inside the panel so the user
+     has a one-tap path back to a populated view. */
+  .empty-state-panel {
+    margin: 48px auto;
+    max-width: 520px;
+    padding: 24px 28px;
+    background: var(--white);
+    border: 1px solid var(--gray-15);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .empty-state-title {
+    font-size: 15px; font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+  }
+  .empty-state-detail {
+    font-size: 13px; font-weight: 450;
+    color: var(--gray-75);
+    line-height: 1.5;
+    margin: 0 0 14px 0;
+  }
+  .empty-state-actions {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+  }
+  .empty-state-btn {
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background: var(--navy); color: var(--white);
+    border: none; border-radius: 6px;
+    padding: 8px 14px;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.4px; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .empty-state-btn:hover, .empty-state-btn:focus-visible {
+    background: var(--blue);
+    outline: none;
+  }
+  .empty-state-btn.secondary {
+    background: transparent; color: var(--navy);
+    border: 1px solid var(--gray-15);
+  }
+  .empty-state-btn.secondary:hover, .empty-state-btn.secondary:focus-visible {
+    background: var(--gray-05);
+    border-color: var(--navy);
+  }
+  @media (max-width: 720px) {
+    .empty-state-panel { margin: 32px 16px; padding: 18px 16px; }
+  }
+
+  /* Loading skeleton — shown before Firestore fetch resolves. Matches the
+     year-section grid shape so the page doesn't jump on data arrival. The
+     shimmer keyframe is disabled by the prefers-reduced-motion block near
+     the bottom of the stylesheet (via the universal animation-duration
+     override), so motion-sensitive users see static gray blocks. */
+  @keyframes skeletonShimmer {
+    0% { background-position: -200px 0; }
+    100% { background-position: 200px 0; }
+  }
+  .skeleton-year-section {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    padding: 48px 0 0 0;
+  }
+  .skeleton-year-label {
+    width: 60px; height: 36px; border-radius: 6px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.06) 100%);
+    background-size: 200px 100%;
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+  }
+  .skeleton-events-col {
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 0 0 48px 40px;
+  }
+  .skeleton-card {
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.05);
+    padding: 16px 20px 16px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-card::before {
+    /* Category-accent bar placeholder on the left — same geometry as .event-dot */
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 0;
+    width: 4px; border-top-left-radius: 8px; border-bottom-left-radius: 8px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.06));
+  }
+  .skeleton-line {
+    height: 12px; border-radius: 4px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.11) 50%, rgba(0,0,0,0.05) 100%);
+    background-size: 200px 100%;
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+  }
+  .skeleton-line.short { width: 35%; height: 10px; }
+  .skeleton-line.title { width: 65%; height: 20px; margin-bottom: 4px; }
+  .skeleton-line.body1 { width: 92%; }
+  .skeleton-line.body2 { width: 78%; }
+  @media (max-width: 720px) {
+    .skeleton-year-section { grid-template-columns: 60px 1fr; padding-top: 32px; }
+    .skeleton-year-label { width: 40px; height: 24px; }
+    .skeleton-events-col { padding: 0 0 32px 20px; gap: 12px; }
+    .skeleton-card { padding: 12px 16px 12px 20px; }
+    .skeleton-line.title { height: 16px; }
+  }
+
   .event-card-bg {
     position: absolute;
     top: 0; right: 0;
@@ -1941,6 +2119,30 @@
     .bottom-bar-inner { padding: 14px 20px; flex-direction: column; gap: 8px; }
   }
 
+  /* Respect iOS / macOS "Reduce Motion" preference. Users with vestibular
+     sensitivity, attention disorders, or motion-triggered conditions opt
+     into this at the OS level. Kills the pulsing halo, year-section fade-in,
+     card hover translate, and any long transitions. The 4px header minimize
+     (snap, not animation) and opacity changes are preserved — those don't
+     involve motion, they're visibility toggles. JS also checks this flag
+     inside updateYearGradient() to skip per-scroll-frame color lerp. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    /* Explicit overrides for the heavier animations so they truly stop */
+    .event-card.contract-jump-halo { animation: none !important; }
+    .event-card:hover { transform: none !important; }
+    .year-section { animation: none !important; opacity: 1 !important; }
+    .live-dot { animation: none !important; }
+    .filter-pulse { animation: none !important; }
+    /* Preserve the sticky-header minimize snap — it's a layout swap, not
+       a motion transition — so the page still compacts correctly on scroll. */
+  }
+
   @media print {
     .sticky-header { position: relative !important; }
     .hero-section { transform: none !important; opacity: 1 !important; }
@@ -2265,8 +2467,58 @@
   </div></div>
 </div>
 
-<div class="timeline-wrapper" id="timeline-container">
-  <div style="text-align:center;padding:80px 0;color:var(--gray-50);font-size:14px;font-weight:500;">Loading timeline...</div>
+<!-- Polite ARIA live region — screen readers announce state changes
+     (search match count, filter toggles, drawer open/close, year jumps)
+     without interrupting the user. Empty on load; announce() in the JS
+     block injects text and it gets read. Kept outside #timeline-container
+     so renderTimeline()'s innerHTML replace doesn't wipe it. -->
+<div id="a11y-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div class="timeline-wrapper" id="timeline-container" aria-busy="true">
+  <!-- Loading skeleton — replaced by renderTimeline() when Firestore data
+       arrives. Three placeholder year sections with shimmering lines give
+       the user a sense of where content will land without the blank-page
+       flash of a plain "Loading..." text. Reduced-motion users see static
+       gray blocks (shimmer keyframe is paused by the prefers-reduced-motion
+       universal override). -->
+  <div class="skeleton-year-section" aria-hidden="true">
+    <div class="skeleton-year-label"></div>
+    <div class="skeleton-events-col">
+      <div class="skeleton-card">
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line body1"></div>
+        <div class="skeleton-line body2"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line body1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="skeleton-year-section" aria-hidden="true">
+    <div class="skeleton-year-label"></div>
+    <div class="skeleton-events-col">
+      <div class="skeleton-card">
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line body1"></div>
+        <div class="skeleton-line body2"></div>
+      </div>
+    </div>
+  </div>
+  <div class="skeleton-year-section" aria-hidden="true">
+    <div class="skeleton-year-label"></div>
+    <div class="skeleton-events-col">
+      <div class="skeleton-card">
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line body1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sr-only" role="status" aria-live="polite">Loading timeline events.</div>
 </div>
 
 <!-- Firestore-powered timeline will be injected here by JS below -->
@@ -2293,6 +2545,161 @@
   var FIRESTORE_PROJECT = 'marketing---earned-media-db';
   var FIRESTORE_COLLECTION = 'skyways_history_and_story';
   var FIRESTORE_API_KEY = 'AIzaSyCSsKbZzs2xRSbZC_Ask_-8uX59GiDSnmw';
+
+  // ═══ EMPTY-STATE PANEL ═══
+  // Single reusable recovery panel that renders inside #timeline-container
+  // when search yields 0 matches, or when a filter hides every card.
+  // Replaces the previous silent state (all cards display:none) that
+  // looked identical to a load failure. Injects/removes one DOM node.
+  function showEmptyState(opts) {
+    var container = document.getElementById('timeline-container');
+    if (!container) return;
+    var existing = document.getElementById('emptyStatePanel');
+    var html = '<div id="emptyStatePanel" class="empty-state-panel" role="status">'
+      + '<div class="empty-state-title">' + escHtml(opts.title) + '</div>'
+      + (opts.detail ? '<div class="empty-state-detail">' + escHtml(opts.detail) + '</div>' : '')
+      + '<div class="empty-state-actions">'
+      + (opts.primary ? '<button type="button" class="empty-state-btn" onclick="' + opts.primary.onclick + '">' + escHtml(opts.primary.label) + '</button>' : '')
+      + (opts.secondary ? '<button type="button" class="empty-state-btn secondary" onclick="' + opts.secondary.onclick + '">' + escHtml(opts.secondary.label) + '</button>' : '')
+      + '</div></div>';
+    if (existing) {
+      existing.outerHTML = html;
+    } else {
+      container.insertAdjacentHTML('afterbegin', html);
+    }
+  }
+  function hideEmptyState() {
+    var existing = document.getElementById('emptyStatePanel');
+    if (existing) existing.remove();
+  }
+  // Minimal HTML-escape helper for user-driven strings (search query copy).
+  // `esc` already exists later in the file but is defined after this point;
+  // a local shim keeps this block self-contained.
+  function escHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  // ═══ URL HASH DEEP-LINKING ═══
+  // Three supported hash formats so shared links land in the right state:
+  //   • #year-YYYY    → scroll to that year section
+  //   • #event-N      → scroll + pulse the card with id="event-N"
+  //   • #filter=cat   → apply a category filter on load (e.g. #filter=contracts)
+  // Anchor application happens once per renderTimeline (after data loads)
+  // and on popstate (back/forward). toggleFilter() writes the filter hash via
+  // history.replaceState — we explicitly do NOT write on every keystroke of
+  // search because that would pollute the back button with every query.
+  function parseLocationHash() {
+    var raw = (location.hash || '').replace(/^#/, '');
+    if (!raw) return null;
+    var mYear = raw.match(/^year-(\d{4})$/);
+    if (mYear) return { kind: 'year', value: mYear[1] };
+    var mEvent = raw.match(/^event-([A-Za-z0-9_-]+)$/);
+    if (mEvent) return { kind: 'event', value: mEvent[1] };
+    var mFilter = raw.match(/^filter=([a-z,]+)$/i);
+    if (mFilter) return { kind: 'filter', value: mFilter[1].toLowerCase() };
+    return null;
+  }
+  function applyLocationHash() {
+    var parsed = parseLocationHash();
+    if (!parsed) return;
+    if (parsed.kind === 'year') {
+      var yearEl = null;
+      var labels = document.querySelectorAll('.year-label');
+      for (var i = 0; i < labels.length; i++) {
+        if ((labels[i].textContent || '').trim() === parsed.value) {
+          yearEl = labels[i].closest('.year-section');
+          break;
+        }
+      }
+      if (yearEl) {
+        yearEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        announce('Scrolled to year ' + parsed.value, true);
+      }
+    } else if (parsed.kind === 'event') {
+      // Reuse scrollToContract's battle-tested scroll + halo logic.
+      if (typeof window.scrollToContract === 'function') {
+        window.scrollToContract(parsed.value);
+        announce('Scrolled to event ' + parsed.value, true);
+      }
+    } else if (parsed.kind === 'filter') {
+      // Apply the first valid category in the comma list. toggleFilter is a
+      // toggle, so only call when the category isn't already active.
+      var cats = parsed.value.split(',');
+      for (var c = 0; c < cats.length; c++) {
+        var cat = cats[c].trim();
+        if (['contracts','funding','product','milestone','defense'].indexOf(cat) !== -1) {
+          if (activeFilter !== cat) toggleFilter(cat);
+          break;
+        }
+      }
+    }
+  }
+  function writeFilterHash(category) {
+    // replaceState avoids adding a history entry per filter toggle.
+    try {
+      if (category) {
+        history.replaceState(null, '', '#filter=' + category);
+      } else {
+        // Clear the hash without leaving a "#" behind
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    } catch (e) { /* ignore */ }
+  }
+  window.addEventListener('popstate', function() { applyLocationHash(); });
+
+  // Copy-to-clipboard helper for the per-card link icon. Builds an absolute
+  // URL with a #event-N hash and writes it. Shows a brief toast so the user
+  // knows it worked. Graceful fallback for browsers without navigator.clipboard.
+  function copyEventLink(eventId, btnEl) {
+    var url = location.origin + location.pathname + '#event-' + eventId;
+    var done = function() {
+      announce('Link copied to clipboard', true);
+      if (btnEl) {
+        btnEl.classList.add('copied');
+        setTimeout(function() { btnEl.classList.remove('copied'); }, 1500);
+      }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function() { fallback(); });
+    } else {
+      fallback();
+    }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = url; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { /* ignore */ }
+      document.body.removeChild(ta);
+    }
+  }
+  window.copyEventLink = copyEventLink;
+
+  // ═══ ARIA-LIVE ANNOUNCER ═══
+  // Screen-reader channel for state-change feedback: search match counts,
+  // filter toggles, drawer open/close, year navigation. Debounced so that
+  // typing-as-you-search doesn't spam "12 matches, 11 matches, 10 matches"
+  // every keystroke — we announce only after input settles for 250ms.
+  // aria-atomic="true" on the element (see HTML) means the full text is
+  // re-read each time even when we're just updating one count.
+  var _announceTimer = null;
+  var _announceLast = '';
+  function announce(text, immediate) {
+    var el = document.getElementById('a11y-announcer');
+    if (!el || !text) return;
+    if (text === _announceLast) return; // dedupe
+    _announceLast = text;
+    if (_announceTimer) { clearTimeout(_announceTimer); _announceTimer = null; }
+    var delay = immediate ? 0 : 250;
+    _announceTimer = setTimeout(function() {
+      // Toggle textContent to force re-announcement even if text is repeated later.
+      el.textContent = '';
+      // Next tick to ensure the clear lands before the new text.
+      setTimeout(function() { el.textContent = text; }, 20);
+    }, delay);
+  }
 
   // ═══ HIGHLIGHT EVENTS (these get the dark navy card style) ═══
   var HIGHLIGHT_TITLES = [
@@ -2529,8 +2936,24 @@
     }
 
     var cardIdAttr = (ev.id !== undefined && ev.id !== null) ? ' id="event-' + esc(String(ev.id)) + '"' : '';
+    // Per-card share button — visible only when the card has an id we can
+     // encode into the URL hash. Fallback to no button for legacy docs
+     // missing ev.id.
+    var linkBtnHTML = '';
+    if (ev.id !== undefined && ev.id !== null) {
+      linkBtnHTML = '<button type="button" class="card-link-btn" '
+        + 'aria-label="Copy link to this event" '
+        + 'onclick="event.stopPropagation(); copyEventLink(\'' + esc(String(ev.id)) + '\', this);">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        + '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>'
+        + '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'
+        + '</svg>'
+        + '</button>';
+    }
+
     return '<div class="' + cardClass + '"' + cardIdAttr + ' data-category="' + esc(cat) + '">' +
       thumbHTML +
+      linkBtnHTML +
       '<div class="event-dot ' + esc(cat) + '"></div>' +
       '<div class="event-content">' +
         '<span class="event-date">' + esc(ev.date_display || '') + '</span>' +
@@ -2589,6 +3012,8 @@
 
     var container = document.getElementById('timeline-container');
     container.innerHTML = html;
+    // Skeleton is gone; let AT know content is ready.
+    container.removeAttribute('aria-busy');
 
     // Re-run animation delays
     var sections = container.querySelectorAll('.year-section');
@@ -2609,6 +3034,11 @@
 
     // Update header scroll
     updateHeader();
+
+    // After first render, honor any URL hash (?deep link to event or year,
+    // or an encoded filter from a shared link). Runs once per renderTimeline
+    // call; popstate listener handles back/forward after this.
+    applyLocationHash();
   }
 
   // ═══ STAT DRAWER HOVER + TAP ═══
@@ -2737,6 +3167,9 @@
       // zeros the transitions when this class is present.
       if (stickyHeader) stickyHeader.classList.add('drawer-active');
       pinDrawer(stat);
+      // Announce drawer open via the stat's label (e.g. "Contracts", "UAVs Built").
+      var _lbl = stat.querySelector('.stat-label');
+      if (typeof announce === 'function' && _lbl) announce(_lbl.textContent.trim() + ' details opened.', true);
     }
     function hide(stat) {
       unpinDrawer(stat);
@@ -3352,6 +3785,7 @@
       });
       navEl.classList.remove('visible');
       countEl.textContent = '';
+      hideEmptyState();
       return;
     }
 
@@ -3390,8 +3824,17 @@
       // presses Next (Enter) or the arrow button.
       countEl.textContent = searchMatches.length + (searchMatches.length === 1 ? ' match' : ' matches');
       currentMatchIdx = -1;
+      announce(searchMatches.length + (searchMatches.length === 1 ? ' match for ' : ' matches for ') + '"' + query + '"');
+      hideEmptyState();
     } else {
       countEl.textContent = '0 matches';
+      announce('No matches for "' + query + '"');
+      showEmptyState({
+        title: 'No events match "' + query + '"',
+        detail: (activeFilter ? 'A ' + activeFilter + ' filter is active. Try clearing the filter or searching a different term.' : 'Try a different search term, or browse the full timeline.'),
+        primary: { label: 'Clear search', onclick: 'clearSearch()' },
+        secondary: activeFilter ? { label: 'Clear filter', onclick: 'toggleFilter(\'' + activeFilter + '\')' } : null
+      });
     }
   }
 
@@ -3439,6 +3882,10 @@
   function toggleFilter(category) {
     // Clear search when filtering
     clearSearch();
+    // Any prior empty-state panel is for search; filter state gets its own
+    // (or no) messaging below. Wipe it so the panel doesn't linger from
+    // the prior search.
+    hideEmptyState();
 
     var cards = document.querySelectorAll('.event-card');
     var sections = document.querySelectorAll('.year-section');
@@ -3484,6 +3931,18 @@
         sections[s].style.display = anyVisible ? '' : 'none';
       }
     }
+    // Announce filter state change to screen readers
+    if (activeFilter) {
+      var visibleCount = 0;
+      for (var ac = 0; ac < cards.length; ac++) {
+        if (cards[ac].style.display !== 'none') visibleCount++;
+      }
+      announce('Filter: ' + activeFilter + '. ' + visibleCount + (visibleCount === 1 ? ' event' : ' events') + ' shown.', true);
+    } else {
+      announce('Filter cleared. All events shown.', true);
+    }
+    // Reflect filter state in the URL so "share this view" links work.
+    writeFilterHash(activeFilter);
   }
 
   // ═══ HEADER SCROLL BEHAVIOR ═══
@@ -3662,7 +4121,25 @@
     _lastGradientBg = null;
   }
 
+  // Reduced-motion opt-out (checked once at init, cached). When the user
+  // has "Reduce Motion" enabled at the OS level we skip the per-scroll-frame
+  // color lerp entirely and snap to a single neutral background. The work
+  // of computing + writing a gradient 60 times per second of scroll is the
+  // motion; removing it is the point.
+  var _reduceMotion = (function() {
+    try {
+      return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { return false; }
+  })();
   function updateYearGradient() {
+    if (_reduceMotion) {
+      // One-time static background — no per-scroll-frame writes.
+      if (!_lastGradientBg) {
+        gradientEl.style.background = 'linear-gradient(180deg, rgba(200,200,200,0.15) 0%, rgba(200,200,200,0.04) 70%, transparent 100%)';
+        _lastGradientBg = 'static';
+      }
+      return;
+    }
     var sections = getYearSections();
     if (!sections.length) return;
     var viewMid = window.innerHeight * 0.4;
