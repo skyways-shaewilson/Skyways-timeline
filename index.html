@@ -1510,6 +1510,12 @@
   /* Hide the Scan button when search is focused so the compact match
      view keeps every pixel above the keyboard for results. */
   body.search-focused .density-toggle.floating { display: none; }
+  /* Hide the Scan button while any stat drawer is open — otherwise the
+     fixed pill (z-index 110 in the body stacking context) overlays the
+     drawer on mobile, where the drawer's own z-index is constrained by
+     the .stat.menu-open parent's stacking context (z-index: 5). General
+     sibling selector because the sticky header is a sibling of the pill. */
+  .sticky-header.drawer-active ~ .density-toggle.floating { display: none; }
 
   /* ── DENSITY: SCAN MODE ──
      When body.density-compact is set, collapse every card to date +
