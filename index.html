@@ -1402,64 +1402,84 @@
     white-space: nowrap; border: 0;
   }
 
-  /* Density toggle — switches between "Full" (default, current view)
-     and "Scan" (cards collapsed to date + title so the 9-year span is
-     scannable in one screenful on desktop, ~5 cards on mobile). Sits
-     under the legend row, right-aligned; subtle so it reads as a tool,
-     not a primary CTA. State persists in localStorage across visits. */
-  .density-row {
+  /* Timeline toolbar — sits between the sticky header and the timeline
+     content. Holds the Scan/Full density toggle out in the open where
+     visitors can discover it (previously buried in the header menu,
+     which expanded its height unnecessarily). Static flow: scrolls
+     with the page, doesn't compete with sticky behavior. */
+  .timeline-toolbar {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 14px 64px 0 64px;
+    position: relative;
+    z-index: 2;
+  }
+  .timeline-toolbar-inner {
     display: flex;
     justify-content: flex-end;
-    padding: 6px 0 0 0;
-    margin-top: -2px;
+    align-items: center;
   }
+
+  /* Density toggle — switches between "Full" (default, current view)
+     and "Scan" (cards collapsed to date + title so the 9-year span is
+     scannable in one screenful). Navy palette matching the page body
+     (not the header's dark navy) now that it lives below the header. */
   .density-toggle {
     appearance: none;
     -webkit-tap-highlight-color: transparent;
-    background: transparent;
-    color: rgba(255,255,255,0.65);
-    border: 1px solid rgba(255,255,255,0.18);
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--gray-15);
     border-radius: 999px;
-    padding: 4px 12px 4px 8px;
+    padding: 7px 16px 7px 12px;
     font-family: inherit;
-    font-size: 10px; font-weight: 600;
+    font-size: 11px; font-weight: 600;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .density-toggle:hover,
   .density-toggle:focus-visible {
-    background: rgba(255,255,255,0.1);
+    background: var(--navy);
     color: var(--white);
-    border-color: rgba(255,255,255,0.35);
+    border-color: var(--navy);
     outline: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
   .density-toggle[aria-pressed="true"] {
-    background: rgba(194,242,19,0.16);
-    color: var(--thrust-green);
-    border-color: rgba(194,242,19,0.35);
+    background: var(--thrust-green);
+    color: var(--navy);
+    border-color: var(--thrust-green);
   }
-  .density-toggle[aria-pressed="true"]:hover {
-    background: rgba(194,242,19,0.22);
+  .density-toggle[aria-pressed="true"]:hover,
+  .density-toggle[aria-pressed="true"]:focus-visible {
+    background: var(--navy);
+    color: var(--thrust-green);
+    border-color: var(--navy);
   }
   .density-icon {
     width: 14px; height: 10px;
     display: inline-flex; flex-direction: column; justify-content: space-between;
   }
   .density-icon-line {
-    display: block; height: 1.5px; border-radius: 1px;
+    display: block; height: 1.75px; border-radius: 1px;
     background: currentColor;
   }
   .density-icon-line:nth-child(1) { width: 100%; }
   .density-icon-line:nth-child(2) { width: 70%; }
   .density-icon-line:nth-child(3) { width: 85%; }
   @media (max-width: 720px) {
-    .density-row { padding-top: 4px; }
-    .density-toggle { font-size: 9px; padding: 3px 10px 3px 7px; letter-spacing: 0.6px; }
-    .density-icon { width: 11px; height: 8px; }
+    .timeline-toolbar { padding: 10px 16px 0 16px; }
+    .density-toggle { font-size: 10px; padding: 6px 14px 6px 10px; letter-spacing: 0.6px; }
+    .density-icon { width: 12px; height: 9px; }
   }
+  /* Hide the toolbar entirely when search is focused on mobile — the
+     compact search-focused state already strips everything non-essential
+     so the match list sits above the keyboard. */
+  body.search-focused .timeline-toolbar { display: none; }
 
   /* ── DENSITY: SCAN MODE ──
      When body.density-compact is set, collapse every card to date +
@@ -2816,17 +2836,26 @@
       <div class="legend-item" data-filter="defense" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Defense Milestones" onclick="toggleFilter('defense')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('defense');}"><div class="legend-dot defense"></div><span class="legend-label">Defense<span class="legend-long"> Milestones</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
       <div class="legend-item" data-filter="milestone" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Major Milestones" onclick="toggleFilter('milestone')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('milestone');}"><div class="legend-dot milestone"></div><span class="legend-label"><span class="legend-long">Major </span>Milestones</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
     </div>
-    <div class="density-row">
-      <button type="button" class="density-toggle" id="densityToggle" aria-pressed="false" onclick="toggleDensity()" aria-label="Toggle timeline density">
-        <span class="density-icon" aria-hidden="true">
-          <span class="density-icon-line"></span>
-          <span class="density-icon-line"></span>
-          <span class="density-icon-line"></span>
-        </span>
-        <span class="density-label">Scan</span>
-      </button>
-    </div>
   </div></div>
+</div>
+
+<!-- Timeline toolbar — sits OUTSIDE the sticky header so it doesn't
+     add height to the minimize transition. Scrolls with the timeline
+     (static flow, not sticky); the Scan/Full toggle is prominent here
+     and discoverable, not buried inside the header menu. Placed
+     between the sticky header and the timeline-wrapper so it's the
+     first thing a visitor sees under the stats banner. -->
+<div class="timeline-toolbar" id="timelineToolbar">
+  <div class="timeline-toolbar-inner">
+    <button type="button" class="density-toggle" id="densityToggle" aria-pressed="false" onclick="toggleDensity()" aria-label="Toggle timeline density">
+      <span class="density-icon" aria-hidden="true">
+        <span class="density-icon-line"></span>
+        <span class="density-icon-line"></span>
+        <span class="density-icon-line"></span>
+      </span>
+      <span class="density-label">Scan</span>
+    </button>
+  </div>
 </div>
 
 <!-- Polite ARIA live region — screen readers announce state changes
