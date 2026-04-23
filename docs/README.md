@@ -14,6 +14,7 @@ Project-level rules and architecture live in the root-level [CLAUDE.md](../CLAUD
 | [FIRESTORE_SCHEMA.md](FIRESTORE_SCHEMA.md) | Firestore `skyways_history_and_story` collection schema: fields, types, required vs. optional, doc ID format, field-by-field description. | Any time you're adding a new event, renaming a field, or writing a sync script. Pair with the rules in CLAUDE.md. |
 | [TIMELINE_REVIEW.md](TIMELINE_REVIEW.md) | Standing review criteria for event copy: voice, acronyms, date format, source quality, categorization rules. | Before committing any event-detail edit or adding a new card. |
 | [SITE_VERIFICATION.md](SITE_VERIFICATION.md) | Post-deploy verification checklist: stats banner values, filter categories, mobile layout, source drawers, contract totals. | After any Firestore sync, banner update, or Vercel deploy. Run through this before declaring a change shipped. |
+| [SOURCE_VISIBILITY_RULES.md](SOURCE_VISIBILITY_RULES.md) | Canonical four-state source classification (internal / mixed / charles-approved / fully public) with banner colors (red / orange / beige / none) and the classifier regex. | Any time you add a new event, a new source, or change how a card is flagged for public distribution. Authoritative reference paired with `memory/feedback_internal_marking_style.md`. |
 
 ## Working ledgers (scope-specific, kept for history)
 

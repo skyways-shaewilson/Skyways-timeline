@@ -209,6 +209,38 @@ All 45 Charles/Tom correction items verified across 65 events:
 
 ### Flagged for separate future session (not Charles/Tom feedback)
 
-- **63 pre-existing em/en dashes live in source labels** (e.g., "Skyways Internal — Charles Acknin"). Violates the no-em-dash user-visible-copy rule. Not part of the audit scope since neither Charles nor Tom raised it.
+- ~~63 pre-existing em/en dashes live in source labels~~ — **RESOLVED same session, see next section.**
 - Tom's Apr 23 re-review reaction was `:eyes:`; no new corrections yet at time of writing.
 - ANA Oct 2025 row (id=41) was live before this session; should reconfirm with Jessica before next press cycle (Charles C-16 compliance hold).
+
+---
+
+## Em-dash cleanup + source-visibility banner rules
+
+Two related pieces of work triggered by the earlier em-dash flag.
+
+| Commit | Summary |
+|---|---|
+| [4e5b2ec](https://github.com/skywaysinc/Skyways-timeline/commit/4e5b2ec) | Em-dash cleanup (63 instances) across source labels + source_urls keys. Mirrored to Firestore (47 docs updated). Contracts stat drawer gained "Internal = no public press release found" disclaimer. New `docs/README.md` folder map. |
+| [09b7ff8](https://github.com/skywaysinc/Skyways-timeline/commit/09b7ff8) | Mobile header aircraft bg fix (Shae's concurrent edit) bundled with banner refactor from same file-session. |
+
+**Source-visibility banner rules formalized into four states** (see `docs/SOURCE_VISIBILITY_RULES.md` for the canonical reference):
+
+| State | Banner color | Trigger |
+|---|---|---|
+| Internal only | **Red** `#d93025` | Skyways Internal + contract #/CLIN/PO, or `[NOT PUBLIC` flag. Military contract pattern. |
+| Mixed | **Orange** `#c05621` | Public source validates card + internal-only addendum |
+| Charles-only | **Beige** `#d4c18c` | Charles Acknin / No Source / Not Published is sole source |
+| Fully public | no banner | External press only |
+
+Code changes: `classifySource(label)` function added (3 buckets: internal / charles-approved / external). Separator regex now accepts `|`, em dash, en dash, and hyphen so it works after the em-dash cleanup. Charles-only cards now correctly show the beige banner (previously got no banner at all — bug).
+
+Memory rule `feedback_internal_marking_style.md` rewritten with the four-state table, classifier logic, and Apr 23, 2026 revision history so future sessions don't re-litigate.
+
+### Em-dash cleanup scope
+
+- 63 instances of em / en dashes in source labels and `source_urls` keys replaced with `|` separator across all 65 events
+- 47 Firestore documents updated (only those with actual changes)
+- 74 unique thumbnails preserved (em-dash fix was purely label text)
+- Render-path scan on index.html: zero em dashes in user-visible HTML (code comments preserved per CLAUDE.md rule)
+- Pre-existing "INTERNAL ONLY" banner logic uncovered and fixed for the pipe separator (regex was em-dash-only, would have silently failed post-cleanup)
