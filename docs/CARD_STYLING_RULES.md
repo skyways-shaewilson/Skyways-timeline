@@ -6,6 +6,43 @@ Authored Apr 23, 2026 after auditing 65 cards and finding six that needed bullet
 
 ---
 
+## Title Convention: `Hook | Why it matters`
+
+Every card title follows this pattern: the hook sits left of a pipe separator and the "why it matters" signal sits to the right. A third pipe is allowed for additional context when useful.
+
+**Hook (left of first pipe) = the single most important short phrase.**
+
+- **Money events (contracts + funding):** the dollar amount is ALWAYS the hook. No exceptions. `$37M | USAF STRATFI | Path to Program of Record`, not `USAF STRATFI | $37M`.
+- **Milestone events:** the event name or platform version. `V3 Block 0 | Full-Scale First Flight`, `Carrier Deck Trials | USS Gerald R. Ford`.
+- **Defense events:** the exercise / program name, first-of-kind, or named counterpart. `ANTX 2019 | Skyways Beats Boeing`, `JMSDF | First Autonomous Resupply to Destroyer Akizuki`.
+
+**Why (right of first pipe) = the significance.**
+
+Pick one of:
+- First-of-kind ("First 60-Mile BVLOS")
+- Named customer or program ("USAF STRATFI", "USMC/GTRI")
+- Specific wow stat ("Zero Skyways Personnel Aboard", "10 Bags of Blood, 300+ Miles")
+- Strategic unlock ("Path to Program of Record", "Connectivity Leap")
+- Explicit dollar signal when not already in hook ("$13M Series A | Thursday Ventures Leads")
+
+**Avoid in titles:**
+- Filler verbs: "Start of," "End of," "Added," "Accelerates," "Expansion" (unless factually the defining action)
+- Insider contract numbers: the prime contract ID belongs in the detail field, not the title. `Navy DLA Order | DGPS Integration`, not `Navy DLA PO | DGPS (SPE8EJ21D0022 PO 0408)`
+- Vague descriptors: "Platform Development," "Connectivity Added," "Team Expansion"
+
+**Examples of the convention applied:**
+
+| Before | After | Why |
+|---|---|---|
+| Series A | $13M (Thursday Ventures Lead) | $13M Series A | Thursday Ventures Leads | Money in hook |
+| Start of Seed Fundraising | Rolling Close | $1M Seed Round Begins | Rolling Close | Money in hook, filler dropped |
+| V2 Platform Development Accelerates | V2 Specs Set by Navy | 20 lb / 400 NM | Concrete spec replaces buzzword |
+| Leadership Team Expansion | Leadership Expansion | Three Senior Hires | Count signals investment level |
+| Starlink Connectivity Added | Starlink Aboard | Connectivity Leap | "Aboard" shows it's operational |
+| USMC V2.2 Delivery & White Sands BVLOS Demo | First 60-Mile BVLOS at White Sands | V2.2 Delivered to USMC | First-of-kind promoted to hook |
+
+---
+
 ## 1. Bullets vs. Prose
 
 Use the `ev.bullets` array when:
@@ -124,6 +161,16 @@ Always "or," never "and." Any bullet or detail making claims about V3 specs must
 - [ ] Source mix classified correctly (red / orange / beige / no banner per SOURCE_VISIBILITY_RULES.md)
 - [ ] Banner color matches the classification
 
+## Card-Review Checklist | Title Step
+
+Before shipping a new card, confirm the title:
+- [ ] Follows `Hook | Why it matters` pattern
+- [ ] Money events have the dollar amount in the hook
+- [ ] No filler verbs ("Start of," "End of," "Added," "Accelerates")
+- [ ] No insider contract numbers
+- [ ] No em/en dashes or arrows
+- [ ] Under ~65 characters preferred (for mobile-friendly display)
+
 ## Scope Note | Internal Audit Fields
 
 The `charles_corrections` array on event docs is an internal audit trail recording WHICH correction was applied in which round. It is never rendered on the live timeline. Em dashes, arrows, and other no-copy characters are tolerated inside `charles_corrections` entries (you'll often see them when quoting Charles verbatim). All the rules above apply to user-rendered fields: `title`, `detail`, `tag`, `date_display`, `sources`, and `bullets`.
@@ -131,3 +178,4 @@ The `charles_corrections` array on event docs is an internal audit trail recordi
 ## Revision History
 
 - **2026-04-23**: Initial file. Documented bullet patterns, arrow prohibition, content-relevance rule, version-designation preference, V3 capability rule, review checklist. Case study of the Project ULTRA program-ceiling bullet removal. Scope note clarifying that `charles_corrections` audit-log field is exempt from the character rules.
+- **2026-04-23 (evening)**: Added `Hook | Why it matters` title convention. 24 titles retitled across the 65-event corpus to apply the convention, with money always in the hook for money events.
