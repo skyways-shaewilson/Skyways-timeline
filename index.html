@@ -920,6 +920,65 @@
     color: var(--gray-50);
   }
 
+  /* Contracts-table column-header sort affordance. `data-sort` columns
+     become clickable; a tiny glyph renders the current direction. */
+  .contracts-row.contracts-head [data-sort] {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: color 0.15s ease;
+  }
+  .contracts-row.contracts-head [data-sort]:hover,
+  .contracts-row.contracts-head [data-sort]:focus-visible {
+    color: var(--navy);
+    outline: none;
+  }
+  .contracts-row.contracts-head .sort-arrow {
+    font-size: 9px;
+    opacity: 0.35;
+    line-height: 1;
+    transition: opacity 0.15s ease;
+  }
+  .contracts-row.contracts-head [data-sort].active-sort .sort-arrow {
+    opacity: 1;
+    color: var(--blue);
+  }
+  .contracts-row.contracts-head [data-sort].active-sort { color: var(--navy); }
+
+  /* Export CSV button — tiny affordance in the contracts-table footer.
+     Sits on its own row under the source legend. */
+  .contracts-export-row {
+    display: flex; justify-content: flex-end;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--gray-15);
+  }
+  .contracts-export-btn {
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    color: var(--gray-75);
+    border: 1px solid var(--gray-15);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .contracts-export-btn:hover,
+  .contracts-export-btn:focus-visible {
+    color: var(--navy);
+    border-color: var(--navy);
+    background: rgba(0, 0, 0, 0.03);
+    outline: none;
+  }
+  .contracts-export-btn svg { flex-shrink: 0; }
+
   /* Highlight for cards reached via contracts-table click.
      Outer category-colored halo (an 8px solid ring + a ~33px diffuse
      glow) that PULSES between dim and bright every 1.6s for the 9s
@@ -1342,6 +1401,289 @@
     overflow: hidden; clip: rect(0,0,0,0);
     white-space: nowrap; border: 0;
   }
+
+  /* Density toggle — switches between "Full" (default, current view)
+     and "Scan" (cards collapsed to date + title so the 9-year span is
+     scannable in one screenful on desktop, ~5 cards on mobile). Sits
+     under the legend row, right-aligned; subtle so it reads as a tool,
+     not a primary CTA. State persists in localStorage across visits. */
+  .density-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 0 0 0;
+    margin-top: -2px;
+  }
+  .density-toggle {
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    padding: 4px 12px 4px 8px;
+    font-family: inherit;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .density-toggle:hover,
+  .density-toggle:focus-visible {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    border-color: rgba(255,255,255,0.35);
+    outline: none;
+  }
+  .density-toggle[aria-pressed="true"] {
+    background: rgba(194,242,19,0.16);
+    color: var(--thrust-green);
+    border-color: rgba(194,242,19,0.35);
+  }
+  .density-toggle[aria-pressed="true"]:hover {
+    background: rgba(194,242,19,0.22);
+  }
+  .density-icon {
+    width: 14px; height: 10px;
+    display: inline-flex; flex-direction: column; justify-content: space-between;
+  }
+  .density-icon-line {
+    display: block; height: 1.5px; border-radius: 1px;
+    background: currentColor;
+  }
+  .density-icon-line:nth-child(1) { width: 100%; }
+  .density-icon-line:nth-child(2) { width: 70%; }
+  .density-icon-line:nth-child(3) { width: 85%; }
+  @media (max-width: 720px) {
+    .density-row { padding-top: 4px; }
+    .density-toggle { font-size: 9px; padding: 3px 10px 3px 7px; letter-spacing: 0.6px; }
+    .density-icon { width: 11px; height: 8px; }
+  }
+
+  /* ── DENSITY: SCAN MODE ──
+     When body.density-compact is set, collapse every card to date +
+     title (+ category accent bar) only. Details, bullets, tag/source
+     meta, thumbnail background, internal banner, and big value number
+     all hide. Tapping a card toggles `.expanded` which reveals the
+     full content inline — lets the user dip into detail without
+     leaving scan mode. Search/filter compose normally; a search
+     navigate auto-expands the hit card (handled in navigateMatch). */
+  body.density-compact .event-card {
+    padding: 8px 16px 8px 20px;
+    cursor: pointer;
+  }
+  body.density-compact .event-card.highlight {
+    padding: 10px 18px 10px 22px;
+  }
+  body.density-compact .event-card-bg,
+  body.density-compact .event-detail,
+  body.density-compact .event-bullets,
+  body.density-compact .event-meta,
+  body.density-compact .event-value,
+  body.density-compact .event-card .internal-banner,
+  body.density-compact .card-link-btn {
+    display: none;
+  }
+  body.density-compact .event-title {
+    font-size: 15px; line-height: 1.25; letter-spacing: -0.2px;
+    font-weight: 600;
+  }
+  body.density-compact .event-card.highlight .event-title { font-size: 16px; }
+  body.density-compact .event-date {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+  body.density-compact .event-card:hover { transform: none; }
+  body.density-compact .events-col { gap: 8px; }
+  /* Expanded state — an individual card that the user tapped restores
+     full detail while the rest of the list stays collapsed. */
+  body.density-compact .event-card.expanded {
+    padding: 16px 20px 16px 24px;
+    cursor: default;
+  }
+  body.density-compact .event-card.expanded.highlight {
+    padding: 22px 24px 22px 28px;
+  }
+  body.density-compact .event-card.expanded .event-card-bg,
+  body.density-compact .event-card.expanded .event-detail,
+  body.density-compact .event-card.expanded .event-bullets,
+  body.density-compact .event-card.expanded .event-meta,
+  body.density-compact .event-card.expanded .event-value,
+  body.density-compact .event-card.expanded .internal-banner,
+  body.density-compact .event-card.expanded .card-link-btn {
+    display: revert;
+  }
+  body.density-compact .event-card.expanded .event-title { font-size: 22px; font-weight: 700; }
+  body.density-compact .event-card.expanded.highlight .event-title { font-size: 24px; }
+  @media (max-width: 720px) {
+    body.density-compact .event-card { padding: 6px 14px 6px 18px; }
+    body.density-compact .event-title { font-size: 13px; }
+    body.density-compact .event-date { font-size: 9px; }
+    body.density-compact .events-col { gap: 6px; }
+    body.density-compact .event-card.expanded { padding: 12px 16px 12px 20px; }
+    body.density-compact .event-card.expanded .event-title { font-size: 19px; }
+  }
+
+  /* Era chapter divider — shown above the first year-section of each
+     narrative era (see ERAS config in the script block). Four appear
+     in the full timeline: Founding | Stealth Years | Scaling |
+     Public Emergence. Full-width band with title + tagline + stat
+     pills. Mobile collapses the pills into a single wrapped row.
+     Designed to feel like a section opener in long-form editorial,
+     not a card — no shadow, lighter vertical rhythm. */
+  .era-divider {
+    margin: 56px 0 8px 0;
+    padding: 22px 0 26px 0;
+    border-top: 1px solid var(--gray-15);
+    position: relative;
+    /* A thin thrust-green rule under the title (full width of events
+       column) ties era branding to the category accent palette without
+       competing with the red internal banner treatment. */
+  }
+  .era-divider::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 0;
+    width: 64px; height: 3px;
+    background: var(--thrust-green);
+  }
+  .era-divider-inner {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .era-divider-range {
+    font-size: 11px; font-weight: 700;
+    color: var(--gray-50);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding-top: 6px;
+  }
+  .era-divider-body {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .era-divider-title {
+    font-size: 34px; font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.6px;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .era-divider-tagline {
+    font-size: 14px; font-weight: 450;
+    color: var(--gray-75);
+    line-height: 1.5;
+    max-width: 680px;
+    margin: 0;
+  }
+  .era-divider-pills {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 4px;
+  }
+  .era-divider-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(194, 242, 19, 0.15);
+    color: var(--navy);
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  /* First era divider sits right under the stats banner — shorter top
+     margin so the stats-to-timeline transition reads as intentional. */
+  .era-divider:first-child { margin-top: 32px; }
+  @media (max-width: 720px) {
+    .era-divider { margin: 32px 0 4px 0; padding: 16px 0 18px 0; }
+    .era-divider-inner { grid-template-columns: 60px 1fr; }
+    .era-divider-range { font-size: 9px; padding-top: 4px; letter-spacing: 0.8px; }
+    .era-divider-body { padding-left: 20px; gap: 6px; }
+    .era-divider-title { font-size: 22px; letter-spacing: -0.3px; }
+    .era-divider-tagline { font-size: 12.5px; line-height: 1.45; }
+    .era-divider-pill { font-size: 9px; padding: 2px 8px; }
+    .era-divider::before { width: 40px; height: 2px; }
+  }
+  /* Respect the one clean red banner / no-color-noise rule by NOT
+     changing the era divider color on search or filter states —
+     era dividers always render neutral, they frame the story. */
+  body.search-focused .era-divider { display: none; }
+
+  /* Upcoming era — forward-looking chapter rendered after the last
+     real year-section. Used for 2027+ Scaling when production begins.
+     Dashed rule and muted palette signal "what's next, not shipped."
+     Hidden on search/filter just like other era dividers. */
+  .era-divider.upcoming {
+    border-top: 1px dashed var(--gray-25, var(--gray-15));
+    margin-top: 40px;
+    opacity: 0.82;
+  }
+  .era-divider.upcoming::before {
+    background: var(--gray-50);
+    opacity: 0.6;
+  }
+  .era-divider.upcoming .era-divider-title {
+    color: var(--gray-75);
+  }
+  .era-divider.upcoming .era-divider-range {
+    color: var(--gray-50);
+  }
+  .era-divider.upcoming .era-divider-pill {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--gray-75);
+  }
+
+  /* Annual summary strip — sits above each year's event cards. One
+     tight line: "N events | Year headline". Headlines authored in the
+     YEAR_HEADLINES config in the script block; counts auto-computed
+     from yearGroups in renderTimeline. Reads like an editorial lede
+     and gives a mid-scroll user a single-glance sense of what mattered
+     this year without expanding every card. */
+  .year-summary {
+    margin: 4px 0 12px 0;
+    padding: 0 0 8px 0;
+    border-bottom: 1px solid var(--gray-15);
+    font-size: 12.5px; font-weight: 450;
+    color: var(--gray-75);
+    line-height: 1.4;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 10px;
+  }
+  .year-summary-count {
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--gray-50);
+    white-space: nowrap;
+  }
+  .year-summary-divider {
+    color: var(--gray-15);
+    user-select: none;
+  }
+  .year-summary-headline {
+    color: var(--navy);
+    font-weight: 500;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  @media (max-width: 720px) {
+    .year-summary {
+      margin: 2px 0 10px 0;
+      padding-bottom: 6px;
+      font-size: 11px;
+      gap: 4px 8px;
+    }
+    .year-summary-count { font-size: 9px; letter-spacing: 0.6px; }
+  }
+  /* Hide summary strips when compact/search mode is active — they're
+     editorial context, not signal for someone hunting a specific match. */
+  body.search-focused .year-summary { display: none; }
 
   /* Empty-state panel — shown when search returns 0 matches or filter
      returns 0 visible events. Replaces the previous silent "nothing to
@@ -2237,10 +2579,10 @@
               <span>Commercial</span>
               <span class="sh-amount">Values not publicly disclosed</span>
             </div>
-            <div class="contracts-row contracts-head">
-              <div class="c-name">Contract</div>
-              <div class="c-amount">Amount</div>
-              <div class="c-year">Year</div>
+            <div class="contracts-row contracts-head" data-section="commercial">
+              <div class="c-name" role="button" tabindex="0" data-sort="name" aria-label="Sort by contract name">Contract <span class="sort-arrow" aria-hidden="true"></span></div>
+              <div class="c-amount" role="button" tabindex="0" data-sort="amount" aria-label="Sort by amount">Amount <span class="sort-arrow" aria-hidden="true"></span></div>
+              <div class="c-year" role="button" tabindex="0" data-sort="year" aria-label="Sort by year">Year <span class="sort-arrow" aria-hidden="true"></span></div>
               <div class="c-source"></div>
             </div>
             <div class="contracts-row" onclick="scrollToContract(39)">
@@ -2271,10 +2613,10 @@
               <span>Defense</span>
               <span class="sh-amount">$46,322,134.18 | 13 contracts + 1 lease</span>
             </div>
-            <div class="contracts-row contracts-head">
-              <div class="c-name">Contract</div>
-              <div class="c-amount">Amount</div>
-              <div class="c-year">Year</div>
+            <div class="contracts-row contracts-head" data-section="defense">
+              <div class="c-name" role="button" tabindex="0" data-sort="name" aria-label="Sort by contract name">Contract <span class="sort-arrow" aria-hidden="true"></span></div>
+              <div class="c-amount" role="button" tabindex="0" data-sort="amount" aria-label="Sort by amount">Amount <span class="sort-arrow" aria-hidden="true"></span></div>
+              <div class="c-year" role="button" tabindex="0" data-sort="year" aria-label="Sort by year">Year <span class="sort-arrow" aria-hidden="true"></span></div>
               <div class="c-source">Source</div>
             </div>
             <div class="contracts-row" onclick="scrollToContract(7)">
@@ -2378,6 +2720,16 @@
             </div>
           </div>
           <div class="stat-menu-source">Click any row to jump to its timeline card. <strong>Commercial</strong> = non-US-government partnerships (RWE, ANA, Skyports); dollar amounts vary in disclosure. <strong>Defense</strong>: <strong>Internal</strong> = signed contract on file, amount not publicly disclosed | <strong>Public</strong> = publicly releasable document | <strong>Lease (no $)</strong> = NSLP-CRADA Navy aircraft lease, non-monetary.</div>
+          <div class="contracts-export-row">
+            <button type="button" class="contracts-export-btn" onclick="event.stopPropagation(); exportContractsCSV();" aria-label="Export contracts table to CSV">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+          </div>
         </div>
       </div>
       <!-- km Flown removed — now shown live in the Fleet Flight Telemetry panel -->
@@ -2463,6 +2815,16 @@
       <div class="legend-item" data-filter="product" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Product Development" onclick="toggleFilter('product')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('product');}"><div class="legend-dot product"></div><span class="legend-label">Product<span class="legend-long"> Development</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
       <div class="legend-item" data-filter="defense" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Defense Milestones" onclick="toggleFilter('defense')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('defense');}"><div class="legend-dot defense"></div><span class="legend-label">Defense<span class="legend-long"> Milestones</span></span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
       <div class="legend-item" data-filter="milestone" role="button" tabindex="0" aria-pressed="false" aria-label="Filter by Major Milestones" onclick="toggleFilter('milestone')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFilter('milestone');}"><div class="legend-dot milestone"></div><span class="legend-label"><span class="legend-long">Major </span>Milestones</span><div class="legend-x"><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M3.05 3.05a.5.5 0 01.7 0L6 5.29l2.25-2.24a.5.5 0 01.7.7L6.71 6l2.24 2.25a.5.5 0 01-.7.7L6 6.71 3.75 8.95a.5.5 0 01-.7-.7L5.29 6 3.05 3.75a.5.5 0 010-.7z"/></svg></div></div>
+    </div>
+    <div class="density-row">
+      <button type="button" class="density-toggle" id="densityToggle" aria-pressed="false" onclick="toggleDensity()" aria-label="Toggle timeline density">
+        <span class="density-icon" aria-hidden="true">
+          <span class="density-icon-line"></span>
+          <span class="density-icon-line"></span>
+          <span class="density-icon-line"></span>
+        </span>
+        <span class="density-label">Scan</span>
+      </button>
     </div>
   </div></div>
 </div>
@@ -2581,6 +2943,240 @@
       return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
     });
   }
+
+  // ═══ CONTRACTS TABLE — SORT + CSV EXPORT ═══
+  // Works directly on the DOM. The contracts-grid stays hardcoded HTML
+  // (Shae iterates on row copy frequently); adding sort + CSV as a layer
+  // on top avoids the risk of diverging from the canonical rendered
+  // markup. Sort is per-section (Commercial / Defense) and operates on
+  // the child .contracts-row elements, leaving section headers and
+  // subtotal rows in place.
+  //
+  // Amount parsing handles the messy reality of the column: exact values
+  // like "$272,711.48", approximations like "~$2.2M obligated ($4.99M
+  // ceiling)", and non-numeric labels like "Lease (no $)" or
+  // "Value not disclosed". Non-numeric → -Infinity so they sort to the
+  // bottom on descending, top on ascending.
+  var _contractsSortState = {}; // { section: { column, direction } }
+  function parseContractAmount(text) {
+    if (!text) return Number.NEGATIVE_INFINITY;
+    var t = String(text).trim();
+    // Pull the first $NUMBER, optionally with suffix k/m/b/M etc.
+    var m = t.match(/\$([\d,]+(?:\.\d+)?)\s*([kKmMbB])?/);
+    if (!m) return Number.NEGATIVE_INFINITY;
+    var num = parseFloat(m[1].replace(/,/g, ''));
+    if (!isFinite(num)) return Number.NEGATIVE_INFINITY;
+    var suffix = (m[2] || '').toLowerCase();
+    if (suffix === 'k') num *= 1e3;
+    else if (suffix === 'm') num *= 1e6;
+    else if (suffix === 'b') num *= 1e9;
+    return num;
+  }
+  function parseContractYear(text) {
+    if (!text) return Number.NEGATIVE_INFINITY;
+    var m = String(text).match(/\d{4}/);
+    return m ? parseInt(m[0], 10) : Number.NEGATIVE_INFINITY;
+  }
+  function getSortKey(row, column) {
+    if (column === 'amount') return parseContractAmount(
+      (row.querySelector('.c-amount') || {}).textContent
+    );
+    if (column === 'year') return parseContractYear(
+      (row.querySelector('.c-year') || {}).textContent
+    );
+    // name
+    return ((row.querySelector('.c-name') || {}).textContent || '').trim().toLowerCase();
+  }
+  function sortContractsSection(sectionName, column) {
+    var head = document.querySelector('.contracts-row.contracts-head[data-section="' + sectionName + '"]');
+    if (!head) return;
+    // Toggle direction if clicking the same column; default to descending
+    // for numeric columns (bigger-first feels right for Amount and Year),
+    // ascending for name.
+    var prev = _contractsSortState[sectionName] || {};
+    var direction;
+    if (prev.column === column) {
+      direction = prev.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+      direction = (column === 'name') ? 'asc' : 'desc';
+    }
+    _contractsSortState[sectionName] = { column: column, direction: direction };
+
+    // Collect the data rows belonging to this section — everything
+    // BETWEEN the section head and the next section head or subtotal
+    // (skipping .contracts-total / .contracts-subhead / .contracts-section-head).
+    var parent = head.parentElement;
+    var kids = Array.prototype.slice.call(parent.children);
+    var startIdx = kids.indexOf(head);
+    var rows = [];
+    var afterRowsIdx = startIdx + 1;
+    for (var i = startIdx + 1; i < kids.length; i++) {
+      var el = kids[i];
+      if (el.classList.contains('contracts-section-head') ||
+          el.classList.contains('contracts-head') ||
+          el.classList.contains('contracts-total') ||
+          el.classList.contains('contracts-subhead') ||
+          el.classList.contains('contracts-grand-total')) {
+        break;
+      }
+      rows.push(el);
+      afterRowsIdx = i + 1;
+    }
+    rows.sort(function(a, b) {
+      var av = getSortKey(a, column);
+      var bv = getSortKey(b, column);
+      if (av < bv) return direction === 'asc' ? -1 : 1;
+      if (av > bv) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+    // Re-insert sorted rows in place. Use the marker element that was
+    // after the last row as the anchor (insert before it).
+    var anchor = kids[afterRowsIdx] || null;
+    rows.forEach(function(r) { parent.insertBefore(r, anchor); });
+
+    // Update header arrow visuals for this section.
+    var heads = head.querySelectorAll('[data-sort]');
+    heads.forEach(function(h) {
+      var isActive = h.getAttribute('data-sort') === column;
+      h.classList.toggle('active-sort', isActive);
+      var arrow = h.querySelector('.sort-arrow');
+      if (arrow) arrow.textContent = isActive ? (direction === 'asc' ? '▲' : '▼') : '';
+    });
+    announce(
+      'Sorted ' + sectionName + ' contracts by ' + column + ', ' +
+      (direction === 'asc' ? 'ascending' : 'descending'), true
+    );
+  }
+  // Bind sort handlers once. The contracts-table is hardcoded HTML so
+  // the heads exist at page load (not lazy-rendered).
+  (function bindContractsSort() {
+    document.querySelectorAll('.contracts-row.contracts-head[data-section]').forEach(function(head) {
+      var section = head.getAttribute('data-section');
+      head.querySelectorAll('[data-sort]').forEach(function(cell) {
+        var column = cell.getAttribute('data-sort');
+        cell.addEventListener('click', function(e) {
+          e.stopPropagation();
+          sortContractsSection(section, column);
+        });
+        cell.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            sortContractsSection(section, column);
+          }
+        });
+      });
+    });
+  })();
+
+  // CSV export — iterates the current DOM order (so a sort is preserved
+  // in the exported file) and writes "skyways_contracts_YYYY-MM.csv".
+  // Navigator.clipboard isn't an option here (CSV is a file download),
+  // so use a Blob + object URL and click a temporary anchor.
+  function exportContractsCSV() {
+    var rows = [['Section', 'Contract', 'Amount', 'Year', 'Source']];
+    var currentSection = '';
+    document.querySelectorAll('.stat-menu.contracts-table .contracts-grid > *').forEach(function(el) {
+      if (el.classList.contains('contracts-section-head')) {
+        var sec = (el.querySelector('span') || {}).textContent || '';
+        currentSection = sec.trim();
+        return;
+      }
+      if (!el.classList.contains('contracts-row')) return;
+      if (el.classList.contains('contracts-head') ||
+          el.classList.contains('contracts-subhead') ||
+          el.classList.contains('contracts-grand-total')) return;
+      // contracts-total gets exported as a subtotal marker (with an
+      // empty year so it doesn't fight the sort).
+      var name   = ((el.querySelector('.c-name')   || {}).textContent || '').trim();
+      var amount = ((el.querySelector('.c-amount') || {}).textContent || '').trim();
+      var year   = ((el.querySelector('.c-year')   || {}).textContent || '').trim();
+      var source = (el.querySelector('.c-source .src-pill') || {}).textContent || '';
+      rows.push([currentSection, name, amount, year, source.trim()]);
+    });
+    // Escape CSV per RFC-4180: wrap every field in quotes, double any
+    // internal quotes. Keeps commas inside names safe.
+    var csv = rows.map(function(row) {
+      return row.map(function(cell) {
+        return '"' + String(cell == null ? '' : cell).replace(/"/g, '""') + '"';
+      }).join(',');
+    }).join('\r\n');
+    var d = new Date();
+    var stamp = d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0');
+    var filename = 'skyways_contracts_' + stamp + '.csv';
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    announce('Contracts CSV exported: ' + filename, true);
+  }
+  window.exportContractsCSV = exportContractsCSV;
+
+  // ═══ DENSITY TOGGLE (SCAN / FULL) ═══
+  // Two-state toggle in the stats banner. "Scan" collapses each card to
+  // date + title so the 9-year span can be skimmed in one screenful;
+  // "Full" is the default detailed view. Tapping a collapsed card in
+  // scan mode toggles `.expanded` on that single card so the user can
+  // dip into detail without leaving scan mode. State persists in
+  // localStorage as skyways-density.
+  function getDensity() {
+    try { return localStorage.getItem('skyways-density') || 'full'; }
+    catch (e) { return 'full'; }
+  }
+  function setDensity(mode) {
+    try { localStorage.setItem('skyways-density', mode); } catch (e) { /* ignore quota */ }
+    applyDensity();
+  }
+  function applyDensity() {
+    var mode = getDensity();
+    document.body.classList.toggle('density-compact', mode === 'compact');
+    var btn = document.getElementById('densityToggle');
+    if (btn) {
+      btn.setAttribute('aria-pressed', mode === 'compact' ? 'true' : 'false');
+      var lbl = btn.querySelector('.density-label');
+      // Button label shows the mode the user would switch INTO, not the
+      // current mode — matches the "Turn on / Turn off" pattern.
+      if (lbl) lbl.textContent = mode === 'compact' ? 'Full' : 'Scan';
+    }
+  }
+  function toggleDensity() {
+    var next = getDensity() === 'compact' ? 'full' : 'compact';
+    setDensity(next);
+    // Collapse any per-card expanded state when leaving scan mode so the
+    // Full view renders clean.
+    if (next === 'full') {
+      document.querySelectorAll('.event-card.expanded').forEach(function(c) {
+        c.classList.remove('expanded');
+      });
+    }
+    announce(next === 'compact'
+      ? 'Scan density: cards collapsed to date and title'
+      : 'Full density: cards show all detail', true);
+  }
+  window.toggleDensity = toggleDensity;
+  // Tap / click on a card in scan mode toggles its expanded state.
+  // Delegated listener so it also works for cards rendered after this
+  // binding (the timeline re-renders aren't currently a flow, but
+  // defensive delegation costs nothing).
+  document.addEventListener('click', function(e) {
+    if (!document.body.classList.contains('density-compact')) return;
+    var card = e.target.closest('.event-card');
+    if (!card) return;
+    // Don't toggle when the user clicks something interactive INSIDE
+    // the card (source trigger, copy-link button, a link, or any other
+    // actionable child). They need their own click semantics.
+    if (e.target.closest('.sources-trigger, .card-link-btn, a, button')) return;
+    card.classList.toggle('expanded');
+  });
+  // Apply persisted density ASAP so the first paint matches the user's
+  // preference. applyDensity() also runs again after renderTimeline
+  // via the skeleton path — both are cheap no-ops when the class is
+  // already in the right state.
+  applyDensity();
 
   // ═══ URL HASH DEEP-LINKING ═══
   // Three supported hash formats so shared links land in the right state:
@@ -2716,6 +3312,95 @@
 
   // ═══ UPCOMING EVENTS (dashed border style) ═══
   var UPCOMING_KEYWORDS = ['V3 Production Ramp', 'V3 Full-Rate Production'];
+
+  // ═══ ERA CHAPTERS ═══
+  // 9 years of 64 events reads flat. Era dividers group the timeline
+  // into four narrative acts so a first-time visitor sees the arc of
+  // the company, not just a stream of milestones. `startYear` is the
+  // first year of each era; renderTimeline injects the divider right
+  // before that year's section. Keep chronological, no gaps, no
+  // overlaps. Copy uses `|` separators per the no-em-dashes rule.
+  var ERAS = [
+    {
+      startYear: 2016,
+      range: '2016 | 2018',
+      title: 'Founding',
+      tagline: 'V1 built in a San Francisco apartment. Skyways incorporates in Austin. First USMC and Navy demos.',
+      pills: ['3 years', 'V1 to V2.2', 'First defense POs']
+    },
+    {
+      startYear: 2019,
+      range: '2019 | 2022',
+      title: 'DoW Operation Molding',
+      tagline: 'First Navy OTA awarded. Blue Water Maritime Logistics UAS. DIU Navy Spiral contract. Series A closes. Navy partnership takes hold.',
+      pills: ['4 years', 'V2.3 to V2.6', 'Navy OTA $2M+']
+    },
+    {
+      startYear: 2023,
+      range: '2023 | 2024',
+      title: 'Platform Improvements',
+      tagline: 'V3 enters flight test. Navy NAWCAD contracts expand. RIMPAC Hawaii. III MEF Okinawa. Japan operations begin.',
+      pills: ['2 years', 'V3 block rollout', 'RIMPAC + III MEF']
+    },
+    {
+      startYear: 2025,
+      range: '2025 | 2026',
+      title: 'Public Emergence',
+      tagline: 'First public Demo Day. $37M STRATFI. ANA Holdings partnership. Series B round opens. Three continents, one network.',
+      pills: ['2 years', '$37M STRATFI', 'Series B open']
+    },
+    {
+      startYear: 2027,
+      range: '2027 | beyond',
+      title: 'Scaling',
+      tagline: 'Production ramps. Fleet expands across three continents. Operational at scale.',
+      pills: ['Production', 'Fleet growth', 'Global ops'],
+      upcoming: true
+    }
+  ];
+  function eraForYear(yr) {
+    var y = parseInt(yr, 10);
+    var match = null;
+    for (var i = 0; i < ERAS.length; i++) {
+      if (y >= ERAS[i].startYear) match = ERAS[i];
+    }
+    return match;
+  }
+  function renderEraDivider(era) {
+    var pillsHtml = era.pills.map(function(p) {
+      return '<span class="era-divider-pill">' + esc(p) + '</span>';
+    }).join('');
+    var cls = 'era-divider' + (era.upcoming ? ' upcoming' : '');
+    return '<section class="' + cls + '" aria-label="Era: ' + esc(era.title) + '">' +
+      '<div class="era-divider-inner">' +
+        '<div class="era-divider-range">' + esc(era.range) + '</div>' +
+        '<div class="era-divider-body">' +
+          '<h2 class="era-divider-title">' + esc(era.title) + '</h2>' +
+          '<p class="era-divider-tagline">' + esc(era.tagline) + '</p>' +
+          '<div class="era-divider-pills">' + pillsHtml + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  // ═══ ANNUAL HEADLINES ═══
+  // One-liner above each year's cards. Event count is auto-computed by
+  // renderTimeline; the headline is authored here so it stays punchy.
+  // Missing year = no headline (count-only strip renders). Keep to a
+  // single phrase separated by `|` or `,` per the no-em-dashes rule.
+  var YEAR_HEADLINES = {
+    2016: 'V1 built in a San Francisco apartment',
+    2017: 'Delaware incorporation | First USMC and Navy demos',
+    2018: 'Marine ops | USMC delivery orders | Early V2 prototypes',
+    2019: 'ANTX win over Boeing | First Navy OTA awarded',
+    2020: 'OTA spiral continues | Capabilities expand',
+    2021: 'Carrier deck trials | USAF SBIR Phase I',
+    2022: 'DIU/Navy OTA | Series A closes',
+    2023: 'V3 enters flight test | NAWCAD BWUAS 2.0',
+    2024: 'RIMPAC Hawaii | III MEF TCP Okinawa | Phase 3 IDIQ',
+    2025: 'Project ULTRA | $37M STRATFI | First public Demo Day',
+    2026: 'Series B opens | Japan ops scale | Three continents operational'
+  };
 
   function isHighlight(title) {
     for (var i = 0; i < HIGHLIGHT_TITLES.length; i++) {
@@ -2997,17 +3682,51 @@
 
     // Build HTML
     var html = '';
+    // Track era transitions so we only emit a divider when the era CHANGES
+    // between consecutive years. Null on first iteration means "emit for
+    // the first year's era too" (opens the first chapter).
+    var lastEraStart = null;
     for (var y = 0; y < yearOrder.length; y++) {
       var yr = yearOrder[y];
       var yrStr = String(yr);
+      var era = eraForYear(yr);
+      if (era && era.startYear !== lastEraStart) {
+        html += renderEraDivider(era);
+        lastEraStart = era.startYear;
+      }
       var cards = '';
       var evts = yearGroups[yr];
       for (var e = 0; e < evts.length; e++) {
         cards += renderCard(evts[e]);
       }
+      // Annual summary strip — count is auto-derived from this year's
+      // event count; headline is authored in YEAR_HEADLINES (may be
+      // missing for years without a curated one-liner — count still
+      // renders alone).
+      var headline = YEAR_HEADLINES[yr];
+      var countText = evts.length + (evts.length === 1 ? ' event' : ' events');
+      var summaryHTML = '<div class="year-summary">' +
+        '<span class="year-summary-count">' + esc(countText) + '</span>' +
+        (headline
+          ? '<span class="year-summary-divider" aria-hidden="true">|</span>' +
+            '<span class="year-summary-headline">' + esc(headline) + '</span>'
+          : '') +
+        '</div>';
       html += '<div class="year-section">' +
         '<div class="year-label-col"><div class="year-label">' + yrStr + '</div></div>' +
-        '<div class="events-col">' + cards + '</div></div>';
+        '<div class="events-col">' + summaryHTML + cards + '</div></div>';
+    }
+
+    // Upcoming-era tail: any ERAS entry whose startYear hasn't shown up
+    // in the data yet (e.g. 2027 Scaling before any 2027 events exist).
+    // Renders as a forward-looking "what's next" placeholder so the
+    // narrative arc doesn't end on the current year. Skipped if we
+    // already rendered it in the year loop.
+    var lastDataYear = yearOrder.length ? parseInt(yearOrder[yearOrder.length - 1], 10) : 0;
+    for (var ue = 0; ue < ERAS.length; ue++) {
+      if (ERAS[ue].startYear > lastDataYear && ERAS[ue].startYear !== lastEraStart) {
+        html += renderEraDivider(ERAS[ue]);
+      }
     }
 
     var container = document.getElementById('timeline-container');
@@ -3708,6 +4427,14 @@
 
     var target = searchMatches[currentMatchIdx];
     target.classList.add('active');
+
+    // When density is set to scan (compact), the matched text lives
+    // inside a card whose detail is display:none. Expand the card so
+    // the user actually sees the highlighted hit.
+    if (document.body.classList.contains('density-compact')) {
+      var hostCard = target.closest('.event-card');
+      if (hostCard) hostCard.classList.add('expanded');
+    }
 
     // Drawer auto-reveal: when the match lives inside a source drawer, open
     // the drawer so the highlighted hit is actually visible. On mobile we
