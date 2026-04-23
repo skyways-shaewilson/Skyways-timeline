@@ -37,6 +37,16 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  /* iOS Safari creeps font-size up on repeated input+scroll interactions
+     (focused search input + sticky header + smooth-scrolling to a match,
+     4-5 taps in a row = progressive zoom). Lock text size + disable
+     double-tap zoom so the search-navigation flow stays at 1.0x. */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
   body {
     font-family: 'Founders Grotesk', sans-serif;
     background: var(--white);
@@ -160,6 +170,7 @@
     background: var(--white); color: var(--navy);
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    touch-action: manipulation;
     /* Suppress native webkit/Safari clear X (would collide with our custom nav + clear) */
     -webkit-appearance: none;
     appearance: none;
@@ -1663,8 +1674,12 @@
       max-width: 220px;
       margin-left: auto;
     }
-    .search-nav { right: 26px; }
-    .search-count { display: none; } /* Hide count on narrow screens to save space */
+    .search-nav { right: 26px; gap: 2px; }
+    /* Keep the match counter (e.g. "1 of 20") visible on mobile — users need
+       it to know their position in the result set. Compact font + tight gap
+       so it fits inside the narrower mobile input. */
+    .search-count { display: inline-block; font-size: 10px; margin-right: 1px; }
+    .search-nav-btn { padding: 2px 3px; font-size: 11px; }
     /* font-size: 16px prevents iOS Safari from auto-zooming the page when the
        input gets focus. Anything < 16px triggers Safari's "readability zoom"
        which magnifies the whole viewport by ~1.33x, cutting off the left edge
@@ -1878,10 +1893,10 @@
       <input type="search" class="search-input" id="searchInput" placeholder="Search events..." aria-label="Search timeline events" autocomplete="off" oninput="handleSearch()" onkeydown="handleSearchKeydown(event)">
       <div class="search-nav" id="searchNav">
         <span class="search-count" id="searchCount"></span>
-        <button class="search-nav-btn" onclick="prevSearchMatch()">&#9650;</button>
-        <button class="search-nav-btn" onclick="nextSearchMatch()">&#9660;</button>
+        <button class="search-nav-btn" onclick="event.stopPropagation(); prevSearchMatch()">&#9650;</button>
+        <button class="search-nav-btn" onclick="event.stopPropagation(); nextSearchMatch()">&#9660;</button>
       </div>
-      <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">
+      <button class="search-clear" id="searchClear" onclick="event.stopPropagation(); clearSearch()" aria-label="Clear search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -3019,6 +3034,17 @@
   function navigateMatch(dir) {
     if (!searchMatches || searchMatches.length === 0) return;
 
+    // On touch devices, blur the search input so the iOS keyboard closes
+    // and visualViewport resets. Without this, each nav tap keeps the
+    // keyboard open and iOS's "keep focused input visible" auto-scroll
+    // fights our smooth-scroll, which is what was causing the progressive
+    // zoom after 4-5 tapped matches.
+    var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+      var inputEl = document.getElementById('searchInput');
+      if (inputEl && document.activeElement === inputEl) inputEl.blur();
+    }
+
     // Remove active from current
     if (currentMatchIdx >= 0 && searchMatches[currentMatchIdx]) {
       searchMatches[currentMatchIdx].classList.remove('active');
@@ -3034,7 +3060,10 @@
     var target = searchMatches[currentMatchIdx];
     target.classList.add('active');
 
-    // Drawer auto-reveal: only when navigating to a match that lives inside a source drawer
+    // Drawer auto-reveal: when the match lives inside a source drawer, open
+    // the drawer so the highlighted hit is actually visible. On mobile we
+    // also call positionSourceMenuMobile so the drawer sits under its
+    // trigger instead of defaulting off-screen.
     var menu = target.closest('.sources-menu');
     if (menu) {
       var trigger = menu.closest('.sources-trigger');
@@ -3042,6 +3071,9 @@
       if (trigger) trigger.classList.add('active');
       menu.classList.add('active');
       if (card) card.classList.add('sources-open');
+      if (trigger && typeof positionSourceMenuMobile === 'function') {
+        positionSourceMenuMobile(menu, trigger);
+      }
     }
 
     document.getElementById('searchCount').textContent = (currentMatchIdx + 1) + ' of ' + searchMatches.length;
