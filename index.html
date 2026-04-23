@@ -921,28 +921,44 @@
   }
 
   /* Highlight for cards reached via contracts-table click.
-     Outer thrust-green halo (a 5px solid ring + a ~22px diffuse glow) so
-     the card content / thumbnail / category color are never tinted —
-     only the background AROUND the card lights up. Holds for ~9s, then
-     fades over 1s. If the user scrolls after the smooth-scroll has
-     settled (armed ~900ms after click), the highlight fast-fades over
-     ~350ms. Original drop-shadow is preserved at every state.
+     Outer thrust-green halo (an 8px solid ring + a ~33px diffuse glow,
+     ~50% larger than the prior static halo) that PULSES between dim and
+     bright every 1.6s for the 9s hold, then fades over 1s. The card
+     content / thumbnail / category color are never tinted — only the
+     background AROUND the card lights up. If the user scrolls after the
+     smooth-scroll has settled (armed ~900ms after click), the highlight
+     fast-fades over ~350ms instead. Original drop-shadow is preserved at
+     every state.
      z-index on the card lifts the halo above adjacent sibling cards
      within the same year section. */
+  @keyframes contractJumpHaloPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 8px rgba(194, 242, 19, 0.35),
+                  0 0 33px 10px rgba(194, 242, 19, 0.25),
+                  0 2px 8px rgba(0,0,0,0.1),
+                  0 1px 3px rgba(0,0,0,0.08);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(194, 242, 19, 0.90),
+                  0 0 33px 10px rgba(194, 242, 19, 0.75),
+                  0 2px 8px rgba(0,0,0,0.1),
+                  0 1px 3px rgba(0,0,0,0.08);
+    }
+  }
   .event-card.contract-jump-pulse {
     position: relative;
     z-index: 6;
-    box-shadow: 0 0 0 5px rgba(194, 242, 19, 0.65),
-                0 0 22px 6px rgba(194, 242, 19, 0.55),
+    animation: contractJumpHaloPulse 1.6s ease-in-out infinite;
+  }
+  /* Stop pulsing and fade out the halo. Browser interpolates from the
+     animation's current frame to this static transparent state. */
+  .event-card.contract-jump-pulse.faded {
+    animation: none;
+    box-shadow: 0 0 0 8px rgba(194, 242, 19, 0),
+                0 0 33px 10px rgba(194, 242, 19, 0),
                 0 2px 8px rgba(0,0,0,0.1),
                 0 1px 3px rgba(0,0,0,0.08);
     transition: box-shadow 1s ease-out;
-  }
-  .event-card.contract-jump-pulse.faded {
-    box-shadow: 0 0 0 5px rgba(194, 242, 19, 0),
-                0 0 22px 6px rgba(194, 242, 19, 0),
-                0 2px 8px rgba(0,0,0,0.1),
-                0 1px 3px rgba(0,0,0,0.08);
   }
   .event-card.contract-jump-pulse.fading-fast {
     transition: box-shadow 350ms ease-out;
