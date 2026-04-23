@@ -4,6 +4,72 @@ Running chronicle of meaningful work on the Skyways Timeline site. One entry per
 
 ---
 
+## 2026-04-23 (afternoon) — Mobile UX overhaul, CRADA reclassification
+
+### What shipped
+
+**Mobile search behavior**
+- `.search-input` mobile font-size bumped to 16px to prevent iOS Safari's auto-zoom on focus. The zoom was horizontally clipping the left edge of every card (e.g. "Skyways" rendering as "ys"). 16px is the Safari threshold — anything below triggers magnification.
+- `body.search-focused` class toggled on input focus / non-empty query. Collapses hero + stats banner, trims card chrome (hides thumbnail bg, bullets, value number, internal banner) so matching cards stack compactly above the keyboard while keeping title + detail readable.
+- `clearSearch()` blurs instead of re-focusing, then calls an explicit sync so tapping the X, hitting Escape, or clicking a filter category cleanly exits search and brings the normal view back. Previously the re-focus kept the page in search mode.
+- `navigateMatch()` uses `visualViewport.height` to detect an open keyboard and scrolls matches ~25% down the visible-above-keyboard area so the sticky search nav stays reachable after tapping prev/next.
+
+**Mobile drawer placement (stat drawers + event-card source drawers)**
+- Rule established and saved to memory as `feedback_mobile_drawer_placement.md` after three rounds of correction: **every drawer on mobile anchors under its trigger, never a bottom sheet, never floating.**
+- `pinDrawer()` for stat drawers: source-list drawers (stats 2-5) stay absolute-positioned under their stat via CSS; JS sets inline `max-height = visualViewport.bottom - drawerTop - 20px` so the bottom scrollbar always stays above Safari's dynamic URL bar.
+- Contracts-table drawer (wider, needs the full viewport width): `position: fixed` with EXPLICIT `top = stat.bottom + 8px` and `left: 8px / right: 8px`. No more `top: auto + bottom: 16px` bottom-sheet behavior.
+- `positionSourceMenuMobile()` for event-card source drawers: clears inline styles on open, measures trigger rect, shifts horizontally if overflow-right, caps max-height dynamically, and triggers `window.scrollBy({ top: triggerTop - 120, behavior: 'smooth' })` when available below < 180px so the card moves higher and the drawer has room to open downward. Re-measures max-height after the smooth scroll settles (~380ms).
+- Mobile scroll-dismiss listener removed for source drawers — the auto-scroll we just triggered would instantly close the drawer we just opened. Desktop scroll-dismiss unchanged.
+
+**Filter legend**
+- `pointer-events: none` on `.legend-x` and its SVG so taps always bubble to the parent `.legend-item` onclick. Previously the tiny X icon could capture the hit-test and feel like "only the X unselects".
+- Mobile `.legend-item` padding bumped to `8px 4px` so the full filter button is a comfortable 32px tap target.
+- `-webkit-tap-highlight-color: transparent` for cleaner iOS feedback.
+
+**Stat banner polish**
+- Label "Cost of Helicopter" renamed to "Helicopter cost" (shorter, reduces overlap risk).
+- `.stat-value` and `.stat-label` on mobile get `min-width: 0` and `width: 100%` — flex children default to `min-width: min-content` which defeats the `minmax(0, 1fr)` grid cap. The longer labels ("Helicopter cost", "Navy Relationship") were overflowing into adjacent columns despite `overflow: hidden + text-overflow: ellipsis`.
+
+**CRADA reclassification**
+- NSLP-CRADA aircraft lease (id=113) was marked **Public** in the $46M+ contracts table, but Skyways has no press release or news coverage. The only public-release authorization is the CRADA document's own Article 19.
+- Contracts-table row: `src-public` → `src-internal`.
+- ID 113 source: `"Contract on File (Navy NSLP-CRADA, publicly releasable)"` → `"Skyways Internal — Contract on File (NSLP-CRADA, approved for public use)"`. Triggers `isInternalSource()` so the internal banner path fires.
+- ID 113 detail last sentence: "Per Article 19, the agreement is approved for public use. No press release has been issued."
+- New banner variant `internal-banner-approved-public`. `renderCard()` detects `/approved for public/i` in any source label and swaps the default "NOT APPROVED FOR PUBLIC DISTRIBUTION" copy for a clearer "APPROVED FOR PUBLIC USE, NO PRESS RELEASE". Same red styling, just different text.
+- Firestore synced via `set(merge=True)` so `thumbnail` and `source_thumbnails` stayed intact.
+
+### Lessons learned
+
+1. **iOS input font-size < 16px triggers auto-zoom**, which clips cards horizontally. Hard rule: mobile inputs that get focused must be 16px minimum.
+2. **`calc(100dvh - N)` alone is insufficient for absolute-positioned drawers.** CSS max-height caps total height but can't know WHERE the drawer starts. Use JS + `visualViewport` at open time.
+3. **Flex children need explicit `min-width: 0` to respect grid `minmax(0, 1fr)`.** The default `min-width: min-content` beats `max-width: 100%` and `overflow: hidden + ellipsis`.
+4. **Bottom-sheet positioning reads as "floating/disconnected" on mobile.** Anchor drawers under their trigger. (Corrected three times in this session before the rule stuck. Saving the memory file on correction #3 turned the cycle around — correction #4, applied to a different drawer type, landed on first commit.)
+5. **Auto-scroll + scroll-dismiss are incompatible.** When `positionSourceMenuMobile` scrolls the page up to make room, a scroll-dismiss listener would close the drawer that just opened. Disable one or the other on mobile.
+6. **Claude Preview's serve.py is sandbox-restricted.** Fall back to `python3 -m http.server <port>` + `curl | grep` for fast verification.
+7. **Writing the rule to memory mid-session stops the repeat cycle.** After correction #3 on drawer placement, writing `feedback_mobile_drawer_placement.md` with explicit pre-commit grep checks + mental test matrix meant correction #4 landed right.
+
+### Steps that worked well (keep doing)
+
+- **Parallel tool calls for memory reads** — batching 5 file reads at once cut the discovery phase to one round-trip.
+- **TodoWrite for multi-item work** — each user message added new items to a shared list; progress stayed visible and no item got lost.
+- **Scheduled wakeups for Vercel verification** — `ScheduleWakeup` with `curl | grep -c "<unique-new-string>"` after each push verified deploy without polling or asking the user to refresh.
+- **`set(merge=True)` for Firestore partial updates** — kept `thumbnail` and `source_thumbnails` intact while surgically updating `sources` and `detail`.
+- **Bash verification script after each batch of edits** — scripted `python3 | grep` checks against the served HTML caught typos and missing changes before pushing.
+
+### Steps that wasted time (avoid repeating)
+
+- Re-attempting bottom-sheet positioning for the stat contracts-table after Shae said "too high" — should have landed on under-stat the first time.
+- Starting with static `calc(100dvh - N)` instead of JS-driven visualViewport — added an extra correction round.
+- Trusting the commit `git diff --stat` numbers without checking what actually landed (one commit shipped only 14 insertions when I expected 150+; turned out Shae's remote had my edits already via a merge, so the diff was small but the state was correct).
+
+### Follow-ups / open items
+
+- `feedback_mobile_drawer_placement.md` rule is enforced via grep, but consider adding a CI check (`.claude/hooks/`) so future edits can't reintroduce `bottom: 16px` inside a mobile drawer rule.
+- "Navy Relationship" label on mobile is still close to the column width even after the `min-width: 0` fix — if overlap returns, consider shortening to "Navy Partner" or similar (not requested yet).
+- The `internal-banner-approved-public` variant currently uses the same red styling as the warning banners. Shae may want a distinct color (amber / teal) later to visually separate "approved but internal" from "not approved" — ask if she flags it.
+
+---
+
 ## 2026-04-22 (continued) → 2026-04-23 — Drawer stutter, hero redesign, Drive sweep, thumbnail dedup, typography scrub
 
 ### What shipped
