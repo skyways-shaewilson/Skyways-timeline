@@ -1202,9 +1202,18 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .legend-item:hover {
-    background: rgba(255,255,255,0.1);
-    color: var(--white);
+  /* Hover styles gated to real-hover devices only. iOS Safari leaves
+     `:hover` stuck on the last-tapped element until the user taps
+     somewhere else — and these hover styles (white background +
+     color) are visually near-identical to `.active-filter`. Tapping
+     a filter to deselect it then "looked" still-active because the
+     sticky hover read as highlighted. `@media (hover: hover)` scopes
+     hover to pointers that actually support it. */
+  @media (hover: hover) {
+    .legend-item:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+    }
   }
 
   .legend-item:focus-visible {
@@ -1226,8 +1235,8 @@
     opacity: 0.45;
   }
 
-  .legend-item.dimmed:hover {
-    opacity: 0.5;
+  @media (hover: hover) {
+    .legend-item.dimmed:hover { opacity: 0.5; }
   }
 
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; transition: opacity 0.15s ease; }
