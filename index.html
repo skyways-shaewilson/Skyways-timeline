@@ -2826,12 +2826,41 @@
         document.activeElement.blur();
       }
     }
-    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    // Reset any prior highlight on this card so the timing restarts cleanly.
+    // CRITICAL: add the highlight class BEFORE measuring or scrolling. The
+    // :has() rule on .year-section overrides content-visibility: auto, which
+    // forces the section to fully lay out. Without this, the browser uses
+    // contain-intrinsic-size (a 900px guess) to estimate the card's position
+    // for scrollIntoView, then real layout happens mid-scroll and the target
+    // is wrong — worst on first click since the section has never been
+    // rendered. (Bug Shae reported Apr 23: "First click scroll to event
+    // location is over scrolling past the event.")
     card.classList.remove('contract-jump-pulse', 'faded', 'fading-fast');
-    void card.offsetWidth; // force reflow so transitions can re-trigger
+    void card.offsetWidth;
     card.classList.add('contract-jump-pulse');
+
+    // Force a synchronous layout pass so the content-visibility flip
+    // completes BEFORE we measure the card's position. Reading offsetHeight
+    // / getBoundingClientRect triggers layout synchronously.
+    void card.offsetHeight;
+
+    // Manual scroll with sticky-header offset so the card lands in the
+    // visible area below the header (not hidden behind it). Header
+    // minimizes during scroll; we measure its CURRENT height as the
+    // header-area reservation. Slight imprecision during the minimize
+    // transition is acceptable — within ~50px of true center.
+    var headerH = 0;
+    var sticky = document.getElementById('stickyHeader');
+    if (sticky) headerH = sticky.getBoundingClientRect().height;
+    var rect = card.getBoundingClientRect();
+    var visibleH = window.innerHeight - headerH;
+    var targetCardTopInViewport = headerH + Math.max(20, (visibleH - rect.height) / 2);
+    var targetScrollY = window.scrollY + (rect.top - targetCardTopInViewport);
+    // Clamp so we never scroll past the bottom of the page.
+    var maxScrollY = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+    if (targetScrollY > maxScrollY) targetScrollY = maxScrollY;
+    if (targetScrollY < 0) targetScrollY = 0;
+    window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
 
     var holdTimer = null;
     var cleanupTimer = null;
