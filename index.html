@@ -934,14 +934,14 @@
      within the same year section. */
   @keyframes contractJumpHaloPulse {
     0%, 100% {
-      box-shadow: 0 0 0 8px rgba(var(--halo-rgb), 0.35),
-                  0 0 33px 10px rgba(var(--halo-rgb), 0.25),
+      box-shadow: 0 0 0 8px rgba(var(--halo-rgb), 0.20),
+                  0 0 33px 10px rgba(var(--halo-rgb), 0.14),
                   0 2px 8px rgba(0,0,0,0.1),
                   0 1px 3px rgba(0,0,0,0.08);
     }
     50% {
-      box-shadow: 0 0 0 8px rgba(var(--halo-rgb), 0.90),
-                  0 0 33px 10px rgba(var(--halo-rgb), 0.75),
+      box-shadow: 0 0 0 8px rgba(var(--halo-rgb), 0.55),
+                  0 0 33px 10px rgba(var(--halo-rgb), 0.42),
                   0 2px 8px rgba(0,0,0,0.1),
                   0 1px 3px rgba(0,0,0,0.08);
     }
@@ -972,10 +972,21 @@
   .event-card.contract-jump-pulse.fading-fast {
     transition: box-shadow 350ms ease-out;
   }
-  /* Lift the year section so the halo is not clipped behind the next year's
-     stacking context. Mirrors the same trick used for sources-open drawers. */
+  /* Lift the year section AND override its content-visibility containment
+     so the halo can extend beyond the section bounds without being clipped
+     (content-visibility: auto otherwise creates an implicit clip box). */
   .year-section:has(.event-card.contract-jump-pulse) {
     z-index: 50;
+    content-visibility: visible;
+  }
+  /* And override the wrapper's overflow-x: clip so the halo's right edge
+     isn't sliced off (events column has 100px year-label padding on the
+     left but the wrapper is the only thing on the right, so the right
+     side hits the clip first). Safe because the halo is short-lived
+     (~10s) and the only thing that would extend horizontally during
+     this window. */
+  .timeline-wrapper:has(.event-card.contract-jump-pulse) {
+    overflow-x: visible;
   }
 
   /* Mobile: keep every stat source drawer anchored DIRECTLY UNDER its own
@@ -2793,13 +2804,14 @@
   // user scrolls AFTER the smooth-scroll has finished, the highlight
   // fast-fades over ~350ms instead.
   //
-  // First-click bug fix: previously a 900ms timer armed the user-scroll
-  // listener, but if the smooth scroll took longer than 900ms (long
-  // distance, first click) the listener caught the smooth scroll itself
-  // and instantly fast-faded the halo before the user saw it. Now the
-  // listener arms on the `scrollend` event (with a 1.6s timeout
-  // fallback for browsers without scrollend support), so the user-scroll
-  // listener only ever sees real user scroll input.
+  // First-click bug fix v2: the previous `scrollend`-based fix was
+  // unreliable (Safari support is recent, and even Chrome doesn't always
+  // fire it cleanly for programmatic smooth scrolls). Replaced with
+  // direct scroll-position polling: we watch window.scrollY and consider
+  // the smooth scroll "done" once scrollY hasn't changed for 250ms
+  // (~15 stable frames at 60fps). Then arm the user-scroll listener.
+  // This only ever sees real user input because programmatic smooth
+  // scroll always changes scrollY frame-by-frame.
   window.scrollToContract = function(eventId) {
     var card = document.getElementById('event-' + eventId);
     if (!card) {
@@ -2823,15 +2835,16 @@
 
     var holdTimer = null;
     var cleanupTimer = null;
-    var armFallbackTimer = null;
-    var scrollEndHandler = null;
+    var hardArmTimer = null;
+    var pollIntervalId = null;
     var scrollHandler = null;
+    var armed = false;
 
     function cleanup() {
       if (holdTimer) clearTimeout(holdTimer);
       if (cleanupTimer) clearTimeout(cleanupTimer);
-      if (armFallbackTimer) clearTimeout(armFallbackTimer);
-      if (scrollEndHandler) window.removeEventListener('scrollend', scrollEndHandler);
+      if (hardArmTimer) clearTimeout(hardArmTimer);
+      if (pollIntervalId) clearInterval(pollIntervalId);
       if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
       card.classList.remove('contract-jump-pulse', 'faded', 'fading-fast');
     }
@@ -2843,11 +2856,10 @@
     }, 9000);
 
     function armUserScrollListener() {
-      // Cancel the other arm path if both fired.
-      if (armFallbackTimer) { clearTimeout(armFallbackTimer); armFallbackTimer = null; }
-      if (scrollEndHandler) { window.removeEventListener('scrollend', scrollEndHandler); scrollEndHandler = null; }
-      // Already armed once? Don't re-arm.
-      if (scrollHandler) return;
+      if (armed) return;
+      armed = true;
+      if (pollIntervalId) { clearInterval(pollIntervalId); pollIntervalId = null; }
+      if (hardArmTimer) { clearTimeout(hardArmTimer); hardArmTimer = null; }
       scrollHandler = function() {
         if (card.classList.contains('faded')) return; // already auto-fading
         card.classList.add('fading-fast');
@@ -2861,15 +2873,27 @@
       window.addEventListener('scroll', scrollHandler, { once: true, passive: true });
     }
 
-    // Modern: arm right after the smooth scroll actually finishes.
-    if ('onscrollend' in window) {
-      scrollEndHandler = function() { armUserScrollListener(); };
-      window.addEventListener('scrollend', scrollEndHandler, { once: true });
-    }
-    // Fallback (covers Safari < 18.2 and the unlikely case scrollend
-    // never fires): arm at 1.6s, generous enough to cover most smooth
-    // scrolls. If scrollend fires first, the fallback is canceled.
-    armFallbackTimer = window.setTimeout(armUserScrollListener, 1600);
+    // Poll scrollY every 50ms. When it hasn't changed for 5 consecutive
+    // checks (~250ms), consider the smooth scroll done and arm the
+    // listener. Programmatic smooth scrolls update scrollY every frame,
+    // so this can only resolve once the browser stops moving the page.
+    var lastY = window.scrollY;
+    var stableTicks = 0;
+    pollIntervalId = window.setInterval(function() {
+      var y = window.scrollY;
+      if (y === lastY) {
+        stableTicks++;
+        if (stableTicks >= 5) armUserScrollListener();
+      } else {
+        stableTicks = 0;
+        lastY = y;
+      }
+    }, 50);
+
+    // Hard cap: if for any reason the poll never resolves (scroll never
+    // settles, e.g. user keeps interacting), force-arm at 4s so we don't
+    // leak the interval forever.
+    hardArmTimer = window.setTimeout(armUserScrollListener, 4000);
   };
 
   // ═══ THUMBNAIL COLOR EXTRACTION ═══
