@@ -8,10 +8,10 @@
     "detail": "V1 was Skyways' first aircraft, a Vertical Takeoff and Landing (VTOL) fixed-wing quadplane with 5 electric motors built on a Commercial Off-The-Shelf (COTS) foam wing modified for VTOL propulsion. Despite its simplicity, V1 flew a fully autonomous multi-point cargo mission: takeoff from point A, fly to point B to pick up a small box, deliver it to point C, and return to A, all without human intervention. An onboard Companion Computer ran an early version of Skyways' precision landing code to execute the mission end-to-end. Endurance was under 30 minutes with a 2-lb cargo capacity.\n\nCharles' father, also passionate about aviation, flew to San Francisco multiple times in 2016 to help build V1, serving as an unofficial co-founder during this earliest phase. For flight testing, Charles would drive almost every day to the Pacifica coast near San Francisco, and later to Livermore where there was more open space to fly.",
     "tag": "Founding",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "source_urls": {
-      "Skyways Internal \u2014 Charles Acknin": "https://youtu.be/Gz8sRWUiw7o"
+      "Skyways Internal | Charles Acknin": "https://youtu.be/Gz8sRWUiw7o"
     },
     "sort_date": "2016-06",
     "source_thumbnails": {
@@ -29,18 +29,18 @@
     "detail": "Charles Acknin, born near Airbus HQ in southern France, co-founded Skyways in Austin, TX with Chris Craighill. Acknin left Google after nearly 7 years as a senior software engineer on core search. The company began 'not with a fuselage but with code,' reflecting Acknin's software-first philosophy applied to autonomous flight. Delaware incorporation filed February 13, 2017.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "OpenCorporates \u2014 Delaware Filing (Feb 13, 2017)",
-      "Y Combinator \u2014 Skyways Company Profile",
-      "SAM.gov \u2014 Business Start Date Feb 13, 2017"
+      "Skyways Internal | Charles Acknin",
+      "OpenCorporates | Delaware Filing (Feb 13, 2017)",
+      "Y Combinator | Skyways Company Profile",
+      "SAM.gov | Business Start Date Feb 13, 2017"
     ],
     "charles_corrections": [
       "Round II: Only two co-founders, Anurag Sabbarwal was not a co-founder"
     ],
     "source_urls": {
-      "OpenCorporates \u2014 Delaware Filing (Feb 13, 2017)": "https://opencorporates.com/companies/us_tx/0802663414",
-      "Y Combinator \u2014 Skyways Company Profile": "https://www.ycombinator.com/companies/skyways",
-      "SAM.gov \u2014 Business Start Date Feb 13, 2017": "https://opengovus.com/sam-entity/DATMBHX83MN7"
+      "OpenCorporates | Delaware Filing (Feb 13, 2017)": "https://opencorporates.com/companies/us_tx/0802663414",
+      "Y Combinator | Skyways Company Profile": "https://www.ycombinator.com/companies/skyways",
+      "SAM.gov | Business Start Date Feb 13, 2017": "https://opengovus.com/sam-entity/DATMBHX83MN7"
     },
     "sort_date": "2017-01",
     "source_thumbnails": {
@@ -58,15 +58,15 @@
     "detail": "Charles Acknin along with co-founder Chris Craighill (formerly at Firefly Aerospace) secured access to Firefly's shop and office in Cedar Park and their rocket test site at Briggs, TX for flight testing.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)"
+      "Skyways Internal | Charles Acknin",
+      "The Drone Girl | Inside Skyways (Nov 2025)"
     ],
     "source_urls": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
     },
     "sort_date": "2017-01",
     "source_thumbnails": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
     },
     "date_display": "2017-01",
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/11f3a4c6f4f768f481979fe8e7f0cc8915ade62d-1008x756.jpg?w=1600&fit=max&auto=format"
@@ -80,7 +80,7 @@
     "detail": "Skyways began iterating through initial all-electric Vertical Takeoff and Landing (VTOL) configurations, building small-scale aircraft for proof-of-concept testing and autonomous flight validation.",
     "tag": "Product",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Source attribution updated: this entry exists because Charles flagged the pre-founding all-electric prototyping phase as a missing timeline milestone."
@@ -102,15 +102,15 @@
     "detail": "First official Skyways office and shop in Manor, TX at 5,000 square feet. Replaced the temporary Firefly shared space with a dedicated facility for aircraft development.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)"
+      "Skyways Internal | Charles Acknin",
+      "The Drone Girl | Inside Skyways (Nov 2025)"
     ],
     "source_urls": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
     },
     "sort_date": "2017-05",
     "source_thumbnails": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
     },
     "date_display": "2017-05",
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/a601a8d365910997fd74e00880a3068285182c47-5970x3039.jpg?w=1600&fit=max&auto=format"
@@ -125,18 +125,18 @@
     "tag": "Milestone",
     "sources": [
       "Crunchbase",
-      "FlyEye \u2014 Innovator Series",
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)"
+      "FlyEye | Innovator Series",
+      "The Drone Girl | Inside Skyways (Nov 2025)"
     ],
     "source_urls": {
       "Crunchbase": "https://www.crunchbase.com/organization/skyways",
-      "FlyEye \u2014 Innovator Series": "https://www.flyeye.io/skyways-autonomous-long-range-cargo-drones/",
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
+      "FlyEye | Innovator Series": "https://www.flyeye.io/skyways-autonomous-long-range-cargo-drones/",
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
     },
     "sort_date": "2017-06",
     "source_thumbnails": {
-      "FlyEye \u2014 Innovator Series": "https://www.flyeye.io/wp-content/uploads/2025/10/Skyways-1028x685-1-e1760987568908-1000x600.webp",
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
+      "FlyEye | Innovator Series": "https://www.flyeye.io/wp-content/uploads/2025/10/Skyways-1028x685-1-e1760987568908-1000x600.webp",
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
     },
     "date_display": "2017-06",
     "thumbnail": "https://www.flyeye.io/wp-content/uploads/2025/10/Skyways-1028x685-1-e1760987568908-1000x600.webp"
@@ -150,7 +150,7 @@
     "detail": "Skyways built and flew V2.0, a small quadplane X8 with a 12ft wingspan, the company's first carbon fiber composite airframe. V2.0 was demonstrated to investors for fundraising purposes as part of the seed round. The aircraft is still displayed on the ceiling of the Tech Ridge shop.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V2.0 built and flown in 2017, small quadplane X8, 12ft wingspan, first composite airframe"
@@ -172,14 +172,14 @@
     "detail": "Skyways began raising its seed round on a rolling basis, bringing in early capital to fund aircraft development and operations. $120K pre-seed from Y Combinator, followed by a $1M seed round led by Capital Factory with 12 additional investors.",
     "tag": "Funding",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "Crunchbase \u2014 Skyways Seed Round (Jul 2017)",
-      "TechCrunch \u2014 YC S17 Demo Day (Aug 21, 2017)"
+      "Skyways Internal | Charles Acknin",
+      "Crunchbase | Skyways Seed Round (Jul 2017)",
+      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)"
     ],
     "charles_corrections": [],
     "source_urls": {
-      "Crunchbase \u2014 Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
-      "TechCrunch \u2014 YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
+      "Crunchbase | Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
+      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
     },
     "sort_date": "2017-07",
     "source_thumbnails": {
@@ -197,7 +197,7 @@
     "detail": "In the second half of 2017, Skyways started building V2.1 and V2.2, a larger 18ft wingspan, 140-lb All-Up Weight (AUW) composite airframe. The team crashed a lot and learned a lot during this intensive build and test phase.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: Second half of 2017, started V2.1 and V2.2, 18ft wingspan, 140-lb AUW, crashed a lot"
@@ -219,8 +219,8 @@
     "detail": "The United States Marine Corps (USMC), in partnership with the Georgia Institute of Technology / Georgia Tech Research Institute (GTRI), issued Skyways' very first purchase order for two V2.2 aircraft under federal prime contract FA8075-14-D-0018-0018 (USAF AFLCMC). PO #0000441708 (Nov 2, 2017): two V2.2 UAS, integration and flight tests, USMC training, test support, crating and shipping. PO #0000498568 (Jun 1, 2018): CDR Preparation, CDR Execution, two sets aircraft containers and auxiliary equipment containers. Combined value $272,711.48 across the two POs. This was Skyways' first-ever contract and a critical early validation of the platform's readiness for military customers.",
     "tag": "Contract | USMC",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "Skyways Internal \u2014 GTRI POs #0000441708 ($213,967.48, Nov 2, 2017) + #0000498568 ($58,744.00, Jun 1, 2018) under FA8075-14-D-0018-0018, not publicly disclosed"
+      "Skyways Internal | Charles Acknin",
+      "Skyways Internal | GTRI POs #0000441708 ($213,967.48, Nov 2, 2017) + #0000498568 ($58,744.00, Jun 1, 2018) under FA8075-14-D-0018-0018, not publicly disclosed"
     ],
     "charles_corrections": [
       "Round III: This happened end of 2017 \u2014 first ever contract/PO. Navy Blue Water program only happened later in 2019.",
@@ -243,7 +243,7 @@
     "detail": "Skyways finished building the first two V2.2 aircraft for the United States Marine Corps (USMC) and drove to New Mexico for flight testing and demonstration at White Sands with New Mexico State University (NMSU), Georgia Tech Research Institute (GTRI), and USMC. This marked the first time Skyways ever flew Beyond Visual Line of Sight (BVLOS) and completed a greater than 60-mile flight, still all-electric at the time.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: Apr 2018, first two V2.2 for USMC, White Sands NM demo with NMSU + GTRI + USMC, first BVLOS, >60-mile flight, still all electric"
@@ -289,7 +289,7 @@
     "detail": "Following the ANTX 2019 competition win, the U.S. Navy awarded an Other Transaction Authority (OTA) contract to Skyways ($575,141 base) for the Blue Water Maritime Logistics Unmanned Aircraft System (UAS) program. Contract number N00421-19-9-0007, awarded August 29, 2019 by NAWCAD. This first Navy contract specifically funded the development of hybrid propulsion for the V2 platform. Through subsequent modifications including P00003 (Spiral Dev V2.6, Sep 2020), P00005 (AV3, Dec 2020), P00006 (SATCOM Link, Jan 2022), and P00007 (extension and SLINs, Jul 2022), the funded value grew to $2,066,701.73 by July 2022 (Total Potential Amount including CMG Fee: $2,476,005.91).",
     "tag": "Contract | U.S. Navy",
     "sources": [
-      "NASC (Naval Aviation Systems Consortium) \u2014 N00421-19-9-0007",
+      "NASC (Naval Aviation Systems Consortium) | N00421-19-9-0007",
       "Janes (2020)",
       "USNI News (Aug 2021)"
     ],
@@ -297,7 +297,7 @@
       "Round III: The very first US Navy contract (2019) was specifically to do the hybrid propulsion."
     ],
     "source_urls": {
-      "NASC (Naval Aviation Systems Consortium) \u2014 N00421-19-9-0007": "http://nascsolutions.org/project/n00421-19-9-0007/",
+      "NASC (Naval Aviation Systems Consortium) | N00421-19-9-0007": "http://nascsolutions.org/project/n00421-19-9-0007/",
       "Janes (2020)": "https://www.janes.com/osint-insights/defence-news/update-us-navy-acquires-skyways-aircraft-prototype-for-blue-water-maritime-logistics-uas",
       "USNI News (Aug 2021)": "https://news.usni.org/2021/08/05/navy-considering-drone-delivery-for-essential-parts-at-sea"
     },
@@ -341,20 +341,20 @@
     "detail": "Skyways raised its seed round on a rolling basis over the first several years of the company, bringing in capital as needed rather than in a single close. Early seed investors included Capital Factory, Social Capital, NextView Ventures, and others.",
     "tag": "Funding",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "Crunchbase \u2014 Skyways Seed Round (Jul 2017)",
-      "TechCrunch \u2014 YC S17 Demo Day (Aug 21, 2017)"
+      "Skyways Internal | Charles Acknin",
+      "Crunchbase | Skyways Seed Round (Jul 2017)",
+      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)"
     ],
     "charles_corrections": [
       "Round III: Removed UpHonest. Outlander VC and MVP Ventures came in later (2021+ Series A), not seed."
     ],
     "source_urls": {
-      "Crunchbase \u2014 Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
-      "TechCrunch \u2014 YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
+      "Crunchbase | Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
+      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
     },
     "sort_date": "2019-12",
     "source_thumbnails": {
-      "FlyEye \u2014 CEO Interview": "https://www.flyeye.io/wp-content/uploads/2025/10/Charles-Acknin-1000x600.webp"
+      "FlyEye | CEO Interview": "https://www.flyeye.io/wp-content/uploads/2025/10/Charles-Acknin-1000x600.webp"
     },
     "date_display": "2019-12"
   },
@@ -367,14 +367,14 @@
     "detail": "Skyways iterated through initial all-electric Vertical Takeoff and Landing (VTOL) configurations. Aircraft were small-scale, used for proof-of-concept flights, and evolved rapidly through multiple designs before the Navy contract drove the shift to hybrid propulsion.",
     "tag": "Product",
     "sources": [
-      "Commercial UAV News \u2014 Pursuit of Autonomous Deliveries (May 2020)"
+      "Commercial UAV News | Pursuit of Autonomous Deliveries (May 2020)"
     ],
     "source_urls": {
-      "Commercial UAV News \u2014 Pursuit of Autonomous Deliveries (May 2020)": "https://www.commercialuavnews.com/infrastructure/skyways-and-the-pursuit-of-fully-autonomous-drone-deliveries"
+      "Commercial UAV News | Pursuit of Autonomous Deliveries (May 2020)": "https://www.commercialuavnews.com/infrastructure/skyways-and-the-pursuit-of-fully-autonomous-drone-deliveries"
     },
     "sort_date": "2019-12",
     "source_thumbnails": {
-      "Commercial UAV News \u2014 Pursuit of Autonomous Deliveries (May 2020)": "https://s3.divcom.com/www.commercialuavnews.com/images/181%20evtol%20vehicle%20side%20view.JPG.large.1024x1024.jpeg"
+      "Commercial UAV News | Pursuit of Autonomous Deliveries (May 2020)": "https://s3.divcom.com/www.commercialuavnews.com/images/181%20evtol%20vehicle%20side%20view.JPG.large.1024x1024.jpeg"
     },
     "date_display": "2019-12",
     "thumbnail": "https://dronelife.com/wp-content/uploads/2019/03/Airbus-Skyways-drone2.jpg"
@@ -388,7 +388,7 @@
     "detail": "Following the initial Navy Other Transaction Authority (OTA) contract award, spiral development began with follow-on awards expanding the scope of Skyways' hybrid propulsion logistics Unmanned Aircraft System (UAS) work. The Naval Air Warfare Center Aircraft Division (NAWCAD) acquired a Skyways prototype to demonstrate long-range ship-to-ship and ship-to-shore cargo transport at Naval Air Station (NAS) Patuxent River.",
     "tag": "Contract | U.S. Navy",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
+      "Skyways Internal | Charles Acknin",
       "FlightGlobal (Nov 2020)",
       "Inside Unmanned Systems (Nov 2020)"
     ],
@@ -438,7 +438,7 @@
     "detail": "Skyways begins initial concept work on the V3 next-generation platform. Current performance estimates target 157 nautical miles range with 100 lbs payload, or approximately 35 lbs cargo at 1,000 nautical miles, representing a significant leap in capability over the V2.",
     "tag": "Product | V3",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V3 timeline provided \u2014 initial concept started 2021."
@@ -499,13 +499,13 @@
     "detail": "Small Business Innovation Research (SBIR) Phase I under topic AF203-CSO1, contract number FA8649-21-P-0539, project title 'Autonomous transportation using AI and a long-range vertical-lift UAS'. Award period February 4, 2021 to May 7, 2021. This $47,775 Phase I award began the Air Force Works (AFWERX) SBIR pathway that would eventually lead to the USAF awarding Skyways a $37M contract.",
     "tag": "Contract | U.S. Air Force",
     "sources": [
-      "SBIR.gov \u2014 Award #191434"
+      "SBIR.gov | Award #191434"
     ],
     "charles_corrections": [
       "Round III: Rephrased from 'lead to $37M' to 'eventually lead to the USAF awarding Skyways a $37M contract'."
     ],
     "source_urls": {
-      "SBIR.gov \u2014 Award #191434": "https://www.sbir.gov/awards/191434"
+      "SBIR.gov | Award #191434": "https://www.sbir.gov/awards/191434"
     },
     "sort_date": "2021-02",
     "source_thumbnails": {
@@ -524,7 +524,7 @@
     "detail": "Facility expansion to 10,000 square feet on Cross Park Drive in Austin to support Navy contract execution and growing team.",
     "tag": "Internal",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "source_urls": {},
     "sort_date": "2021-04",
@@ -591,15 +591,15 @@
     "detail": "Skyways raised a $13M Series A led by Thursday Ventures, joined by MVP Ventures, Outlander VC, Defense Angels, Cathexis, Capital Factory, and other follow-on investors. Total raised at the close of the Series A was $17M.",
     "tag": "Funding",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "Crunchbase \u2014 Skyways Series A (Jan 2022)"
+      "Skyways Internal | Charles Acknin",
+      "Crunchbase | Skyways Series A (Jan 2022)"
     ],
     "charles_corrections": [
       "Round III: Series A was missing entirely from the timeline. Added per Charles.",
       "Note: Crunchbase lists $15M; Charles confirmed $13M. Charles figure is authoritative."
     ],
     "source_urls": {
-      "Crunchbase \u2014 Skyways Series A (Jan 2022)": "https://www.crunchbase.com/funding_round/skyways-series-a--cc98b67a"
+      "Crunchbase | Skyways Series A (Jan 2022)": "https://www.crunchbase.com/funding_round/skyways-series-a--cc98b67a"
     },
     "sort_date": "2022-01",
     "source_thumbnails": {
@@ -618,10 +618,10 @@
     "detail": "Skyways secured a contract through the Defense Innovation Unit (DIU) for the Blue Water Maritime Logistics UAS program in partnership with the U.S. Navy, Naval Air Warfare Center Aircraft Division (NAWCAD), and Military Sealift Command. The award contract was directly issued by Army Contracting Command, New Jersey (ACC-NJ). DIU partnered with the 4th Fleet and Marine Corps Warfighting Laboratory to develop computer vision technology enabling autonomous navigation and intelligent landing without beacon assistance.",
     "tag": "Contract | DIU / U.S. Navy",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
-      "Skyways Internal \u2014 Contract W15QKN-22-9-5005 (base $1,429,587.50 Feb 3, 2022; P00004 mod brought funded total to $1,807,149.22 as of Mar 20, 2024; not publicly disclosed)",
-      "Inside Unmanned Systems \u2014 Navy Demonstrating Programs for Drone Delivery at Sea",
-      "Potomac Officers Club \u2014 US Naval Components Test Skyways Blue Water Logistics UAS"
+      "Skyways Internal | Charles Acknin",
+      "Skyways Internal | Contract W15QKN-22-9-5005 (base $1,429,587.50 Feb 3, 2022; P00004 mod brought funded total to $1,807,149.22 as of Mar 20, 2024; not publicly disclosed)",
+      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea",
+      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS"
     ],
     "charles_corrections": [
       "Round III: Corrected from ~2023 to 2022. Charles confirmed: 'We won the DIU contract/OTA in 2022.'",
@@ -629,8 +629,8 @@
       "Round IV: DIU Blue Water program target (50 lbs over 250 mi for ~95% of critical parts) is per Charles internal \u2014 public sources confirm contract structure but not the specific program target percentage."
     ],
     "source_urls": {
-      "Inside Unmanned Systems \u2014 Navy Demonstrating Programs for Drone Delivery at Sea": "https://insideunmannedsystems.com/navy-demonstrating-programs-for-drone-delivery-at-sea/",
-      "Potomac Officers Club \u2014 US Naval Components Test Skyways Blue Water Logistics UAS": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
+      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea": "https://insideunmannedsystems.com/navy-demonstrating-programs-for-drone-delivery-at-sea/",
+      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
     },
     "sort_date": "2022-02",
     "source_thumbnails": {
@@ -657,10 +657,10 @@
     "detail": "Air Force Works (AFWERX) Small Business Innovation Research (SBIR) Phase II under topic AF203-CSO1, contract number FA8649-22-P-0719, project title '12-Hour Continuous Inter-Unit Autonomous UAS Resupply'. Award period March 10, 2022 to June 12, 2023. Funds further development along the pathway that would eventually lead to the $37M Strategic Funding Increase (STRATFI) contract.",
     "tag": "Contract | U.S. Air Force",
     "sources": [
-      "SBIR.gov \u2014 Award #195821"
+      "SBIR.gov | Award #195821"
     ],
     "source_urls": {
-      "SBIR.gov \u2014 Award #195821": "https://www.sbir.gov/awards/195821"
+      "SBIR.gov | Award #195821": "https://www.sbir.gov/awards/195821"
     },
     "sort_date": "2022-03",
     "source_thumbnails": {
@@ -679,7 +679,7 @@
     "detail": "Skyways builds and flies a subscale version of the V3 platform, culminating in test flights in October 2022. This validates the aerodynamic design and hybrid propulsion concept before committing to full-scale development.",
     "tag": "Product | V3",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V3 subscale with test flights in Oct 2022."
@@ -729,7 +729,7 @@
     "detail": "Multi-mode cargo delivery operations at Naval Air Station (NAS) Patuxent River. Skyways and Martin UAV demonstrated Vertical Takeoff and Landing (VTOL) cargo delivery capabilities.",
     "tag": "Defense",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin (NAWCAD finding: 90% of critical mission failures repairable with under 20 lb payloads \u2014 public sources cite a separate 50 lb threshold for general logistics)",
+      "Skyways Internal | Charles Acknin (NAWCAD finding: 90% of critical mission failures repairable with under 20 lb payloads | public sources cite a separate 50 lb threshold for general logistics)",
       "DroneDJ (Dec 2022)",
       "DroneXL (Jan 2023)",
       "FlightGlobal (Dec 2022)",
@@ -767,7 +767,7 @@
     "detail": "The first full-scale V3 aircraft (Block 0) achieves its maiden flight. This is a major engineering milestone transitioning from subscale proof-of-concept to a flyable full-size platform.",
     "tag": "Product | V3",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V3 Block 0 (full scale) first flew early 2023."
@@ -790,7 +790,7 @@
     "detail": "Defense Logistics Agency (DLA) Purchase Order PFR006115, Order Number PO 0408, under prime contract SPE8EJ21D0022 (Noble Supply and Logistics is prime; Skyways is component supplier). PO dated March 15, 2023. Total funded value $71,070.00 breaks out as: Differential Global Positioning System (DGPS) hardware, 6 units at $1,897.50 = $11,385.00; Engineering services (integration, ground testing, flight testing, quality assurance), $48,185.00; Special Operations Equipment (SOE) freight charges, $11,500.00. Delivery to James Tomasic at Naval Air Warfare Center Aircraft Division Rapid Prototyping Experimentation and Demonstration (NAWCAD RPED), Patuxent River, MD.",
     "tag": "Contract | U.S. Navy / DLA",
     "sources": [
-      "Skyways Internal \u2014 Contract on File (Noble Purchase Order PFR006115 under DLA prime SPE8EJ21D0022; PO dated Mar 15, 2023; $71,070.00 total funded to Skyways)"
+      "Skyways Internal | Contract on File (Noble Purchase Order PFR006115 under DLA prime SPE8EJ21D0022; PO dated Mar 15, 2023; $71,070.00 total funded to Skyways)"
     ],
     "charles_corrections": [],
     "source_urls": {},
@@ -811,7 +811,7 @@
     "detail": "Skyways launches SkyNav, its proprietary autonomous software platform that coordinates multi-aircraft operations and integrates with third-party Unmanned Traffic Management (UTM) systems. SkyNav becomes the ground control system used across all Skyways operations.",
     "tag": "Product",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: SkyNav started Q2 2023, not 2020 as previously stated."
@@ -831,7 +831,7 @@
     "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) awarded Skyways the Blue Water Maritime Logistics Unmanned Aircraft System 2.0 (BWUAS 2.0) Prototype Project contract through the Naval Aviation Systems Consortium (NASC), effective May 4, 2023.",
     "tag": "Contract | U.S. Navy",
     "sources": [
-      "Skyways Internal \u2014 Contract N00421-23-9-0013 ($479,052.96, effective May 4, 2023, not publicly disclosed)"
+      "Skyways Internal | Contract N00421-23-9-0013 ($479,052.96, effective May 4, 2023, not publicly disclosed)"
     ],
     "source_urls": {},
     "sort_date": "2023-05",
@@ -858,7 +858,7 @@
     "detail": "Defense Logistics Agency (DLA) Purchase Order PFR007234, Order Number PO 0463, under prime contract SPE8EJ21D0022 (Noble Supply and Logistics is prime; Skyways is component supplier). PO dated May 26, 2023. Total funded value $203,735.00 breaks out as: SKYTRAC DLS-100 SATCOMv2 hardware (3 units per aircraft across 3 aircraft = 9 total) at $28,865.00 each = $86,595.00; V2.6b SATCOMv2 Non-Recurring Engineering and Test (software, mechanical, electrical, test, flight test) = $105,110.00; SKYTRAC DLS-100 Integration across 3 aircraft at $1,610.00 each = $4,830.00; SPP-720M airtime plan (720 MB per month for 12 months) at $600.00 each = $7,200.00. Delivery to James Tomasic at NAWCAD RPED, Patuxent River, MD. Buyer: Tyler Ray (Noble).",
     "tag": "Contract | U.S. Navy / DLA",
     "sources": [
-      "Skyways Internal \u2014 Contract on File (Noble Purchase Order PFR007234 under DLA prime SPE8EJ21D0022; PO dated May 26, 2023; $203,735.00 total funded to Skyways)"
+      "Skyways Internal | Contract on File (Noble Purchase Order PFR007234 under DLA prime SPE8EJ21D0022; PO dated May 26, 2023; $203,735.00 total funded to Skyways)"
     ],
     "charles_corrections": [],
     "source_urls": {},
@@ -903,7 +903,7 @@
     "detail": "Defense Logistics Agency (DLA) Purchase Order PFR007445, Order Number PO 0465, under prime contract SPE8EJ21D0022 (Noble Supply and Logistics is prime; Skyways is component supplier). PO dated June 15, 2023. Total funded value $79,545.00 breaks out as: V2.6b Intelligen onboard start across 3 aircraft at $12,255.00 each = $36,765.00; V2.6b AV1-3 Intelligen integration and testing across 3 aircraft at $14,260.00 each = $42,780.00. Delivery to James Tomasic at NAWCAD RPED, Patuxent River, MD. Buyer: Karli King (Noble).",
     "tag": "Contract | U.S. Navy / DLA",
     "sources": [
-      "Skyways Internal \u2014 Contract on File (Noble Purchase Order PFR007445 under DLA prime SPE8EJ21D0022; PO dated Jun 15, 2023; $79,545.00 total funded to Skyways)"
+      "Skyways Internal | Contract on File (Noble Purchase Order PFR007445 under DLA prime SPE8EJ21D0022; PO dated Jun 15, 2023; $79,545.00 total funded to Skyways)"
     ],
     "charles_corrections": [],
     "source_urls": {},
@@ -924,7 +924,7 @@
     "detail": "V3 Block 1 (full scale) achieves first flight. Significant resources dedicated to V3 from mid-2023 onward. Block 1 incorporates lessons from Block 0 and prepares the platform for customer demonstrations.",
     "tag": "Product | V3",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V3 Block 1 (full scale) first flew early 2024."
@@ -947,7 +947,7 @@
     "tag": "Internal",
     "sources": [
       "Austin American-Statesman (Feb 2026)",
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "source_urls": {
       "Austin American-Statesman (Feb 2026)": "https://www.statesman.com/business/technology/article/austin-skyways-autonomous-drone-aircraft-21311896.php"
@@ -994,7 +994,7 @@
     "tag": "Contract | U.S. Air Force",
     "sources": [
       "SBIR.gov",
-      "Skyways Internal \u2014 Contract FA228024D0003 / Task Order FA228024F0013 (~$2.2M obligated as of Jul 2024 across Mods #1 and #2; $4.99M IDIQ ceiling; not publicly disclosed)"
+      "Skyways Internal | Contract FA228024D0003 / Task Order FA228024F0013 (~$2.2M obligated as of Jul 2024 across Mods #1 and #2; $4.99M IDIQ ceiling; not publicly disclosed)"
     ],
     "charles_corrections": [
       "Round III: Cleaned up 'initial millions' language."
@@ -1027,7 +1027,7 @@
     "detail": "Under a Defense Innovation Unit (DIU) contract modification, Skyways demonstrated Temperature Controlled Payload (TCP) delivery capability for III Marine Expeditionary Force (III MEF), a U.S. Marine Corps command covering Indo-Pacific operations. The demonstration, conducted stateside, flew ten bags of blood at 3 to 6 degrees Celsius across more than 300 miles in a single six-hour flight.",
     "tag": "Defense | USMC / III MEF",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: Reframed from 'III MEF operations' to accurately reflect this was a DIU contract mod for TCP demo. Not direct III MEF ops.",
@@ -1051,10 +1051,10 @@
     "detail": "Skyways conducts Japan's first autonomous Vertical Takeoff and Landing (VTOL) drone cargo resupply to a naval vessel at sea. From August 15 to 25, 2024, the Skyways V2.6, operated by ANA Holdings, delivered cargo including food supplies to the JMSDF destroyer DD-115 Akizuki, operating 23 kilometers offshore Minami-Boso, Chiba Prefecture. The V2.6 completed the fully autonomous round trip (launch, transit, deck landing on a moving ship, and return) in approximately 40 minutes with no human intervention. All flights conducted Beyond Visual Line of Sight (BVLOS). This marks Skyways' first operational engagement with an allied nation's navy.",
     "tag": "Defense | JSDF (Japan)",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin",
+      "Skyways Internal | Charles Acknin",
       "Skyways LinkedIn (video, Sep 25, 2024)",
       "JMSDF Public Affairs Office (X/Twitter)",
-      "drone.jp \u2014 JMSDF Japan's First VTOL Drone Supply to Vessel",
+      "drone.jp | JMSDF Japan's First VTOL Drone Supply to Vessel",
       "Yahoo! Japan News (drone.jp syndication)",
       "Traffic News (trafficnews.jp)",
       "Asagumo Shimbun (Japan defense newspaper)"
@@ -1067,7 +1067,7 @@
     "source_urls": {
       "Skyways LinkedIn (video, Sep 25, 2024)": "https://www.linkedin.com/posts/skyways-air-transportation-inc_skyways-v26-aircraft-autonomously-resupplying-activity-7244709502019604483-_F8Q",
       "JMSDF Public Affairs Office (X/Twitter)": "https://x.com/JMSDF_PAO/status/1850764432063819880",
-      "drone.jp \u2014 JMSDF Japan's First VTOL Drone Supply to Vessel": "https://www.drone.jp/news/20241028182919101826.html",
+      "drone.jp | JMSDF Japan's First VTOL Drone Supply to Vessel": "https://www.drone.jp/news/20241028182919101826.html",
       "Traffic News (trafficnews.jp)": "https://trafficnews.jp/post/135816"
     },
     "sort_date": "2024-08",
@@ -1087,7 +1087,7 @@
     "detail": "Skyways conducts inter-island autonomous cargo resupply with the Japan Air Self-Defense Force (JASDF) through ANA Holdings. All flights conducted Beyond Visual Line of Sight (BVLOS). Demonstrates Skyways' capability for allied nation military logistics across maritime and island environments.",
     "tag": "Defense | JSDF (Japan)",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: JSDF operations were entirely missing from the timeline. Added per Charles.",
@@ -1134,17 +1134,17 @@
     "detail": "Skyways adds Starlink satellite connectivity to its aircraft, transforming real-time operations. CEO Acknin described the improvement: 'Before Starlink, it felt like the AOL days... Now it is like watching Netflix.'",
     "tag": "Product",
     "sources": [
-      "The Drone Girl \u2014 From cargo to commuters (Dec 2025)"
+      "The Drone Girl | From cargo to commuters (Dec 2025)"
     ],
     "charles_corrections": [
       "Round III: Starlink started end of 2024, not 2020 as previously listed."
     ],
     "source_urls": {
-      "The Drone Girl \u2014 From cargo to commuters (Dec 2025)": "https://www.thedronegirl.com/2025/12/02/skyways-roadmap-cargo-drones-human-flight/"
+      "The Drone Girl | From cargo to commuters (Dec 2025)": "https://www.thedronegirl.com/2025/12/02/skyways-roadmap-cargo-drones-human-flight/"
     },
     "sort_date": "2024-12",
     "source_thumbnails": {
-      "The Drone Girl \u2014 From cargo to commuters (Dec 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01472-scaled.jpeg?fit=2560%2C1707&ssl=1"
+      "The Drone Girl | From cargo to commuters (Dec 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01472-scaled.jpeg?fit=2560%2C1707&ssl=1"
     },
     "date_display": "2024-12"
   },
@@ -1157,17 +1157,17 @@
     "detail": "Skyways delivers aircraft to commercial customers internationally for the first time. Skyports Drone Services takes delivery around February 2025, followed by ANA Holdings in approximately April 2025.",
     "tag": "Milestone",
     "sources": [
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)"
+      "The Drone Girl | Inside Skyways (Nov 2025)"
     ],
     "charles_corrections": [
       "Round III: Removed last sentence about this being the first time customers operated their own aircraft \u2014 the US Navy was flying their own Skyways aircraft for years before 2025."
     ],
     "source_urls": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/"
     },
     "sort_date": "2025-02",
     "source_thumbnails": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1"
     },
     "date_display": "2025-02",
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/0e359d2154f9d81cb74144509f8af5c8cf1b2b40-4284x2892.jpg?w=1600&fit=max&auto=format"
@@ -1181,7 +1181,7 @@
     "detail": "Non-Standard Limited Purpose Cooperative Research and Development Agreement (NSLP-CRADA) between Naval Air Warfare Center Aircraft Division Patuxent River (NAVAIRWARCENACDIV) and Skyways Air Transportation, Inc. Agreement number NSLP-CRADA-NAWCADPAX-25-533, titled \"SKYWAYS V2.6 UNMANNED AERIAL SYSTEM DEMONSTRATION.\" Signed by Charles Acknin (Skyways CEO) on March 18, 2025 and by J.E. Dougherty IV, RDML, USN, Commander NAWCAD on March 20, 2025. Duration up to 4 years from effective date (through ~March 2029). The Navy transfers custody of three V2.6 aircraft (AV1, AV2, AV3) plus 6 Ground Control Stations, 3 Telemetry Station Shore units, 3 Telemetry Station Ship units, 4 VTOL Battery Packs, and 3 Ground Support Equipment kits to Skyways for demonstrations and technology development. No funds are transferred under the agreement (Article 16); Skyways retains title to its own equipment and must return all Navy-owned equipment at termination. Per Article 19, the agreement is approved for public use. No press release has been issued.",
     "tag": "Contract | U.S. Navy",
     "sources": [
-      "Skyways Internal \u2014 Contract on File (NSLP-CRADA, approved for public use)"
+      "Skyways Internal | Contract on File (NSLP-CRADA, approved for public use)"
     ],
     "source_urls": {},
     "sort_date": "2025-03",
@@ -1201,7 +1201,7 @@
     "detail": "Skyways awarded a $37M ceiling contract through Air Force Works (AFWERX) Strategic Funding Increase (STRATFI), one of the largest STRATFI awards ever given to an autonomous drone company. SBIR Phase II contract number FA2280-25-9-9523, awarded May 6, 2025 with period of performance through May 6, 2029, project title 'SKYWAYS V3 300LB Vertical Takeoff and Landing (VTOL) Unmanned Aerial System (UAS) Strategic Funding Increase (STRATFI)'. The SBIR Phase II portion is $3,550,613, with the full $37M ceiling reached through STRATFI's 1:1:2 Government:SBIR:Private matching structure. Funds V3 transition from prototype to full-rate production. STRATFI is a pathway to a Program of Record (PoR), a formal Department of Defense (DoD) acquisition designation that unlocks large-scale, long-term procurement.",
     "tag": "Contract | U.S. Air Force",
     "sources": [
-      "SBIR.gov \u2014 Award #220016",
+      "SBIR.gov | Award #220016",
       "BusinessWire (Jun 2025)",
       "DroneLife (Jun 2025)"
     ],
@@ -1209,7 +1209,7 @@
       "Round III: Added Program of Record context. STRATFI is a pathway to PoR, which is a big deal for Skyways."
     ],
     "source_urls": {
-      "SBIR.gov \u2014 Award #220016": "https://www.sbir.gov/awards/220016",
+      "SBIR.gov | Award #220016": "https://www.sbir.gov/awards/220016",
       "BusinessWire (Jun 2025)": "https://www.businesswire.com/news/home/20250609862238/en/",
       "DroneLife (Jun 2025)": "https://dronelife.com/2025/06/09/skyways-afwerx-contract/"
     },
@@ -1229,7 +1229,7 @@
     "detail": "U.S. Navy NAWCAD added Contract Line Item 0005 (CLIN 0005) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025, funding Skyways' Project ULTRA Demonstration.",
     "tag": "Contract | U.S. Navy / OUSD",
     "sources": [
-      "Skyways Internal \u2014 Contract N00421-23-9-0013 Mod P00002, CLIN 0005 ($361,832.40, signed May 23, 2025, not publicly disclosed)"
+      "Skyways Internal | Contract N00421-23-9-0013 Mod P00002, CLIN 0005 ($361,832.40, signed May 23, 2025, not publicly disclosed)"
     ],
     "source_urls": {},
     "sort_date": "2025-05",
@@ -1257,7 +1257,7 @@
     "detail": "U.S. Navy NAWCAD added Contract Line Item 0006 (CLIN 0006) to Skyways' BWUAS 2.0 contract via Modification P00002 effective May 23, 2025. CLIN 0006 funds the design and build of an actively temperature-controlled payload proof of concept for the V3 Block 2 aircraft.",
     "tag": "Contract | U.S. Navy",
     "sources": [
-      "Skyways Internal \u2014 Contract N00421-23-9-0013 Mod P00002, CLIN 0006 ($982,850.39, signed May 23, 2025, not publicly disclosed)"
+      "Skyways Internal | Contract N00421-23-9-0013 Mod P00002, CLIN 0006 ($982,850.39, signed May 23, 2025, not publicly disclosed)"
     ],
     "source_urls": {},
     "sort_date": "2025-05",
@@ -1286,7 +1286,7 @@
     "tag": "Funding",
     "sources": [
       "BusinessWire (Jun 2025)",
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: Corrected \u2014 $7M equity was separate from $5M debt. Not $7M total including debt."
@@ -1363,7 +1363,7 @@
     "detail": "V2 operational record demonstrating the operational tempo required for fleet-scale logistics.",
     "tag": "Product",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin (V2 operational record: 11 flights / 9.4 hrs / 466 NM / 8-min turnarounds, Sept 2025)"
+      "Skyways Internal | Charles Acknin (V2 operational record: 11 flights / 9.4 hrs / 466 NM / 8-min turnarounds, Sept 2025)"
     ],
     "source_urls": {},
     "sort_date": "2025-09",
@@ -1414,16 +1414,16 @@
     "detail": "ANA Holdings invested $1M through its corporate venture fund and signed a long-term business partnership agreement. Skyways drones fly between Okinawa islands delivering medical supplies. ANA established internal Skyways-specific pilot training.",
     "tag": "Contract | ANA Holdings (Japan)",
     "sources": [
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)",
+      "The Drone Girl | Inside Skyways (Nov 2025)",
       "Payload Asia (Mar 2026)"
     ],
     "source_urls": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/",
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://www.thedronegirl.com/2025/11/21/skyways/",
       "Payload Asia (Mar 2026)": "https://payloadasia.com/2026/03/ana-hd-completes-long-distance-medical-supply-drone-delivery-trials-okinawa/"
     },
     "sort_date": "2025-10",
     "source_thumbnails": {
-      "The Drone Girl \u2014 Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1",
+      "The Drone Girl | Inside Skyways (Nov 2025)": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2025/11/DSC01482-scaled.jpeg?fit=2560%2C1707&ssl=1",
       "Payload Asia (Mar 2026)": "https://payloadasia.com/wp-content/uploads/2026/03/ANA-HD.png"
     },
     "date_display": "2025-10",
@@ -1512,7 +1512,7 @@
     "detail": "Skyways begins its Series B fundraising round to accelerate V3 production ramp and expand commercial operations.",
     "tag": "Funding",
     "sources": [
-      "Skyways Internal \u2014 Shae Wilson"
+      "Skyways Internal | Shae Wilson"
     ],
     "source_urls": {},
     "sort_date": "2026-04",
@@ -1532,7 +1532,7 @@
     "detail": "V3 Block 2 (production-intent) first article build scheduled for June 2026. This is the production design variant that will enter full-rate manufacturing.",
     "tag": "Product | V3 / Upcoming",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin"
+      "Skyways Internal | Charles Acknin"
     ],
     "charles_corrections": [
       "Round III: V3 Block 2 first article build scheduled Jun 2026."
@@ -1577,7 +1577,7 @@
     "detail": "Next iteration in the V3 family beyond V3 Block 2. Details TBD; entry will be filled with full specs and milestone context once the build phase begins. This placeholder ensures the iteration list in the '20+ UAVs Built' stat menu is auditable against the timeline.",
     "tag": "Product | V3",
     "sources": [
-      "Skyways Internal \u2014 Charles Acknin (V3.2 / V3 Block 2L planned for Q4 2026; placeholder pending more information)"
+      "Skyways Internal | Charles Acknin (V3.2 / V3 Block 2L planned for Q4 2026; placeholder pending more information)"
     ],
     "charles_corrections": [],
     "source_urls": {},
