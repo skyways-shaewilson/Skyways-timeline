@@ -2178,9 +2178,22 @@
     // Tag label
     var tag = ev.tag || cat.charAt(0).toUpperCase() + cat.slice(1);
 
-    // Thumbnail background
+    // Thumbnail background. Prefer top-level ev.thumbnail; fall back to the
+    // first URL in ev.source_thumbnails (which is how every entry stores its
+    // thumbnail today — the top-level field was dropped during a Firestore
+    // overwrite and we now derive on the fly so the renderer is schema-tolerant).
     var thumbHTML = '';
     var thumb = ev.thumbnail || '';
+    if (!thumb && ev.source_thumbnails && typeof ev.source_thumbnails === 'object') {
+      var stKeys = Object.keys(ev.source_thumbnails);
+      for (var si = 0; si < stKeys.length; si++) {
+        var candidate = ev.source_thumbnails[stKeys[si]];
+        if (typeof candidate === 'string' && candidate.indexOf('http') === 0) {
+          thumb = candidate;
+          break;
+        }
+      }
+    }
     if (thumb && thumb.indexOf('http') === 0) {
       thumbHTML = '<div class="event-card-bg" style="background-image:url(\'' + esc(thumb) + '\')"></div>';
     }
