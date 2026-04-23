@@ -328,7 +328,7 @@
     "id": 14,
     "year": "2021",
     "date": "2021-02",
-    "title": "SBIR Phase I | $47,775",
+    "title": "$47,775 | USAF SBIR Phase I",
     "category": "contracts",
     "detail": "Small Business Innovation Research (SBIR) Phase I under topic AF203-CSO1, contract number FA8649-21-P-0539, project title 'Autonomous transportation using AI and a long-range vertical-lift UAS'. Award period February 4, 2021 to May 7, 2021. This $47,775 Phase I award began the Air Force Works (AFWERX) SBIR pathway that would eventually lead to the USAF awarding Skyways a $37M contract.",
     "tag": "Contract | U.S. Air Force",
@@ -482,7 +482,7 @@
     "id": 20,
     "year": "2022",
     "date": "2022-03",
-    "title": "SBIR Phase II | $749,711",
+    "title": "$749,711 | USAF SBIR Phase II",
     "category": "contracts",
     "detail": "Air Force Works (AFWERX) Small Business Innovation Research (SBIR) Phase II under topic AF203-CSO1, contract number FA8649-22-P-0719, project title '12-Hour Continuous Inter-Unit Autonomous UAS Resupply'. Award period March 10, 2022 to June 12, 2023. Funds further development along the pathway that would eventually lead to the $37M Strategic Funding Increase (STRATFI) contract.",
     "tag": "Contract | U.S. Air Force",
@@ -697,7 +697,7 @@
     "id": 28,
     "year": "2024",
     "date": "2024-06",
-    "title": "$2,200,000 Obligated / $4,999,999 Ceiling | USAF SBIR Phase 3 IDIQ + STRATFI Selection",
+    "title": "$2,200,000 | USAF SBIR Phase 3 IDIQ + STRATFI Selection ($4,999,999 Ceiling)",
     "category": "contracts",
     "detail": "After submitting the Strategic Funding Increase (STRATFI) package, USAF AFWERX awarded Skyways the basic SBIR Phase 3 IDIQ contract FA228024D0003 in June 2024. The first Task Order FA228024F0013 was awarded simultaneously. STRATFI selection was announced in the same month and ultimately led to the $37M contract in May 2025.",
     "tag": "Contract | U.S. Air Force",
@@ -855,7 +855,7 @@
     "id": 34,
     "year": "2025",
     "date": "2025-05",
-    "title": "$37M U.S. Air Force STRATFI Contract",
+    "title": "$37M | U.S. Air Force STRATFI Contract",
     "category": "contracts",
     "detail": "Skyways awarded a $37M ceiling contract through Air Force Works (AFWERX) Strategic Funding Increase (STRATFI), one of the largest STRATFI awards ever given to an autonomous drone company. SBIR Phase II contract number FA2280-25-9-9523, awarded May 6, 2025 with period of performance through May 6, 2029, project title 'SKYWAYS V3 300LB Vertical Takeoff and Landing (VTOL) Unmanned Aerial System (UAS) Strategic Funding Increase (STRATFI)'. The SBIR Phase II portion is $3,550,613, with the full $37M ceiling reached through STRATFI's 1:1:2 Government:SBIR:Private matching structure. Funds V3 transition from prototype to full-rate production. STRATFI is a pathway to a Program of Record (PoR), a formal Department of Defense (DoD) acquisition designation that unlocks large-scale, long-term procurement.",
     "tag": "Contract | U.S. Air Force",
@@ -1037,7 +1037,7 @@
     "id": 113,
     "year": "2025",
     "date": "2025-03",
-    "title": "Navy LP-CRADA | Aircraft Lease Agreement (V2 AV1-3)",
+    "title": "Aircraft Lease Agreement | Navy LP-CRADA (V2 AV1-3)",
     "category": "contracts",
     "detail": "U.S. Navy and Skyways signed a Lease Program Cooperative Research and Development Agreement (LP-CRADA) effective March 18, 2025. Under this agreement, the Navy gives Skyways formal custody of three Navy-owned V2 aircraft (AV1, AV2, AV3) for use in the V2 aircraft program. Skyways must track every configuration change so the aircraft can be returned to their original Navy-owned state at end of agreement. This is a non-monetary lease arrangement (not a fixed-price development contract), but it represents an active formal Navy partnership separate from the BWUAS 2.0 contract (N00421-23-9-0013) and the original Blue Water OTA (N00421-19-9-0007).",
     "tag": "Contract | U.S. Navy",
@@ -1079,7 +1079,7 @@
     "id": 40,
     "year": "2025",
     "date": "2025-09",
-    "title": "RWE Offshore Wind Farm, Baltic Sea, Germany",
+    "title": "Commercial Contract | RWE Offshore Wind Farm (Baltic Sea, Germany)",
     "category": "contracts",
     "detail": "Germany's first long-range Beyond Visual Line of Sight (BVLOS) offshore wind drone delivery. Partnered with RWE and Skyports Drone Services at the Arkona wind farm in the Baltic Sea. V2 flew 40km routes, up to 10kg cargo, sub-30-minute flights vs. 1+ hour by boat. Over 2,500km total, 65+ flight hours in 3 weeks.",
     "tag": "Contract | RWE (Germany)",
@@ -1471,5 +1471,68 @@
     },
     "thumbnail_status": "fallback_v3_hover",
     "date_display": "2026-12"
+  },
+  {
+    "id": 115,
+    "year": "2023",
+    "date": "2023-03",
+    "title": "Navy DLA PO | DGPS (SPE8EJ21D0022)",
+    "category": "contracts",
+    "detail": "Defense Logistics Agency (DLA) Purchase Order under prime contract SPE8EJ21D0022 (Noble Supply & Logistics). Skyways component / supply role. Funded item: Differential Global Positioning System (DGPS). Effective March 15, 2023. Dollar amount not yet documented in available records.",
+    "tag": "Contract | U.S. Navy / DLA",
+    "sources": [
+      "Skyways Internal — Contract SPE8EJ21D0022 (DLA prime via Noble Supply & Logistics; PO dated Mar 15, 2023; component supplier role; dollar amount pending documentation)",
+      "TAA Transmittal Letter (Mar 24, 2025)"
+    ],
+    "charles_corrections": [],
+    "source_urls": {},
+    "sort_date": "2023-03",
+    "source_thumbnails": {
+      "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
+    },
+    "thumbnail_status": "fallback_v2_ship",
+    "date_display": "2023-03"
+  },
+  {
+    "id": 116,
+    "year": "2023",
+    "date": "2023-05",
+    "title": "Navy DLA PO | SATCOMv2 (SPE8EJ21D0022)",
+    "category": "contracts",
+    "detail": "Defense Logistics Agency (DLA) Purchase Order under prime contract SPE8EJ21D0022 (Noble Supply & Logistics). Skyways component / supply role. Funded item: Satellite Communications version 2 (SATCOMv2). Effective May 26, 2023. Dollar amount not yet documented in available records.",
+    "tag": "Contract | U.S. Navy / DLA",
+    "sources": [
+      "Skyways Internal — Contract SPE8EJ21D0022 (DLA prime via Noble Supply & Logistics; PO dated May 26, 2023; component supplier role; dollar amount pending documentation)",
+      "TAA Transmittal Letter (Mar 24, 2025)"
+    ],
+    "charles_corrections": [],
+    "source_urls": {},
+    "sort_date": "2023-05",
+    "source_thumbnails": {
+      "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
+    },
+    "thumbnail_status": "fallback_v2_ship",
+    "date_display": "2023-05"
+  },
+  {
+    "id": 117,
+    "year": "2023",
+    "date": "2023-06",
+    "title": "Navy DLA PO | Intelligen (SPE8EJ21D0022)",
+    "category": "contracts",
+    "detail": "Defense Logistics Agency (DLA) Purchase Order under prime contract SPE8EJ21D0022 (Noble Supply & Logistics). Skyways component / supply role. Funded item: Intelligen (autonomous flight stack component). Effective June 15, 2023. Dollar amount not yet documented in available records.",
+    "tag": "Contract | U.S. Navy / DLA",
+    "sources": [
+      "Skyways Internal — Contract SPE8EJ21D0022 (DLA prime via Noble Supply & Logistics; PO dated Jun 15, 2023; component supplier role; dollar amount pending documentation)",
+      "TAA Transmittal Letter (Mar 24, 2025)"
+    ],
+    "charles_corrections": [],
+    "source_urls": {},
+    "sort_date": "2023-06",
+    "source_thumbnails": {
+      "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
+    },
+    "thumbnail_status": "fallback_v2_ship",
+    "date_display": "2023-06"
   }
 ]
