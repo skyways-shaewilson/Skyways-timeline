@@ -51,6 +51,14 @@ FLIGHTS_TABLE = "tblqPi1dUtTjK1bhk"      # "Flights" — SKYWAYS source of truth
 MERGED_TABLE = "tblb3eu5LS3aD9zVi"       # "Merged flights" — SKYWAYS + ANA + SKYPORTS rollup
 # ANA / Skyports tables intentionally omitted: they are already contained in Merged.
 
+# Pre-2024 flight archive. Airtable only goes back to Jan 3, 2024, but Skyways
+# has been flying since 2017. Charles reviewed the timeline Apr 2026 and said
+# lifetime flights were "nearly 3,000" — the delta between that and the live
+# Airtable total is the pre-2024 archive count. Hardcoded here so the public
+# counter reflects true lifetime, not just 2024-onwards. Pending a full archive
+# import into Airtable; update this number if Charles provides a refined count.
+PRE_2024_ARCHIVE_FLIGHTS = 1400
+
 
 def load_env() -> dict[str, str]:
     env: dict[str, str] = {}
@@ -104,7 +112,8 @@ def compute_totals(merged: list[dict], flights: list[dict]) -> dict:
 
     combined = merged + delta
 
-    lifetime_flights = len(combined)
+    airtable_flights = len(combined)
+    lifetime_flights = airtable_flights + PRE_2024_ARCHIVE_FLIGHTS
     flight_time_sec = int(
         sum((r["fields"].get("Flight time (s)") or 0) for r in combined)
     )
@@ -120,6 +129,8 @@ def compute_totals(merged: list[dict], flights: list[dict]) -> dict:
         "breakdown": {
             "mergedRecords": len(merged),
             "flightsDeltaRecords": len(delta),
+            "airtableFlights": airtable_flights,
+            "pre2024Archive": PRE_2024_ARCHIVE_FLIGHTS,
         },
     }
 
