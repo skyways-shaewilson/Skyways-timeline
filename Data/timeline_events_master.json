@@ -167,19 +167,23 @@
     "id": 100,
     "year": "2017",
     "date": "2017-07",
-    "title": "$1M Seed Round Begins | Rolling Close",
+    "title": "Pre-Series-A Rolling Raise | $3.8M from 49 Investors",
     "category": "funding",
-    "detail": "Skyways began raising its seed round on a rolling basis, bringing in early capital to fund aircraft development and operations. $120K pre-seed from Y Combinator, followed by a $1M seed round led by Capital Factory with 12 additional investors.",
+    "detail": "Skyways raised capital on a rolling basis from 2017 to 2021, totaling $3,814,343 across 49 investors. Y Combinator anchored the 2017 pre-seed alongside a 29-investor angel cohort (Social Capital, Makers Fund, NextView Ventures, Liquid2, Pi Campus, Graph Ventures, Boom Supersonic CEO Blake Scholl, and others). Capital Factory joined in 2019 and became a recurring lead across later tranches; Cathexis (2020, 2021) and MVP Ventures (2021) followed. The structure let Skyways take in capital as needed rather than running a single closed round; most of these SAFE and convertible-note investors converted into Skyways' Series A preferred stock at the January 2022 close.",
     "tag": "Funding",
     "sources": [
       "Skyways Internal | Charles Acknin",
-      "Crunchbase | Skyways Seed Round (Jul 2017)",
-      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)"
+      "Skyways Internal | Fundraise Master Sheet",
+      "Crunchbase | Skyways",
+      "TechCrunch | YC S17 Demo Day (Aug 2017)"
     ],
-    "charles_corrections": [],
+    "charles_corrections": [
+      "Apr 23, 2026: Per Charles Round II CA#4/CA#5, collapsed id=4 'Seed Round Closes' into this rolling event. Replaced incorrect '$1M Capital Factory led' framing with correct '$3.8M from 49 investors' total per Charles's master fundraise sheet. Capital Factory joined 2019, not 2017."
+    ],
     "source_urls": {
-      "Crunchbase | Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
-      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
+      "Skyways Internal | Fundraise Master Sheet": "https://docs.google.com/spreadsheets/d/1nRoMRs-aUTIuL1b7hVmp62XHTR3cgSlRExFyzH6Lwss/edit",
+      "Crunchbase | Skyways": "https://www.crunchbase.com/organization/skyways",
+      "TechCrunch | YC S17 Demo Day (Aug 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
     },
     "sort_date": "2017-07",
     "source_thumbnails": {
@@ -341,32 +345,6 @@
     },
     "date_display": "2019-10",
     "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/682636d5971346b8b97f0af18a6d2c0b5e9bfb95-1599x1066.jpg?w=1600&fit=max&auto=format"
-  },
-  {
-    "id": 4,
-    "year": "2019",
-    "date": "2019-12",
-    "title": "$1M Seed Round Closes | Fundraise Complete",
-    "category": "funding",
-    "detail": "Skyways raised its seed round on a rolling basis over the first several years of the company, bringing in capital as needed rather than in a single close. Early seed investors included Capital Factory, Social Capital, NextView Ventures, and others.",
-    "tag": "Funding",
-    "sources": [
-      "Skyways Internal | Charles Acknin",
-      "Crunchbase | Skyways Seed Round (Jul 2017)",
-      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)"
-    ],
-    "charles_corrections": [
-      "Round III: Removed UpHonest. Outlander VC and MVP Ventures came in later (2021+ Series A), not seed."
-    ],
-    "source_urls": {
-      "Crunchbase | Skyways Seed Round (Jul 2017)": "https://www.crunchbase.com/funding_round/skyways-seed--1ab8f93f",
-      "TechCrunch | YC S17 Demo Day (Aug 21, 2017)": "https://techcrunch.com/2017/08/21/y-combinator-summer-2017/"
-    },
-    "sort_date": "2019-12",
-    "source_thumbnails": {
-      "FlyEye | CEO Interview": "https://www.flyeye.io/wp-content/uploads/2025/10/Charles-Acknin-1000x600.webp"
-    },
-    "date_display": "2019-12"
   },
   {
     "id": 6,
@@ -596,9 +574,9 @@
     "id": 18,
     "year": "2022",
     "date": "2022-01",
-    "title": "$13M Series A | Thursday Ventures Leads",
+    "title": "$17M Series A | Thursday Ventures Leads",
     "category": "funding",
-    "detail": "Skyways raised a $13M Series A led by Thursday Ventures, joined by MVP Ventures, Outlander VC, Defense Angels, Cathexis, Capital Factory, and other follow-on investors. Total raised at the close of the Series A was $17M.",
+    "detail": "Skyways closed a $17M Series A round led by Thursday Ventures, with $13M in new commitments from Thursday Ventures, MVP Ventures, Outlander VC, Defense Angels, Cathexis, and Capital Factory. The remaining ~$4M came from earlier SAFE and convertible-note investors from the 2017-2021 rolling raise converting at the close.",
     "tag": "Funding",
     "sources": [
       "Skyways Internal | Charles Acknin",
@@ -606,7 +584,8 @@
     ],
     "charles_corrections": [
       "Round III: Series A was missing entirely from the timeline. Added per Charles.",
-      "Note: Crunchbase lists $15M; Charles confirmed $13M. Charles figure is authoritative."
+      "Note: Crunchbase lists $15M; Charles confirmed $13M. Charles figure is authoritative.",
+      "Apr 23, 2026: Title changed from '$13M' to '$17M' to keep Charles's Series A figure consistent across the timeline (event card + Investments stat drawer). Detail sharpened to spell out the SAFE conversion mechanics ($13M new + ~$4M conversions = $17M total at close) so readers don't see two different numbers."
     ],
     "source_urls": {
       "Crunchbase | Skyways Series A (Jan 2022)": "https://www.crunchbase.com/funding_round/skyways-series-a--cc98b67a"
