@@ -1480,8 +1480,14 @@
   .view-controls {
     position: absolute;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    /* Anchor to the bottom edge of the legend-row so the cluster sits
+       on the same baseline as the filter pills. legend-row has
+       padding-top: 10px (6px when minimized) which makes top:50% land
+       above the filter content; using bottom + a small lift keeps the
+       cluster visually centered with the filter pills regardless of
+       the row's top padding. */
+    bottom: 0;
+    transform: translateY(-2px);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -2308,9 +2314,13 @@
        — 520px min was designed for a 1440px desktop. */
     .dashboard-hero { gap: 24px; }
     .war-room-panel { min-width: 0; flex: 0 1 auto; }
-    /* Aircraft background stays desktop-only. */
-    .header-aircraft-bg,
-    .header-aircraft-wash { display: none; }
+    /* Aircraft background hidden in EXPANDED state only at tablet
+       widths. When the header minimizes, the aircraft peek through is
+       desirable on tablet too (matches the desktop and mobile minimized
+       behavior). The earlier blanket .header-aircraft-bg { display:none }
+       was hiding the image even in minimized state. */
+    .sticky-header:not(.minimized) .header-aircraft-bg,
+    .sticky-header:not(.minimized) .header-aircraft-wash { display: none; }
     /* Pin telemetry to 3 columns (one line) — auto-fit minmax was
        allowing the grid to wrap to two rows on narrow tablets. */
     .telemetry-grid {
