@@ -4768,18 +4768,33 @@
     // detect an open keyboard via the viewport delta and position the match
     // ~25% down the visible area so it stays well clear of both the sticky
     // header and the keyboard.
+    //
+    // Special case: if the match lives inside a source drawer, scroll so
+    // the EVENT CARD's top sits just below the header rather than scrolling
+    // to the mark itself. The card provides the context (title, detail,
+    // category) for the source-drawer match — without it the user sees only
+    // a highlighted publisher name with no clue which event it belongs to.
+    // The drawer hangs below the card via position:absolute so it remains
+    // visible naturally once the card is in view.
     var stickyHeaderEl = document.getElementById('stickyHeader');
     var headerH = stickyHeaderEl ? stickyHeaderEl.offsetHeight : 0;
     var vv = window.visualViewport;
     var visibleH = (vv && vv.height) || window.innerHeight;
     var keyboardOpen = !!vv && (window.innerHeight - vv.height) > 100;
-    var rect = target.getBoundingClientRect();
+    // Use card top instead of mark top when match is inside a source drawer.
+    var hostCardForScroll = menu ? target.closest('.event-card') : null;
+    var scrollAnchor = hostCardForScroll || target;
+    var rect = scrollAnchor.getBoundingClientRect();
     var scrollY;
     if (keyboardOpen) {
       var targetY = headerH + Math.max(40, (visibleH - headerH) * 0.25);
       scrollY = window.pageYOffset + rect.top - targetY;
     } else {
-      scrollY = window.pageYOffset + rect.top - headerH - 64;
+      // Tighter gap (24px) when anchoring to the card top so the drawer
+      // below has more vertical room to be visible. Default 64px gap kept
+      // for non-drawer matches.
+      var gap = menu ? 24 : 64;
+      scrollY = window.pageYOffset + rect.top - headerH - gap;
     }
     window.scrollTo({ top: scrollY, behavior: 'smooth' });
   }
