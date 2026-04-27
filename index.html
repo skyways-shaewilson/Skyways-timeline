@@ -1472,13 +1472,27 @@
   /* View controls cluster — Scan + Order pills inline at the right end
      of the .legend-row. Sits in the auto-width slot of the legend-row
      flex container; .legend-filters takes the remaining space on the
-     left. */
+     left. Pills are slimmed via the .view-controls .density-toggle
+     override below so the legend-row height stays close to its old
+     1-grid-row height (otherwise the taller pills push the entire
+     sticky-header down by ~10-14px and squeeze the aircraft peek
+     window when minimized). */
   .view-controls {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     flex: 0 0 auto;
   }
+  .view-controls .density-toggle {
+    /* Tighter than the standalone .density-toggle so this pill's height
+       matches the filter pills next to it. Matches legend-item's
+       vertical rhythm in the legend-row. */
+    padding: 3px 10px 3px 8px;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    gap: 6px;
+  }
+  .view-controls .density-icon { width: 11px; height: 8px; }
   /* Density toggle — switches between "Full" (default, current view)
      and "Scan" (cards collapsed to date + title so the 9-year span is
      scannable in one screenful). The shared .density-toggle styling is
