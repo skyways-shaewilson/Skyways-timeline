@@ -1169,30 +1169,31 @@
   }
 
   .legend-row {
-    /* Flex container holding the .legend-filters grid (5 filter cells
-       that align with stat columns above) on the left and the inline
-       .view-controls cluster (Scan + Order pills) on the right.
-       flex-wrap allows view-controls to drop below filters when the
-       viewport is too narrow to fit both on one row. */
-    display: flex;
+    /* Original 5-column grid match with .stats-row above so each filter
+       aligns directly under its stat counterpart. View-controls sits
+       absolutely-positioned in the right padding-zone (does NOT consume
+       grid space and does NOT contribute to row height — keeps the
+       sticky-header height stable so the aircraft peek-through window
+       in the minimized state is preserved). */
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0 12px;
     align-items: center;
-    gap: 6px 12px;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    padding-right: 160px;
     border-top: 1px solid rgba(255,255,255,0.14); padding-top: 10px;
     transition: padding-top 0.35s ease;
   }
 
   .legend-filters {
-    /* Grid match with .stats-row above: 5 equal columns so each filter
-       lines up directly under its stat counterpart. flex:1 lets the
-       grid take the remaining horizontal space after view-controls. */
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0 12px;
-    align-items: center;
-    flex: 1 1 auto;
-    min-width: 0;
+    /* Left over from a flex-based layout attempt that grew the
+       sticky-header height and broke the minimized aircraft peek.
+       Now the .legend-row grid handles alignment directly; this
+       wrapper stays in the DOM as a no-op container so the legend-item
+       children remain at the same nesting depth they had before, in
+       case any future code relies on it. display:contents lets the
+       grid layout reach through. */
+    display: contents;
   }
 
   .sticky-header.minimized .legend-row { padding-top: 6px; }
@@ -1469,24 +1470,28 @@
     white-space: nowrap; border: 0;
   }
 
-  /* View controls cluster — Scan + Order pills inline at the right end
-     of the .legend-row. Sits in the auto-width slot of the legend-row
-     flex container; .legend-filters takes the remaining space on the
-     left. Pills are slimmed via the .view-controls .density-toggle
-     override below so the legend-row height stays close to its old
-     1-grid-row height (otherwise the taller pills push the entire
-     sticky-header down by ~10-14px and squeeze the aircraft peek
-     window when minimized). */
+  /* View controls cluster — Scan + Order pills absolutely-positioned in
+     the right padding zone of .legend-row. Critical: position:absolute
+     means this cluster does NOT contribute to the legend-row height,
+     so adding it does NOT grow the sticky-header. The aircraft peek
+     window in minimized state is preserved.
+     The legend-row's padding-right reserves horizontal space so the
+     5th filter cell (Milestones) doesn't extend behind the cluster. */
   .view-controls {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    flex: 0 0 auto;
+    /* Sits above the filter row content + any background fades but
+       below the sticky header's drawer overlays. */
+    z-index: 2;
   }
   .view-controls .density-toggle {
-    /* Tighter than the standalone .density-toggle so this pill's height
-       matches the filter pills next to it. Matches legend-item's
-       vertical rhythm in the legend-row. */
+    /* Slim variant to match the visual rhythm of the filter row even
+       though it's not contributing to row height. */
     padding: 3px 10px 3px 8px;
     font-size: 10px;
     letter-spacing: 0.6px;
@@ -2322,10 +2327,9 @@
     .stat-value { font-size: 30px; }
     .stat-label { font-size: 8px; }
     /* Keep the 5-column grid at tablet so each filter stays under its
-       stat counterpart. Shrink horizontal gap to fit. Vertical gap stays
-       small but non-zero so wrapped view-controls breathe a little. */
-    .legend-row { gap: 4px 8px; }
-    .legend-filters { gap: 0 8px; }
+       stat counterpart. Shrink horizontal gap + the right-side reserve
+       so view-controls fits without crowding the Milestones cell. */
+    .legend-row { gap: 0 8px; padding-right: 140px; }
     .legend-item { white-space: nowrap; }
     .legend-long { display: none; }
     .timeline-wrapper { padding: 12px 32px 48px; }
@@ -2487,12 +2491,10 @@
        "Milestones", "Major ") collapse via .legend-long so everything
        fits in the viewport width. */
     .legend-row {
-      gap: 4px 6px;
+      gap: 0 6px;
       padding-top: 6px;
       padding-bottom: 2px;
-    }
-    .legend-filters {
-      gap: 0 6px;
+      padding-right: 110px;
     }
     .legend-item {
       font-size: 8px;
