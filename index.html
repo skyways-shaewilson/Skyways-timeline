@@ -1453,23 +1453,29 @@
     white-space: nowrap; border: 0;
   }
 
-  /* Density toggle — switches between "Full" (default, current view)
-     and "Scan" (cards collapsed to date + title so the 9-year span is
-     scannable in one screenful). The `.floating` variant pins the
-     button to the bottom-right edge of the sticky header via
-     `position: fixed` + `top: var(--header-height)`. No wrapping row,
-     no background layer — just a pill that pokes out of the menu. */
-  .density-toggle.floating {
+  /* View controls cluster — wraps the Scan + Order toggle pills as a
+     single fixed-position group that pokes out of the bottom-right edge
+     of the sticky header. Wrapper handles positioning; inner buttons
+     are inline-flex with a small gap. */
+  .view-controls.floating {
     position: fixed;
     top: var(--header-height, 0px);
     right: 32px;
-    /* Overlap the header edge slightly so the button reads as "attached
+    /* Overlap the header edge slightly so the cluster reads as "attached
        to" the menu rather than "floating under" it. Negative translate
-       lifts it 14px up so roughly half the pill sits above the header
+       lifts it so roughly half the pill height sits above the header
        bottom rule. */
     transform: translateY(-50%);
     z-index: 110;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
+  /* Density toggle — switches between "Full" (default, current view)
+     and "Scan" (cards collapsed to date + title so the 9-year span is
+     scannable in one screenful). The shared .density-toggle styling is
+     also reused by the Order pill (same visual language: blue=off,
+     lime=on; same hover/focus treatment). */
   .density-toggle {
     appearance: none;
     -webkit-tap-highlight-color: transparent;
@@ -1523,18 +1529,18 @@
   .density-icon-line:nth-child(3) { width: 85%; }
   @media (max-width: 720px) {
     .density-toggle { font-size: 10px; padding: 6px 14px 6px 10px; letter-spacing: 0.6px; }
-    .density-toggle.floating { right: 16px; }
+    .view-controls.floating { right: 16px; gap: 4px; }
     .density-icon { width: 12px; height: 9px; }
   }
-  /* Hide the Scan button when search is focused so the compact match
-     view keeps every pixel above the keyboard for results. */
-  body.search-focused .density-toggle.floating { display: none; }
-  /* Hide the Scan button while any stat drawer is open — otherwise the
+  /* Hide the view-controls cluster when search is focused so the
+     compact match view keeps every pixel above the keyboard for results. */
+  body.search-focused .view-controls.floating { display: none; }
+  /* Hide the view-controls while any stat drawer is open — otherwise the
      fixed pill (z-index 110 in the body stacking context) overlays the
      drawer on mobile, where the drawer's own z-index is constrained by
      the .stat.menu-open parent's stacking context (z-index: 5). General
-     sibling selector because the sticky header is a sibling of the pill. */
-  .sticky-header.drawer-active ~ .density-toggle.floating { display: none; }
+     sibling selector because the sticky header is a sibling of the cluster. */
+  .sticky-header.drawer-active ~ .view-controls.floating { display: none; }
 
   /* ── DENSITY: SCAN MODE ──
      When body.density-compact is set, collapse every card to date +
@@ -2923,19 +2929,29 @@
   </div></div>
 </div>
 
-<!-- Scan toggle — single button that pokes out of the sticky header's
-     bottom-right edge. Not a full-width row, no background layer; just
-     a pill pinned to the right that stays in place as the user scrolls.
-     Top offset tracks the header's animated height via the
-     --header-height custom property (updated by syncYearLabelOffset). -->
-<button type="button" class="density-toggle floating" id="densityToggle" aria-pressed="false" onclick="toggleDensity()" aria-label="Toggle timeline density">
-  <span class="density-icon" aria-hidden="true">
-    <span class="density-icon-line"></span>
-    <span class="density-icon-line"></span>
-    <span class="density-icon-line"></span>
-  </span>
-  <span class="density-label">Scan</span>
-</button>
+<!-- View controls cluster — Scan + Order pills that poke out of the
+     sticky header's bottom-right edge. The .view-controls wrapper holds
+     the fixed positioning; inner buttons sit inline. Top offset tracks
+     the header's animated height via the --header-height custom property
+     (updated by syncYearLabelOffset). -->
+<div class="view-controls floating" id="viewControls">
+  <button type="button" class="density-toggle" id="densityToggle" aria-pressed="false" onclick="toggleDensity()" aria-label="Toggle timeline density">
+    <span class="density-icon" aria-hidden="true">
+      <span class="density-icon-line"></span>
+      <span class="density-icon-line"></span>
+      <span class="density-icon-line"></span>
+    </span>
+    <span class="density-label">Scan</span>
+  </button>
+  <button type="button" class="density-toggle" id="orderToggle" aria-pressed="false" onclick="toggleOrder()" aria-label="Toggle timeline order">
+    <span class="density-icon" aria-hidden="true">
+      <span class="density-icon-line"></span>
+      <span class="density-icon-line"></span>
+      <span class="density-icon-line"></span>
+    </span>
+    <span class="density-label" id="orderLabel">Newest</span>
+  </button>
+</div>
 
 <!-- Polite ARIA live region — screen readers announce state changes
      (search match count, filter toggles, drawer open/close, year jumps)
@@ -3285,6 +3301,60 @@
   // via the skeleton path — both are cheap no-ops when the class is
   // already in the right state.
   applyDensity();
+
+  // ═══ ORDER TOGGLE (OLDEST / NEWEST FIRST) ═══
+  // Two-state toggle paired with Scan in the .view-controls cluster.
+  // 'asc' = oldest first (default chronological reading; V1 2016 at top).
+  // 'desc' = newest first (Series B 2026 at top, V1 at bottom).
+  // Affects year order AND events within a year. Era dividers and the
+  // upcoming-era forward-look are handled in renderTimeline().
+  // State persists in localStorage as skyways-order.
+  function getOrder() {
+    try { return localStorage.getItem('skyways-order') || 'asc'; }
+    catch (e) { return 'asc'; }
+  }
+  function setOrder(mode) {
+    try { localStorage.setItem('skyways-order', mode); } catch (e) { /* ignore */ }
+    applyOrder();
+  }
+  function applyOrder() {
+    var mode = getOrder();
+    var btn = document.getElementById('orderToggle');
+    if (btn) {
+      btn.setAttribute('aria-pressed', mode === 'desc' ? 'true' : 'false');
+      var lbl = document.getElementById('orderLabel');
+      // Label shows the mode the user would switch INTO, matching Scan's
+      // "Turn on / Turn off" pattern. Default 'asc' shows "Newest"
+      // (click to flip to newest first); 'desc' shows "Oldest".
+      if (lbl) lbl.textContent = mode === 'desc' ? 'Oldest' : 'Newest';
+    }
+  }
+  function toggleOrder() {
+    var next = getOrder() === 'desc' ? 'asc' : 'desc';
+    setOrder(next);
+    // Re-render the timeline in the new order. Re-uses the cached event
+    // list captured by the most recent renderTimeline call.
+    if (window._lastTimelineEvents) {
+      renderTimeline(window._lastTimelineEvents);
+      // Search applies inline styles (display: none) to non-matching cards.
+      // The re-render replaces innerHTML, dropping those styles, so we have
+      // to re-run handleSearch when the user has an active query. Reset
+      // currentQuery first so handleSearch's equality short-circuit does
+      // not bail out.
+      var inputEl = document.getElementById('searchInput');
+      if (inputEl && inputEl.value) {
+        currentQuery = '';
+        handleSearch();
+      }
+      // Filter state lives on body classes (CSS-driven) so it survives the
+      // re-render automatically. No re-application needed there.
+    }
+    announce(next === 'desc'
+      ? 'Timeline order: newest first'
+      : 'Timeline order: oldest first', true);
+  }
+  window.toggleOrder = toggleOrder;
+  applyOrder();
 
   // ═══ URL HASH DEEP-LINKING ═══
   // Three supported hash formats so shared links land in the right state:
@@ -3793,7 +3863,14 @@
 
   // ═══ RENDER FULL TIMELINE ═══
   function renderTimeline(events) {
-    // Sort by sort_date
+    // Cache the events list so toggleOrder() can re-render without re-fetch
+    window._lastTimelineEvents = events;
+    var order = (typeof getOrder === 'function') ? getOrder() : 'asc';
+    var asc = order !== 'desc';
+
+    // Sort by sort_date — always ascending here so grouping is stable.
+    // Display order is applied below by reversing the year list and the
+    // events within each year when desc.
     events.sort(function(a, b) {
       var da = a.sort_date || '';
       var db = b.sort_date || '';
@@ -3815,14 +3892,35 @@
       yearGroups[year].push(ev);
     }
 
+    // Track the highest data year independently of iteration direction so
+    // the upcoming-era tail logic always knows where the future begins.
+    var maxDataYear = 0;
+    for (var my = 0; my < yearOrder.length; my++) {
+      var yi = parseInt(yearOrder[my], 10);
+      if (yi > maxDataYear) maxDataYear = yi;
+    }
+    // displayYearOrder applies the user's chosen order to the iteration.
+    var displayYearOrder = asc ? yearOrder.slice() : yearOrder.slice().reverse();
+
     // Build HTML
     var html = '';
+    // In desc mode, render upcoming-era dividers FIRST so the forward-look
+    // chapters appear at the top of the timeline (above the most-recent
+    // year). In asc mode, they're appended after the year loop as before.
+    if (!asc) {
+      // Iterate ERAS in reverse so the latest upcoming era renders highest.
+      for (var ueDesc = ERAS.length - 1; ueDesc >= 0; ueDesc--) {
+        if (ERAS[ueDesc].startYear > maxDataYear) {
+          html += renderEraDivider(ERAS[ueDesc]);
+        }
+      }
+    }
     // Track era transitions so we only emit a divider when the era CHANGES
     // between consecutive years. Null on first iteration means "emit for
     // the first year's era too" (opens the first chapter).
     var lastEraStart = null;
-    for (var y = 0; y < yearOrder.length; y++) {
-      var yr = yearOrder[y];
+    for (var y = 0; y < displayYearOrder.length; y++) {
+      var yr = displayYearOrder[y];
       var yrStr = String(yr);
       var era = eraForYear(yr);
       if (era && era.startYear !== lastEraStart) {
@@ -3831,8 +3929,11 @@
       }
       var cards = '';
       var evts = yearGroups[yr];
-      for (var e = 0; e < evts.length; e++) {
-        cards += renderCard(evts[e]);
+      // Reverse events within a year when desc so most-recent-of-the-year
+      // appears at the top of that year's stack.
+      var displayEvts = asc ? evts : evts.slice().reverse();
+      for (var e = 0; e < displayEvts.length; e++) {
+        cards += renderCard(displayEvts[e]);
       }
       // Annual summary strip — count is auto-derived from this year's
       // event count; headline is authored in YEAR_HEADLINES (may be
@@ -3852,15 +3953,15 @@
         '<div class="events-col">' + summaryHTML + cards + '</div></div>';
     }
 
-    // Upcoming-era tail: any ERAS entry whose startYear hasn't shown up
-    // in the data yet (e.g. 2027 Scaling before any 2027 events exist).
-    // Renders as a forward-looking "what's next" placeholder so the
-    // narrative arc doesn't end on the current year. Skipped if we
-    // already rendered it in the year loop.
-    var lastDataYear = yearOrder.length ? parseInt(yearOrder[yearOrder.length - 1], 10) : 0;
-    for (var ue = 0; ue < ERAS.length; ue++) {
-      if (ERAS[ue].startYear > lastDataYear && ERAS[ue].startYear !== lastEraStart) {
-        html += renderEraDivider(ERAS[ue]);
+    // Upcoming-era tail (asc mode only): any ERAS entry whose startYear
+    // hasn't shown up in the data yet (e.g. 2027 Scaling before any 2027
+    // events exist). Renders as a forward-looking "what's next" placeholder
+    // so the narrative arc doesn't end on the current year.
+    if (asc) {
+      for (var ue = 0; ue < ERAS.length; ue++) {
+        if (ERAS[ue].startYear > maxDataYear && ERAS[ue].startYear !== lastEraStart) {
+          html += renderEraDivider(ERAS[ue]);
+        }
       }
     }
 
