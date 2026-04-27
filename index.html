@@ -612,9 +612,12 @@
      for the drawers to be visible against it. */
   .stats-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     /* Wider gap gives real breathing room between each stat's content
-       and the divider hairline that lives in the middle of the gap. */
+       and the divider hairline that lives in the middle of the gap.
+       NOTE: 6 columns (was 5) since the Investments stat was added next
+       to Contracts. Filter row below remains 5 columns; the visual
+       alignment between filters and stats is intentionally relaxed. */
     gap: 0 32px;
     width: 100%;
     position: relative;
@@ -2329,9 +2332,9 @@
     }
     .stats-banner-inner { padding: 16px 32px; }
     .sticky-header.minimized .stats-banner-inner { padding: 10px 32px; }
-    /* 5 columns at tablet — ~180px per stat is plenty; keeps parity with
+    /* 6 columns at tablet — ~150px per stat is plenty; keeps parity with
        desktop so the layout doesn't re-flow awkwardly at the breakpoint. */
-    .stats-row { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 12px; }
+    .stats-row { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 12px; }
     /* Dial the stat-value down a touch so it never butts up against
        its neighbor in the narrower tablet columns. */
     .stat-value { font-size: 30px; }
@@ -2460,11 +2463,12 @@
     /* Minimized mobile hero: back to the compact aircraft strip. */
     .sticky-header.minimized .hero-section { padding: 10px 0 14px; height: auto; min-height: 0; }
 
-    /* Stats banner: all 5 stats on one row on mobile — tight but it fits. */
+    /* Stats banner: 6 stats on one row on mobile — tight but it fits when
+       stat values stay narrow ("$33M+", "20+", "3", "1/30th", "7 yrs"). */
     .stats-banner-inner { padding: 8px 16px; gap: 6px; }
     .sticky-header.minimized .stats-banner-inner { padding: 6px 16px; gap: 4px; }
     .stats-row {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 0 6px;
     }
     /* Do NOT put overflow:hidden on .stat — it would clip the absolutely-
@@ -2902,7 +2906,64 @@
           </div>
         </div>
       </div>
-      <!-- km Flown removed — now shown live in the Fleet Flight Telemetry panel -->
+      <div class="stat" id="investmentsStat"><div class="stat-value">$33M+</div><div class="stat-label">Investments</div>
+        <div class="stat-menu contracts-table">
+          <div class="contracts-title">Skyways investments: rounds + leads</div>
+          <div class="contracts-grid">
+            <div class="contracts-row contracts-head" data-section="investments">
+              <div class="c-name">Round</div>
+              <div class="c-amount">Amount</div>
+              <div class="c-year">Year</div>
+              <div class="c-source">Source</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(100)">
+              <div class="c-name">Pre-Series-A | Capital Factory lead, rolling</div>
+              <div class="c-amount">$3,814,343</div>
+              <div class="c-year">2017-21</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(18)">
+              <div class="c-name">Series A | Thursday Ventures lead</div>
+              <div class="c-amount">$17,000,000</div>
+              <div class="c-year">2022</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(35)">
+              <div class="c-name">STRATFI match equity | private capital</div>
+              <div class="c-amount">$7,000,000</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(35)">
+              <div class="c-name">Debt facility | Leonid Capital Partners</div>
+              <div class="c-amount">$5,000,000</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(41)">
+              <div class="c-name">Strategic | ANA Holdings</div>
+              <div class="c-amount">$1,000,000</div>
+              <div class="c-year">2025</div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(109)">
+              <div class="c-name">Series B | open, in progress</div>
+              <div class="c-amount">In progress</div>
+              <div class="c-year">2026</div>
+              <div class="c-source"><span class="src-pill src-internal">Internal</span></div>
+            </div>
+            <div class="contracts-row contracts-total contracts-grand-total">
+              <div class="c-name">Total raised to date</div>
+              <div class="c-amount">$33,814,343</div>
+              <div class="c-year"></div>
+              <div class="c-source"></div>
+            </div>
+          </div>
+          <div class="stat-menu-source">Internal = no public press release found.</div>
+          <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
+        </div>
+      </div>
+      <!-- km Flown removed | now shown live in the Fleet Flight Telemetry panel -->
       <div class="stat"><div class="stat-value">20+</div><div class="stat-label">UAVs Built</div>
         <div class="stat-menu">
           <div class="stat-menu-info">
@@ -4293,14 +4354,15 @@
       console.warn('scrollToContract: no card with id event-' + eventId);
       return;
     }
-    // Close the stats hover so it doesn't obstruct the card after scroll.
-    var statEl = document.getElementById('contractsStat');
-    if (statEl) {
+    // Close ANY open stat drawer so it doesn't obstruct the card after
+    // scroll. Generalized from contractsStat-only because the Investments
+    // drawer also triggers this function on row click.
+    document.querySelectorAll('.stat.menu-open').forEach(function(statEl) {
       statEl.classList.remove('menu-open');
       if (document.activeElement && statEl.contains(document.activeElement)) {
         document.activeElement.blur();
       }
-    }
+    });
 
     // FIX (Apr 23 v3): the previous "snap header + flip destination
     // year-section's content-visibility via :has()" wasn't enough.
