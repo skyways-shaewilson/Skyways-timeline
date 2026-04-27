@@ -259,7 +259,7 @@
     },
     "thumbnail_status": "fallback_image1",
     "date_display": "2018-04",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/bab9a77f2f76f02adfd435b797747fb1d6cd8f8b-1824x1022.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp"
   },
   {
     "id": 8,
@@ -413,7 +413,7 @@
     },
     "thumbnail_status": "fallback_v2_ship",
     "date_display": "2020-01",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/384283b9ef9b42457154f2413405627ea8e42c35-1600x1067.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 12,
@@ -460,7 +460,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2021-01",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/41c9b6cd8fd79ca7015f725a32aa15b7418ebc04-1280x646.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 13,
@@ -523,7 +523,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2021-02",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/5ed7a8c7e22b777cefa200bf895e574ec21f24db-4080x1884.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/hype-still.zGCakefh_1kEicT.webp"
   },
   {
     "id": 16,
@@ -543,7 +543,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2021-04",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/96ba056bd350e4931418e972d28289efa444c3e0-9504x6336.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp"
   },
   {
     "id": 15,
@@ -617,7 +617,7 @@
     },
     "thumbnail_status": "fallback_hero",
     "date_display": "2022-01",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/f2942e19861c551657e1f4d5163a6da88eff51ca-1024x614.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/hero.DmMP60zO_Z1mKK4i.webp"
   },
   {
     "id": 19,
@@ -656,7 +656,7 @@
       "Final value: $1,807,149.22 (Mar 2024)",
       "Program target (per Charles): 50 lbs over 250 mi for ship-based logistics, covers ~95% of critical parts by weight"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/8a53bef362decb0ce330e79568990c9aa602272b-2560x1707.png?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 20,
@@ -678,7 +678,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2022-03",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/012f90afd866a26e9c76232aaca14a73312d6f49-1200x675.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp"
   },
   {
     "id": 21,
@@ -701,7 +701,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2022-10",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/2ab4b9e77fd8cace39ab627d4e3a5d3a663d2a23-1200x675.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 11,
@@ -789,7 +789,7 @@
     },
     "thumbnail_status": "fallback_skyways",
     "date_display": "2023-02",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/c909b21916d6990410cf068ea9c6cb2883c5cf80-1200x600.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 115,
@@ -810,7 +810,7 @@
     },
     "thumbnail_status": "fallback_v2_ship",
     "date_display": "2023-03",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/9b176eaaed9f4d41377f4fbfff6183f142e7e618-1280x720.jpg?w=1600&fit=max&auto=format",
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp",
     "bullets": [
       "Differential Global Positioning System (DGPS) hardware, 6 units at $1,897.50 each: $11,385.00",
       "Engineering services (integration, ground testing, flight testing, quality assurance): $48,185.00",
@@ -862,7 +862,7 @@
       "Builds on: 2019 Blue Water work",
       "Mods added: Project ULTRA Demonstration (May 2025), V3 TCP Development (May 2025)"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/0afb2d8be388e2d6e8d57efd90cf7d3904d70a0a-1000x600.webp?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 116,
@@ -883,7 +883,7 @@
     },
     "thumbnail_status": "fallback_v2_ship",
     "date_display": "2023-05",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/1d8ababd19aa2215aac02eb2be9dff64a22a80c2-1000x600.webp?w=1600&fit=max&auto=format",
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp",
     "bullets": [
       "SKYTRAC DLS-100 SATCOMv2 hardware, 9 units across 3 aircraft at $28,865.00 each: $86,595.00",
       "V2.6b SATCOMv2 Non-Recurring Engineering and Test (software, mechanical, electrical, test, flight test): $105,110.00",
@@ -934,7 +934,7 @@
     },
     "thumbnail_status": "fallback_v2_ship",
     "date_display": "2023-06",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/717da0fd3aaf9e2528f180ed0d0f2aa823bcaa54-1600x1069.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 26,
@@ -979,7 +979,7 @@
     },
     "thumbnail_status": "fallback_image2",
     "date_display": "2024-05",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/df089c6f5eb2b0912e101deb4bfdec6a67b357f7-2560x1707.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp"
   },
   {
     "id": 27,
@@ -1037,7 +1037,7 @@
       "Jan 6, 2025: Mod #3 extended CLIN dates (no $ change)",
       "June 2024: STRATFI selection announced leading to the $37M contract awarded May 2025"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/6293b2075bb369a21ee620760faa68c79a25c69a-4875x2775.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/hero.DmMP60zO_Z1mKK4i.webp"
   },
   {
     "id": 31,
@@ -1061,7 +1061,7 @@
     },
     "thumbnail_status": "fallback_video_still",
     "date_display": "2024-07",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/085474c12d1e44508ee4ccc424d65c9afbe10702-4801x2700.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp"
   },
   {
     "id": 29,
@@ -1097,7 +1097,7 @@
     },
     "thumbnail_status": "fallback_v3_hover",
     "date_display": "2024-08",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/737abe512421e11f019ae029342bd40d6f199896-2142x1607.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 30,
@@ -1121,7 +1121,7 @@
     },
     "thumbnail_status": "fallback_image1",
     "date_display": "2024-10",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/c2cf90979ddd5242f7554f52b37b18d318fef763-1600x900.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp"
   },
   {
     "id": 118,
@@ -1211,7 +1211,7 @@
     },
     "thumbnail_status": "fallback_v2_ship",
     "date_display": "2025-03",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/1d55f12bf912dd8167948e17f7254231fa0b2c33-1600x1066.jpg?w=1600&fit=max&auto=format",
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp",
     "bullets": [
       "3 V2.6 aircraft (AV1, AV2, AV3)",
       "6 Ground Control Stations",
@@ -1274,7 +1274,7 @@
       "Sponsor: OUSD Project ULTRA",
       "Total task order: $3.5M (OUSD + Grand Forks County)"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/09e89784c737bfe05418e71b1906801403e39695-1911x1070.png?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 112,
@@ -1302,7 +1302,7 @@
       "System: end-to-end, powered by onboard alternator",
       "Deliverables: PDR within 6 months, CDR thereafter"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/b8025d1f654ce57c4918cd9bc3023734085bc62f-1200x800.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 35,
@@ -1328,7 +1328,7 @@
     },
     "thumbnail_status": "fallback_og",
     "date_display": "2025-06",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/4eecb1ebf3d3fad6c712501ad6cc8a5baa792a78-1920x1283.webp?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/og.png"
   },
   {
     "id": 36,
@@ -1380,7 +1380,7 @@
     },
     "thumbnail_status": "fallback_v3_hover",
     "date_display": "2025-08",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/9b4226a6cddb737ac4532c6b12ff227088dc8191-1052x760.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 38,
@@ -1407,7 +1407,7 @@
       "8-minute average turnaround",
       "Zero human intervention"
     ],
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/9555f45b592526ddbb33a5968c7d2ac29d92d6a0-1200x675.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
   },
   {
     "id": 40,
@@ -1554,7 +1554,7 @@
     },
     "thumbnail_status": "fallback_v3_front",
     "date_display": "2026-04",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/4f5ec5bc9be394039c380379581de5df7d2288d9-1634x1086.png?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-front.CCe8Cx4z_1Fmvtl.webp"
   },
   {
     "id": 45,
@@ -1577,7 +1577,7 @@
     },
     "thumbnail_status": "fallback_v3_hover",
     "date_display": "2026-06",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/a8e1e9babf2b48601b54609099b3b6fdac949cb6-999x562.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 46,
@@ -1599,7 +1599,7 @@
     },
     "thumbnail_status": "fallback_video_still",
     "date_display": "2026-07",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/f9d986ebdf32f151ee1970b1792ba4eeb81932d7-1920x1080.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp"
   },
   {
     "id": 114,
@@ -1620,7 +1620,7 @@
     },
     "thumbnail_status": "fallback_v3_hover",
     "date_display": "2026-12",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/aba9d21179061aab78f3323a1a55ee46ca07487e-1500x849.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp"
   },
   {
     "id": 47,
@@ -1642,6 +1642,6 @@
     },
     "thumbnail_status": "fallback_hype_still",
     "date_display": "2027-12",
-    "thumbnail": "https://cdn.sanity.io/images/zlpq6b94/production/816e4843f5d232f62e315c3b1ca1333938d15ee7-1600x886.jpg?w=1600&fit=max&auto=format"
+    "thumbnail": "https://www.skyways.com/_astro/hype-still.zGCakefh_1kEicT.webp"
   }
 ]
