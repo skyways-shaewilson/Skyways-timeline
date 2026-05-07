@@ -608,8 +608,8 @@
     "sources": [
       "Skyways Internal | Charles Acknin",
       "Skyways Internal | Contract W15QKN-22-9-5005 (base $1,429,587.50 Feb 3, 2022; P00004 mod brought funded total to $1,807,149.22 as of Mar 20, 2024; not publicly disclosed)",
-      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea",
-      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS"
+      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea (no contract value mentioned)",
+      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS (no contract value mentioned)"
     ],
     "charles_corrections": [
       "Round III: Corrected from ~2023 to 2022. Charles confirmed: 'We won the DIU contract/OTA in 2022.'",
@@ -617,8 +617,8 @@
       "Round IV: DIU Blue Water program target (50 lbs over 250 mi for ~95% of critical parts) is per Charles internal \u2014 public sources confirm contract structure but not the specific program target percentage."
     ],
     "source_urls": {
-      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea": "https://insideunmannedsystems.com/navy-demonstrating-programs-for-drone-delivery-at-sea/",
-      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
+      "Inside Unmanned Systems | Navy Demonstrating Programs for Drone Delivery at Sea (no contract value mentioned)": "https://insideunmannedsystems.com/navy-demonstrating-programs-for-drone-delivery-at-sea/",
+      "Potomac Officers Club | US Naval Components Test Skyways Blue Water Logistics UAS (no contract value mentioned)": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
     },
     "sort_date": "2022-02",
     "source_thumbnails": {
@@ -882,19 +882,19 @@
     "detail": "Autonomous flights from USNS Patuxent to Marines at Camp Lejeune, NC during Fleet Battle Problem 23-1. Skyways team worked with Naval Air Warfare Center Aircraft Division (NAWCAD), UX-24 Unmanned Test Squadron, United States Marine Corps (USMC), and Military Sealift Command (MSC). Five test flights with two drones demonstrating autonomous cargo delivery ship-to-shore and shore-to-ship.",
     "tag": "Defense | U.S. Navy / USMC",
     "sources": [
-      "Military Sealift Command (Jun 2023)",
-      "DVIDS (Jun 2023)",
-      "Potomac Officers Club (Jun 2023)"
+      "Military Sealift Command (Jun 2023, no contract value mentioned)",
+      "DVIDS (Jun 2023, no contract value mentioned)",
+      "Potomac Officers Club (Jun 2023, no contract value mentioned)"
     ],
     "source_urls": {
-      "Military Sealift Command (Jun 2023)": "https://www.msc.usff.navy.mil/Press-Room/News-Stories/Article/3443999/naval-air-warfare-center-teams-up-with-military-sealift-command-us-marines-to-t/",
-      "DVIDS (Jun 2023)": "https://www.dvidshub.net/news/447537/",
-      "Potomac Officers Club (Jun 2023)": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
+      "Military Sealift Command (Jun 2023, no contract value mentioned)": "https://www.msc.usff.navy.mil/Press-Room/News-Stories/Article/3443999/naval-air-warfare-center-teams-up-with-military-sealift-command-us-marines-to-t/",
+      "DVIDS (Jun 2023, no contract value mentioned)": "https://www.dvidshub.net/news/447537/",
+      "Potomac Officers Club (Jun 2023, no contract value mentioned)": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
     },
     "sort_date": "2023-06",
     "source_thumbnails": {
-      "DVIDS (Jun 2023)": "https://d1ldvf68ux039x.cloudfront.net/thumbs/photos/2306/7870810/1000w_q95.jpg",
-      "Potomac Officers Club (Jun 2023)": "https://media.potomacofficersclub.com/2023/06/US-Naval-Components-Test-Skyways-Developed-Blue-Water-Logistics-UAS.png"
+      "DVIDS (Jun 2023, no contract value mentioned)": "https://d1ldvf68ux039x.cloudfront.net/thumbs/photos/2306/7870810/1000w_q95.jpg",
+      "Potomac Officers Club (Jun 2023, no contract value mentioned)": "https://media.potomacofficersclub.com/2023/06/US-Naval-Components-Test-Skyways-Developed-Blue-Water-Logistics-UAS.png"
     },
     "date_display": "2023-06",
     "thumbnail": "https://media.bizj.us/view/img/12995744/230610-n-oh262-0002*1200xx4032-2268-0-0.jpg"

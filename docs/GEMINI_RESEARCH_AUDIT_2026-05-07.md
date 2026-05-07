@@ -52,6 +52,7 @@ Completed:
 - Event `id=28`: added AFRL public PDF as a source for the parent FA228024D0003 IDIQ.
 - Event `id=28`: clarified that the AFRL source covers the parent contract, while the approx. `$2.2M` task-order obligation remains internal.
 - Event `id=25`: added the official Military Sealift Command release confirming Skyways' public Blue Water Logistics UAS work with NAWCAD, USMC, MSC, and USNS Patuxent during Fleet Battle Problem 23-1.
+- Event `id=19` and `id=25`: added `(no contract value mentioned)` to relationship/program source labels that do not substantiate the ledger dollar values.
 - Event `id=110`: added Federal Compass as a public source for the parent NAWCAD BWUAS 2.0 Prototype Project award `N004212390013`; kept the `$479,052.96` base line-item amount internally sourced.
 - Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Public`; the AFRL PDF link belongs in the event card source list.
 - Contracts drawer: changed the NAWCAD BWUAS 2.0 base row source pill from `Internal` to `Public` because the parent award identifier/program is externally indexed.
