@@ -1002,13 +1002,46 @@
   }
   .contracts-row.contracts-head [data-sort].active-sort { color: var(--navy); }
 
-  /* Export CSV button — tiny affordance in the contracts-table footer.
-     Sits on its own row under the source legend. */
-  .contracts-export-row {
-    display: flex; justify-content: flex-end;
+  /* Compact contracts-table footer. Keep the table scroll area tall by
+     putting source notes and actions on one line instead of creating a
+     separate footer band. */
+  .stat-menu-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
     margin-top: 8px;
     padding-top: 8px;
     border-top: 1px solid var(--gray-15);
+  }
+  .stat-menu-footer .stat-menu-source {
+    margin-top: 0;
+  }
+  .stat-menu-footer-single {
+    justify-content: flex-start;
+  }
+  .stat-menu-footer > :first-child {
+    min-width: 0;
+  }
+  .contracts-export-row {
+    display: flex; justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    flex: 0 0 auto;
+  }
+  .aircraft-footer .stat-menu-links {
+    margin-top: 4px;
+    padding-top: 0;
+    border-top: 0;
+    gap: 2px;
+  }
+  .aircraft-footer > :first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .aircraft-footer .contracts-export-row {
+    margin-bottom: 2px;
   }
   .contracts-export-btn {
     appearance: none;
@@ -1024,6 +1057,7 @@
     text-transform: uppercase;
     cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
     transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
   .contracts-export-btn:hover,
@@ -2922,17 +2956,18 @@
               <div class="c-source"></div>
             </div>
           </div>
-          <div class="stat-menu-source">Internal = no public press release found.</div>
-          <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
-          <div class="contracts-export-row">
-            <button type="button" class="contracts-export-btn" onclick="event.stopPropagation(); exportContractsCSV();" aria-label="Export contracts table to CSV">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              <span>Export CSV</span>
-            </button>
+          <div class="stat-menu-footer">
+            <div class="stat-menu-source">Internal = no public press release found.</div>
+            <div class="contracts-export-row">
+              <button type="button" class="contracts-export-btn" onclick="event.stopPropagation(); exportContractsCSV();" aria-label="Export contracts table to CSV">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -2977,9 +3012,9 @@
               <div class="c-source"></div>
             </div>
           </div>
-          <div class="stat-menu-source">Pre-Series-A SAFEs (2017-21, Capital Factory lead) converted into the Series A close above; not added separately to avoid double-counting.</div>
-          <div class="stat-menu-source">Internal = no public press release found.</div>
-          <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
+          <div class="stat-menu-footer stat-menu-footer-single">
+            <div class="stat-menu-source">Internal = no public press release found.</div>
+          </div>
         </div>
       </div>
       <!-- km Flown removed | now shown live in the Fleet Flight Telemetry panel -->
@@ -3054,18 +3089,20 @@
               <div class="c-source">Open</div>
             </div>
           </div>
-          <div class="stat-menu-source">Per SBIR.gov: "We have built over 20 UAVs and flown over 1,100 flights."</div>
-          <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
-          <div class="contracts-export-row">
-            <a class="contracts-export-btn" href="platform-progression/" onclick="event.stopPropagation();" aria-label="Open Platform Progression page">
-              <span>Full specs + images</span>
-            </a>
-          </div>
-          <div class="stat-menu-source">Verified Sources:</div>
-          <div class="stat-menu-links">
-            <a href="https://www.sbir.gov/portfolio/1542801" target="_blank" rel="noopener">SBIR.gov | Skyways portfolio</a>
-            <a href="https://www.suasnews.com/2024/03/skyways-v3/" target="_blank" rel="noopener">sUAS News | Skyways V3 (Mar 2024)</a>
-            <a href="https://www.thedronegirl.com/2025/11/21/skyways/" target="_blank" rel="noopener">The Drone Girl | Inside Skyways (Nov 2025)</a>
+          <div class="stat-menu-footer aircraft-footer">
+            <div>
+              <div class="stat-menu-source">Verified Sources:</div>
+              <div class="stat-menu-links">
+                <a href="https://www.sbir.gov/portfolio/1542801" target="_blank" rel="noopener">SBIR.gov | Skyways portfolio</a>
+                <a href="https://www.suasnews.com/2024/03/skyways-v3/" target="_blank" rel="noopener">sUAS News | Skyways V3 (Mar 2024)</a>
+                <a href="https://www.thedronegirl.com/2025/11/21/skyways/" target="_blank" rel="noopener">The Drone Girl | Inside Skyways (Nov 2025)</a>
+              </div>
+            </div>
+            <div class="contracts-export-row">
+              <a class="contracts-export-btn" href="platform-progression/" onclick="event.stopPropagation();" aria-label="Open Platform Progression page">
+                <span>Full specs + images</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
