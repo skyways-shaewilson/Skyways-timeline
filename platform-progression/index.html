@@ -316,6 +316,8 @@
   .progression-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 4px; }
   .progression-rail::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 4px; }
   .aircraft-card {
+    --aircraft-image: none;
+    --aircraft-focus: center center;
     min-height: 100%;
     border: 1px solid rgba(238,242,234,0.28);
     border-radius: 8px;
@@ -331,33 +333,41 @@
   }
   .aircraft-media {
     position: relative;
-    min-height: 272px;
+    min-height: 348px;
     background: #0B151B;
+    isolation: isolate;
   }
   .aircraft-media::before {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1px;
-    z-index: 1;
-    height: 104px;
-    background: linear-gradient(180deg, rgba(238,242,234,0), rgba(238,242,234,0.72) 58%, #EEF2EA 100%);
-    backdrop-filter: blur(16px);
-    mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.78) 34%, #000 100%);
+    bottom: -74px;
+    z-index: 2;
+    height: 184px;
+    background:
+      linear-gradient(180deg, rgba(238,242,234,0) 0%, rgba(238,242,234,0.52) 36%, rgba(238,242,234,0.9) 72%, #EEF2EA 100%),
+      linear-gradient(90deg, rgba(0,154,235,0.08), transparent 42%, rgba(194,242,19,0.08));
+    backdrop-filter: blur(24px) saturate(1.18);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.72) 26%, #000 100%);
+    pointer-events: none;
   }
   .aircraft-media::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, rgba(3,10,14,0.58), transparent 48%);
+    background:
+      linear-gradient(180deg, rgba(3,10,14,0.68), transparent 42%),
+      linear-gradient(0deg, rgba(3,10,14,0.18), transparent 38%);
     pointer-events: none;
   }
   .aircraft-media img {
     width: 100%;
-    height: 272px;
+    height: 348px;
     object-fit: cover;
+    object-position: var(--aircraft-focus);
+    transform: scale(1.015);
   }
   .aircraft-title {
     position: absolute;
@@ -394,16 +404,44 @@
   }
   .aircraft-body {
     position: relative;
-    z-index: 2;
-    margin-top: -42px;
-    padding: 58px 18px 18px;
+    z-index: 3;
+    margin-top: -78px;
+    padding: 96px 18px 18px;
     display: grid;
     grid-template-rows: auto auto auto minmax(158px, auto) minmax(112px, auto) auto;
     gap: 14px;
     align-content: start;
     flex: 1;
-    background: linear-gradient(180deg, rgba(238,242,234,0.78), #EEF2EA 34%, #EEF2EA 100%);
-    backdrop-filter: blur(18px);
+    background:
+      linear-gradient(180deg, rgba(238,242,234,0.5) 0%, rgba(238,242,234,0.86) 148px, #EEF2EA 430px, #EEF2EA 100%);
+    backdrop-filter: blur(22px) saturate(1.06);
+    isolation: isolate;
+  }
+  .aircraft-body::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -96px;
+    z-index: 0;
+    height: 396px;
+    border-top: 1px solid rgba(255,255,255,0.22);
+    background:
+      linear-gradient(180deg, rgba(238,242,234,0.02) 0%, rgba(238,242,234,0.5) 24%, rgba(238,242,234,0.82) 62%, #EEF2EA 100%),
+      linear-gradient(90deg, rgba(0,154,235,0.12), transparent 48%, rgba(194,242,19,0.1)),
+      var(--aircraft-image);
+    background-size: cover;
+    background-position: var(--aircraft-focus);
+    filter: blur(22px) saturate(1.12);
+    opacity: 0.78;
+    transform: scale(1.09);
+    transform-origin: 50% 0%;
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.78) 13%, #000 72%, transparent 100%);
+    pointer-events: none;
+  }
+  .aircraft-body > * {
+    position: relative;
+    z-index: 1;
   }
   .aircraft-body p {
     color: rgba(17,30,38,0.72);
@@ -423,7 +461,8 @@
     border: 1px solid rgba(17,30,38,0.14);
     border-radius: 6px;
     padding: 9px 10px;
-    background: rgba(255,255,255,0.56);
+    background: rgba(255,255,255,0.58);
+    backdrop-filter: blur(10px);
   }
   .meta-pill span {
     display: block;
@@ -461,7 +500,8 @@
     border: 1px solid rgba(17,30,38,0.13);
     border-radius: 6px;
     padding: 10px;
-    background: rgba(255,255,255,0.68);
+    background: rgba(255,255,255,0.62);
+    backdrop-filter: blur(10px);
   }
   .spec strong {
     display: block;
@@ -650,13 +690,22 @@
     .progression-rail { grid-template-columns: repeat(6, minmax(254px, 88vw)); }
     .aircraft-media,
     .aircraft-media img {
-      height: 238px;
-      min-height: 238px;
+      height: 276px;
+      min-height: 276px;
+    }
+    .aircraft-media::before {
+      bottom: -62px;
+      height: 148px;
     }
     .aircraft-body {
-      padding-top: 50px;
+      margin-top: -64px;
+      padding-top: 78px;
       grid-template-rows: auto auto auto auto auto auto;
       gap: 12px;
+    }
+    .aircraft-body::before {
+      top: -76px;
+      height: 286px;
     }
     .aircraft-body p {
       font-size: 14px;
@@ -776,7 +825,7 @@
 
     <section class="progression" aria-label="Aircraft platform progression">
       <div class="progression-rail">
-        <article class="aircraft-card" id="v1">
+        <article class="aircraft-card" id="v1" style="--aircraft-image: url('https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp" alt="Early Skyways aircraft video still">
             <div class="aircraft-title">
@@ -820,7 +869,7 @@
           </div>
         </article>
 
-        <article class="aircraft-card" id="v20">
+        <article class="aircraft-card" id="v20" style="--aircraft-image: url('https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp" alt="Skyways V2 aircraft on ship deck">
             <div class="aircraft-title">
@@ -864,7 +913,7 @@
           </div>
         </article>
 
-        <article class="aircraft-card" id="v22">
+        <article class="aircraft-card" id="v22" style="--aircraft-image: url('https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp" alt="Skyways aircraft during early flight testing">
             <div class="aircraft-title">
@@ -909,7 +958,7 @@
           </div>
         </article>
 
-        <article class="aircraft-card current" id="v26">
+        <article class="aircraft-card current" id="v26" style="--aircraft-image: url('https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg" alt="Skyways V2 aircraft on runway">
             <div class="aircraft-title">
@@ -955,7 +1004,7 @@
           </div>
         </article>
 
-        <article class="aircraft-card" id="v3b1">
+        <article class="aircraft-card" id="v3b1" style="--aircraft-image: url('https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft in hover">
             <div class="aircraft-title">
@@ -1001,7 +1050,7 @@
           </div>
         </article>
 
-        <article class="aircraft-card" id="v3b2">
+        <article class="aircraft-card" id="v3b2" style="--aircraft-image: url('https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft forward profile">
             <div class="aircraft-title">
