@@ -3367,22 +3367,42 @@
 
   // ═══ DENSITY TOGGLE (SCAN / FULL) ═══
   // Two-state toggle in the stats banner. "Scan" collapses each card to
-  // date + title so the 9-year span can be skimmed in one screenful;
-  // "Full" is the default detailed view. Tapping a collapsed card in
-  // scan mode toggles `.expanded` on that single card so the user can
-  // dip into detail without leaving scan mode. State persists in
-  // localStorage as skyways-density.
+  // date + title so the 9-year span can be skimmed in one screenful.
+  // Default density is viewport-aware: desktop opens Full, mobile opens
+  // Scan. If a user taps the toggle, that choice persists as an override.
+  var DENSITY_OVERRIDE_KEY = 'skyways-density-override';
+  var DENSITY_MOBILE_QUERY = '(max-width: 720px)';
+  function getAutoDensity() {
+    return (window.matchMedia && window.matchMedia(DENSITY_MOBILE_QUERY).matches)
+      ? 'compact'
+      : 'full';
+  }
+  function getDensityOverride() {
+    try {
+      var stored = localStorage.getItem(DENSITY_OVERRIDE_KEY);
+      return stored === 'compact' || stored === 'full' ? stored : null;
+    } catch (e) {
+      return null;
+    }
+  }
   function getDensity() {
-    try { return localStorage.getItem('skyways-density') || 'full'; }
-    catch (e) { return 'full'; }
+    return getDensityOverride() || getAutoDensity();
   }
   function setDensity(mode) {
-    try { localStorage.setItem('skyways-density', mode); } catch (e) { /* ignore quota */ }
+    try {
+      localStorage.setItem(DENSITY_OVERRIDE_KEY, mode);
+      localStorage.removeItem('skyways-density');
+    } catch (e) { /* ignore quota */ }
     applyDensity();
   }
   function applyDensity() {
     var mode = getDensity();
     document.body.classList.toggle('density-compact', mode === 'compact');
+    if (mode === 'full') {
+      document.querySelectorAll('.event-card.expanded').forEach(function(c) {
+        c.classList.remove('expanded');
+      });
+    }
     var btn = document.getElementById('densityToggle');
     if (btn) {
       btn.setAttribute('aria-pressed', mode === 'compact' ? 'true' : 'false');
@@ -3407,6 +3427,17 @@
       : 'Full density: cards show all detail', true);
   }
   window.toggleDensity = toggleDensity;
+  if (window.matchMedia) {
+    var densityViewport = window.matchMedia(DENSITY_MOBILE_QUERY);
+    var syncAutoDensity = function() {
+      if (!getDensityOverride()) applyDensity();
+    };
+    if (densityViewport.addEventListener) {
+      densityViewport.addEventListener('change', syncAutoDensity);
+    } else if (densityViewport.addListener) {
+      densityViewport.addListener(syncAutoDensity);
+    }
+  }
   // Tap / click on a card in scan mode toggles its expanded state.
   // Delegated listener so it also works for cards rendered after this
   // binding (the timeline re-renders aren't currently a flow, but
