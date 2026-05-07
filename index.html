@@ -1578,13 +1578,15 @@
   */
 
   /* ── DENSITY: SCAN MODE ──
-     When body.density-compact is set, collapse every card to date +
-     title (+ category accent bar) only. Details, bullets, tag/source
-     meta, thumbnail background, internal banner, and big value number
-     all hide. Tapping a card toggles `.expanded` which reveals the
-     full content inline — lets the user dip into detail without
-     leaving scan mode. Search/filter compose normally; a search
-     navigate auto-expands the hit card (handled in navigateMatch). */
+     When body.density-compact is set, collapse every card to date,
+     title, category label, and source trigger (+ category accent bar).
+     Details, bullets, thumbnail background, internal banner, copy-link,
+     and big value number all hide. Source drawers remain available in
+     scan mode so users can verify citations without expanding the card.
+     Tapping a card toggles `.expanded` which reveals the full content
+     inline — lets the user dip into detail without leaving scan mode.
+     Search/filter compose normally; a search navigate auto-expands the
+     hit card (handled in navigateMatch). */
   body.density-compact .event-card {
     padding: 8px 16px 8px 20px;
     cursor: pointer;
@@ -1595,7 +1597,6 @@
   body.density-compact .event-card-bg,
   body.density-compact .event-detail,
   body.density-compact .event-bullets,
-  body.density-compact .event-meta,
   body.density-compact .event-value,
   body.density-compact .event-card .internal-banner,
   body.density-compact .card-link-btn {
@@ -1609,6 +1610,20 @@
   body.density-compact .event-date {
     font-size: 10px;
     margin-bottom: 0;
+  }
+  body.density-compact .event-meta {
+    margin-top: 2px;
+    gap: 8px;
+    row-gap: 4px;
+  }
+  body.density-compact .event-tag,
+  body.density-compact .sources-label,
+  body.density-compact .source-inline {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+  body.density-compact .sources-trigger {
+    padding: 2px 0;
   }
   body.density-compact .event-card:hover { transform: none; }
   body.density-compact .events-col { gap: 8px; }
@@ -3388,7 +3403,7 @@
       });
     }
     announce(next === 'compact'
-      ? 'Scan density: cards collapsed to date and title'
+      ? 'Scan density: cards collapsed to date, title, label, and sources'
       : 'Full density: cards show all detail', true);
   }
   window.toggleDensity = toggleDensity;
