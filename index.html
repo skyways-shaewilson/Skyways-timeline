@@ -151,38 +151,6 @@
   .sticky-header.minimized .logo-white { opacity: 1; }
   .sticky-header.minimized .logo-color { opacity: 0; }
 
-  .brand-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: 6px;
-    flex-shrink: 0;
-  }
-  .brand-nav-link {
-    min-height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 6px;
-    padding: 7px 10px;
-    color: rgba(255,255,255,0.76);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
-    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-  }
-  .brand-nav-link:hover,
-  .brand-nav-link:focus-visible {
-    color: var(--navy);
-    border-color: var(--thrust-green);
-    background: var(--thrust-green);
-    outline: none;
-  }
-
-
   /* ══ SEARCH ══ */
   .search-wrap {
     position: relative;
@@ -1595,6 +1563,10 @@
     border-color: #a9d60c;
     box-shadow: 0 3px 10px rgba(194, 242, 19, 0.5);
   }
+  .density-toggle.view-link {
+    text-decoration: none;
+    white-space: nowrap;
+  }
   .density-icon {
     width: 14px; height: 10px;
     display: inline-flex; flex-direction: column; justify-content: space-between;
@@ -2456,13 +2428,6 @@
       white-space: normal;
     }
     .brand-bar-inline-title .bbit-line { display: block; }
-    .brand-nav { margin-left: 0; }
-    .brand-nav-link {
-      min-height: 28px;
-      padding: 6px 8px;
-      font-size: 9px;
-      letter-spacing: 0.5px;
-    }
     /* Search bar: flexes to fill remaining row width with a sane min+max so
        it never gets cut off on narrow viewports. */
     .search-wrap {
@@ -2613,24 +2578,6 @@
     .legend-x { margin-left: 2px; }
     .legend-x svg { width: 7px; height: 7px; }
 
-    @media (max-width: 480px) {
-      .logo-wrap { height: 32px; }
-      .sticky-header.minimized .logo-wrap { height: 30px; }
-      .brand-bar-inline-title { display: none; }
-      .brand-nav-link {
-        width: 30px;
-        min-width: 30px;
-        padding: 0;
-        font-size: 0;
-      }
-      .brand-nav-link::before {
-        content: 'P';
-        font-size: 11px;
-        line-height: 1;
-      }
-      .search-wrap { min-width: 112px; }
-    }
-
     /* ── MOBILE SEARCH-FOCUSED STATE ──
        When the user taps the search input on a phone, collapse everything
        below the brand bar so the iOS/Android keyboard doesn't have to fight
@@ -2763,9 +2710,6 @@
     </div>
     <div class="brand-bar-divider"></div>
     <div class="brand-bar-inline-title"><span class="bbit-line">History &amp;</span> <span class="bbit-line">Timeline</span></div>
-    <nav class="brand-nav" aria-label="Timeline navigation">
-      <a class="brand-nav-link" href="platform-progression/" aria-label="Platform Progression">Platform</a>
-    </nav>
     <div class="search-wrap">
       <input type="search" class="search-input" id="searchInput" placeholder="Search events..." aria-label="Search timeline events" autocomplete="off" oninput="handleSearch()" onkeydown="handleSearchKeydown(event)">
       <div class="search-nav" id="searchNav">
@@ -3215,6 +3159,14 @@
           </span>
           <span class="density-label" id="orderLabel">Newest</span>
         </button>
+        <a class="density-toggle view-link" href="platform-progression/" aria-label="Open Platform Progression page">
+          <span class="density-icon" aria-hidden="true">
+            <span class="density-icon-line"></span>
+            <span class="density-icon-line"></span>
+            <span class="density-icon-line"></span>
+          </span>
+          <span class="density-label">Platform</span>
+        </a>
       </div>
     </div>
   </div></div>
