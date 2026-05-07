@@ -712,6 +712,18 @@
   .stat-menu-info ul li { margin: 3px 0; }
   .stat-menu-info ul li strong { font-weight: 600; }
   .stat-menu-info .lead { font-weight: 600; margin-bottom: 4px; }
+  .stat-menu-event-link {
+    color: var(--blue);
+    font: inherit;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.12s ease;
+  }
+  .stat-menu-event-link:hover,
+  .stat-menu-event-link:focus-visible {
+    color: var(--navy);
+    text-decoration: underline;
+  }
   .stat-menu-source { font-size: 10px; font-weight: 600; color: var(--gray-50); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
   .stat-menu-links {
     display: flex; flex-direction: column; gap: 4px;
@@ -3007,18 +3019,22 @@
       <div class="stat"><div class="stat-value">1/30th</div><div class="stat-label">Helicopter cost</div>
         <div class="stat-menu">
           <div class="stat-menu-info">
-            <p class="lead">Operating cost vs. legacy maritime helicopters:</p>
+            <p class="lead">Operating cost vs. Navy maritime helicopters:</p>
             <ul>
-              <li><strong>Skyways V2:</strong> ~$1,000 per flight hour</li>
-              <li><strong>Legacy maritime helicopter:</strong> ~$30,000 per flight hour</li>
-              <li><strong>~$100 per flight hour</strong> projected at full fleet scale</li>
-              <li><strong>30&times; cost advantage today, 300&times; at scale</strong></li>
+              <li><strong>Skyways V2:</strong> ~$1,000 per flight hour, per public reporting</li>
+              <li><strong>30&times; claim:</strong> public reporting cites ~$30,000 per crewed helicopter ship-to-ship delivery mission hour</li>
+              <li><strong>GAO-derived MH-60R benchmark:</strong> $14,555 total operating and support cost per flying hour</li>
+              <li><strong>DoD FY2023 rates:</strong> Navy MH-60S/R listed at $6,815-$6,863 per reimbursable flight hour</li>
+              <li><strong>Navy mission fit:</strong> MH-60S missions include vertical replenishment and logistics</li>
             </ul>
           </div>
           <div class="stat-menu-source">Verified Sources:</div>
           <div class="stat-menu-links">
-            <a href="https://dronexl.co/2026/02/07/skyways-autonomous-drone-fleet/" target="_blank" rel="noopener">DroneXL | World&rsquo;s Largest Autonomous Drone Fleet (Feb 2026)</a>
-            <a href="https://www.businesswire.com/news/home/20250609862238/en/" target="_blank" rel="noopener">BusinessWire | Skyways $37M USAF STRATFI (Jun 2025)</a>
+            <a href="https://dronexl.co/2026/02/07/skyways-autonomous-drone-fleet/" target="_blank" rel="noopener">DroneXL | Skyways V2 cost + 30&times; public comparison (Feb 2026)</a>
+            <a href="https://www.popularmechanics.com/military/aviation/a41956551/cost-per-hour-to-fly-us-military-aircraft/" target="_blank" rel="noopener">Popular Mechanics | GAO-derived MH-60R $14,555/hr benchmark</a>
+            <a href="https://www.gao.gov/products/gao-23-106217" target="_blank" rel="noopener">GAO | Aircraft sustainment operating/support cost report</a>
+            <a href="https://comptroller.defense.gov/Portals/45/documents/rates/fy2023/2023_b_c.pdf" target="_blank" rel="noopener">DoD Comptroller | FY2023 Navy MH-60S/R flight-hour rates</a>
+            <a href="https://www.navy.mil/Resources/Fact-Files/Display-FactFiles/Article/2166682/mh-60s-seahawk/" target="_blank" rel="noopener">U.S. Navy | MH-60S vertical replenishment + logistics role</a>
           </div>
         </div>
       </div>
@@ -3027,12 +3043,12 @@
           <div class="stat-menu-info">
             <p class="lead">Continuous Navy partnership since 2019:</p>
             <ul>
-              <li><strong>2019</strong>, ANTX win (beat Boeing, 65 UAS evaluated)</li>
-              <li><strong>2019-22</strong>, Navy OTA / Blue Water Maritime Logistics UAS</li>
-              <li><strong>2022-24</strong>, DIU/USN spiral mods (W15QKN-22-9-5005)</li>
-              <li><strong>2023-25</strong>, NAWCAD BWUAS 2.0 + CLIN 0005 + CLIN 0006</li>
-              <li><strong>2024</strong>, RIMPAC, III MEF TCP demo</li>
-              <li><strong>2025</strong>, Project ULTRA, V3 TCP development</li>
+              <li><strong>2019</strong>, <a class="stat-menu-event-link" href="#event-8" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(8);">ANTX win</a> (beat Boeing, 65 UAS evaluated)</li>
+              <li><strong>2019-22</strong>, <a class="stat-menu-event-link" href="#event-9" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(9);">Navy OTA / Blue Water Maritime Logistics UAS</a></li>
+              <li><strong>2022-24</strong>, <a class="stat-menu-event-link" href="#event-19" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(19);">DIU/USN spiral mods</a> (W15QKN-22-9-5005)</li>
+              <li><strong>2023-25</strong>, <a class="stat-menu-event-link" href="#event-110" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(110);">NAWCAD BWUAS 2.0</a> + <a class="stat-menu-event-link" href="#event-111" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(111);">CLIN 0005</a> + <a class="stat-menu-event-link" href="#event-112" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(112);">CLIN 0006</a></li>
+              <li><strong>2024</strong>, <a class="stat-menu-event-link" href="#event-27" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(27);">RIMPAC</a>, <a class="stat-menu-event-link" href="#event-31" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(31);">III MEF TCP demo</a></li>
+              <li><strong>2025</strong>, <a class="stat-menu-event-link" href="#event-111" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(111);">Project ULTRA</a>, <a class="stat-menu-event-link" href="#event-112" onclick="event.preventDefault(); event.stopPropagation(); scrollToContract(112);">V3 TCP development</a></li>
             </ul>
           </div>
           <div class="stat-menu-source">Verified Sources:</div>
