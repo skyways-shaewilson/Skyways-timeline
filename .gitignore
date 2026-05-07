@@ -6,3 +6,50 @@
 .env
 .env.local
 .env.*
+
+# Local operating files
+.DS_Store
+**/.DS_Store
+.claude/
+
+# Internal working materials: keep out of public Git unless deliberately promoted
+*.md
+docs/
+archive/
+*.xlsx
+*.xlsm
+*.csv
+*.pdf
+*.3mf
+*.x_t
+*.step
+*.stp
+*.iges
+*.igs
+
+# Internal source packets and generated audits
+Data/**
+!Data/
+!Data/live_stats.json
+
+# Working scripts are internal by default; the live stats updater supports the site
+scripts/**
+!scripts/
+!scripts/update_live_stats.py
+
+# Brand/source asset dump is internal; only expose files required by the site
+Logos/**
+!Logos/
+!Logos/Other Logo Files/
+!Logos/Other Logo Files/logo-white-transparent-background.png
+
+# Licensed font sources stay internal; web fonts are required by the site
+Founders Grotesk Family/**
+!Founders Grotesk Family/
+!Founders Grotesk Family/WOFF2/
+!Founders Grotesk Family/WOFF2/*.woff2
+
+# Legacy local page/background experiments
+Skyways Timeline Experiment/
+hero_bg.png
+nasa_bg.png

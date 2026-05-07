@@ -35,18 +35,84 @@
     color: var(--white);
     -webkit-font-smoothing: antialiased;
   }
-  body::before {
-    content: '';
+  .topography-bg {
+    --terrain-y: 0px;
+    --terrain-x: 0px;
+    --terrain-tilt: 0deg;
     position: fixed;
     inset: 0;
+    z-index: 0;
     pointer-events: none;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(17,30,38,0.62), rgba(17,30,38,0.95) 72%, #111E26 100%),
+      linear-gradient(128deg, rgba(0,154,235,0.12), transparent 38%),
+      linear-gradient(310deg, rgba(66,198,193,0.08), transparent 46%),
+      var(--navy);
+  }
+  .topography-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      linear-gradient(90deg, rgba(17,30,38,0.98), rgba(17,30,38,0.22) 18%, rgba(17,30,38,0.12) 76%, rgba(17,30,38,0.94)),
+      linear-gradient(180deg, rgba(17,30,38,0.1), transparent 28%, rgba(17,30,38,0.84) 100%);
+  }
+  .topography-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='1'%3E%3Cpath d='M76 142 C120 90 190 78 244 112 C304 150 338 130 374 78 C416 18 506 20 554 82 C600 142 574 224 504 248 C438 270 398 246 350 292 C294 346 208 352 150 306 C96 264 42 206 76 142Z'/%3E%3Cpath d='M110 152 C150 116 196 112 236 138 C284 168 326 160 356 116 C392 64 468 64 508 112 C546 158 530 210 482 226 C426 246 390 226 346 266 C296 312 226 314 178 278 C136 246 84 196 110 152Z'/%3E%3Cpath d='M146 164 C176 140 206 140 236 160 C276 186 322 184 348 148 C376 108 430 104 462 134 C496 166 486 204 450 214 C410 226 382 214 340 248 C300 282 244 286 208 260 C174 236 120 196 146 164Z'/%3E%3Cpath d='M42 492 C96 438 172 430 226 468 C274 502 318 494 360 450 C416 392 506 398 558 454 C604 504 596 574 532 604 C474 632 410 606 362 580 C308 550 248 584 190 574 C130 564 70 548 42 492Z'/%3E%3Cpath d='M90 498 C136 466 186 466 228 492 C274 520 314 518 352 478 C398 430 480 432 526 478 C562 514 556 560 512 582 C468 604 410 584 364 560 C312 532 260 560 210 552 C156 544 112 532 90 498Z'/%3E%3Cpath d='M330 26 C370 4 420 8 454 42 C486 76 480 122 440 142 C398 164 352 146 322 112 C292 78 294 46 330 26Z'/%3E%3Cpath d='M350 52 C378 36 414 42 434 66 C454 92 446 116 420 128 C392 140 362 128 344 104 C326 82 326 66 350 52Z'/%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-    background-size: 620px 620px, 88px 88px, 88px 88px;
-    background-position: center top, 0 0, 0 0;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 76%);
+      linear-gradient(90deg, rgba(255,255,255,0.017) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 96px 96px;
+    opacity: 0.36;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.84), transparent 72%);
+  }
+  .terrain-map {
+    position: absolute;
+    top: -18vh;
+    left: 50%;
+    z-index: 1;
+    width: max(1600px, 164vw);
+    height: 350vh;
+    min-height: 3100px;
+    transform:
+      translate3d(calc(-50% + var(--terrain-x)), var(--terrain-y), 0)
+      rotate(var(--terrain-tilt))
+      scale(1.035);
+    transform-origin: 50% 8%;
+    opacity: 0.66;
+    will-change: transform;
+  }
+  .terrain-contours {
+    fill: none;
+    stroke: rgba(255,255,255,0.26);
+    stroke-width: 1.05;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .terrain-contours .major {
+    stroke: rgba(255,255,255,0.40);
+    stroke-width: 1.35;
+  }
+  .terrain-contours .minor {
+    stroke: rgba(255,255,255,0.20);
+  }
+  .terrain-contours .accent {
+    stroke: rgba(66,198,193,0.34);
+  }
+  .terrain-contours .index {
+    stroke: rgba(194,242,19,0.22);
+    stroke-width: 1.2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .terrain-map {
+      transform: translate3d(-50%, 0, 0) scale(1.035);
+    }
   }
   a { color: inherit; }
   img { display: block; max-width: 100%; }
@@ -55,12 +121,13 @@
     min-height: 100vh;
     position: relative;
     z-index: 1;
+    isolation: isolate;
   }
   .topbar {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(17,30,38,0.88);
+    background: rgba(17,30,38,0.96);
     border-bottom: 1px solid var(--ink-12);
     backdrop-filter: blur(18px);
   }
@@ -118,18 +185,35 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 74px 48px 42px;
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr);
-    gap: 48px;
-    align-items: end;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 560px;
+    align-items: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 54px 48px 42px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(17,30,38,0.98) 0%, rgba(17,30,38,0.86) 34%, rgba(17,30,38,0.24) 60%, transparent 100%);
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 4;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 720px;
   }
   .hero-copy h1 {
-    max-width: 760px;
-    font-size: clamp(52px, 8vw, 118px);
-    line-height: 0.88;
+    max-width: 720px;
+    font-size: clamp(48px, 6.3vw, 92px);
+    line-height: 0.92;
     letter-spacing: 0;
     font-weight: 700;
     text-transform: uppercase;
+    text-shadow: 0 18px 40px rgba(17,30,38,0.72);
   }
   .hero-copy p {
     max-width: 600px;
@@ -140,10 +224,17 @@
     font-weight: 400;
   }
   .hero-panel {
+    position: relative;
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 1;
+    width: min(58vw, 686px);
+    max-width: calc(100vw - 96px);
+    justify-self: end;
     border: 1px solid var(--ink-12);
     border-radius: 8px;
     overflow: hidden;
-    background: rgba(255,255,255,0.04);
+    background: rgba(13,24,31,0.96);
   }
   .hero-panel img {
     width: 100%;
@@ -197,7 +288,7 @@
     letter-spacing: 0.7px;
     text-transform: uppercase;
     text-align: center;
-    background: rgba(255,255,255,0.03);
+    background: rgba(13,24,31,0.94);
   }
   .chapter-bar a:hover,
   .chapter-bar a:focus-visible {
@@ -226,96 +317,215 @@
   .progression-rail::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 4px; }
   .aircraft-card {
     min-height: 100%;
-    border: 1px solid var(--ink-12);
+    border: 1px solid rgba(238,242,234,0.28);
     border-radius: 8px;
-    background: rgba(255,255,255,0.045);
+    background: #EEF2EA;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    color: var(--navy);
   }
   .aircraft-card.current {
     border-color: rgba(194,242,19,0.55);
-    box-shadow: 0 0 0 1px rgba(194,242,19,0.2), 0 24px 60px rgba(0,0,0,0.22);
+    box-shadow: 0 0 0 1px rgba(194,242,19,0.26), 0 24px 60px rgba(0,0,0,0.24);
   }
   .aircraft-media {
     position: relative;
+    min-height: 272px;
     background: #0B151B;
+  }
+  .aircraft-media::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 1;
+    height: 104px;
+    background: linear-gradient(180deg, rgba(238,242,234,0), rgba(238,242,234,0.72) 58%, #EEF2EA 100%);
+    backdrop-filter: blur(16px);
+    mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.78) 34%, #000 100%);
+  }
+  .aircraft-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(3,10,14,0.58), transparent 48%);
+    pointer-events: none;
   }
   .aircraft-media img {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 272px;
     object-fit: cover;
   }
-  .aircraft-year {
+  .aircraft-title {
     position: absolute;
-    left: 12px;
-    bottom: 12px;
-    border: 1px solid rgba(255,255,255,0.22);
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 3;
+  }
+  .aircraft-year {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    border: 1px solid rgba(255,255,255,0.26);
     border-radius: 6px;
     padding: 5px 8px;
-    background: rgba(17,30,38,0.78);
+    background: rgba(17,30,38,0.74);
     color: var(--white);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.9px;
     text-transform: uppercase;
+    backdrop-filter: blur(12px);
   }
-  .aircraft-body {
-    padding: 18px;
-    display: grid;
-    grid-template-rows: 58px 92px 136px 132px minmax(76px, auto);
-    flex: 1;
-  }
-  .aircraft-body h2 {
-    font-size: 27px;
-    line-height: 0.96;
+  .aircraft-title h2 {
+    max-width: 230px;
+    margin-top: 10px;
+    color: var(--white);
+    font-size: 31px;
+    line-height: 0.92;
     font-weight: 700;
     letter-spacing: 0;
     text-transform: uppercase;
+    text-shadow: 0 12px 30px rgba(0,0,0,0.65);
+  }
+  .aircraft-body {
+    position: relative;
+    z-index: 2;
+    margin-top: -42px;
+    padding: 58px 18px 18px;
+    display: grid;
+    grid-template-rows: auto auto auto minmax(158px, auto) minmax(112px, auto) auto;
+    gap: 14px;
+    align-content: start;
+    flex: 1;
+    background: linear-gradient(180deg, rgba(238,242,234,0.78), #EEF2EA 34%, #EEF2EA 100%);
+    backdrop-filter: blur(18px);
   }
   .aircraft-body p {
-    margin-top: 0;
-    color: rgba(255,255,255,0.7);
+    color: rgba(17,30,38,0.72);
     font-size: 14.5px;
     line-height: 1.38;
   }
+  .aircraft-body > p {
+    min-height: 80px;
+  }
+  .spec-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .meta-pill {
+    min-height: 82px;
+    border: 1px solid rgba(17,30,38,0.14);
+    border-radius: 6px;
+    padding: 9px 10px;
+    background: rgba(255,255,255,0.56);
+  }
+  .meta-pill span {
+    display: block;
+    color: rgba(17,30,38,0.46);
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  .meta-pill strong {
+    display: block;
+    margin-top: 6px;
+    color: rgba(17,30,38,0.92);
+    font-size: 12px;
+    line-height: 1.05;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .meta-pill.trl-pill {
+    border-color: rgba(5,113,158,0.25);
+    background: rgba(5,113,158,0.08);
+  }
+  .meta-pill.trl-pill strong {
+    color: #05719E;
+  }
   .stat-grid {
-    margin-top: 18px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 72px;
     gap: 8px;
   }
   .spec {
     min-height: 64px;
-    border: 1px solid var(--ink-12);
+    border: 1px solid rgba(17,30,38,0.13);
     border-radius: 6px;
     padding: 10px;
-    background: rgba(255,255,255,0.035);
+    background: rgba(255,255,255,0.68);
   }
   .spec strong {
     display: block;
-    color: var(--lime);
+    color: #05719E;
     font-size: 18px;
     line-height: 1;
     font-weight: 700;
   }
+  .spec.spec-muted strong {
+    color: rgba(17,30,38,0.52);
+  }
   .spec span {
     display: block;
     margin-top: 7px;
-    color: rgba(255,255,255,0.58);
+    color: rgba(17,30,38,0.58);
     font-size: 10px;
     line-height: 1.1;
     font-weight: 700;
     letter-spacing: 0.6px;
     text-transform: uppercase;
   }
+  .mission-list {
+    min-height: 158px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(17,30,38,0.14);
+  }
+  .mission-list-label {
+    color: rgba(17,30,38,0.52);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .mission-list ul {
+    list-style: none;
+    margin: 9px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 7px;
+  }
+  .mission-list li {
+    position: relative;
+    padding-left: 13px;
+    color: rgba(17,30,38,0.76);
+    font-size: 13.2px;
+    line-height: 1.28;
+  }
+  .mission-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.58em;
+    left: 1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #05719E;
+  }
   .evidence {
-    margin-top: 18px;
+    min-height: 112px;
     padding-top: 16px;
-    border-top: 1px solid var(--ink-12);
+    border-top: 1px solid rgba(17,30,38,0.14);
   }
   .evidence-label {
-    color: var(--gray-50);
+    color: rgba(17,30,38,0.52);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
@@ -323,7 +533,7 @@
   }
   .evidence p {
     margin-top: 6px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(17,30,38,0.76);
     font-size: 13.5px;
     line-height: 1.32;
   }
@@ -339,10 +549,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--ink-18);
+    border: 1px solid rgba(17,30,38,0.16);
     border-radius: 6px;
     padding: 8px 10px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(17,30,38,0.72);
     text-decoration: none;
     font-size: 11px;
     font-weight: 700;
@@ -369,7 +579,7 @@
     border: 1px solid var(--ink-12);
     border-radius: 8px;
     padding: 22px;
-    background: rgba(255,255,255,0.04);
+    background: rgba(13,24,31,0.95);
   }
   .note-panel h2 {
     font-size: 18px;
@@ -389,9 +599,26 @@
     .hero {
       padding: 44px 24px 28px;
       grid-template-columns: 1fr;
+      min-height: 0;
       gap: 28px;
     }
-    .hero-copy h1 { font-size: clamp(46px, 14vw, 82px); }
+    .hero::before { display: none; }
+    .hero-copy {
+      grid-column: auto;
+      grid-row: auto;
+      max-width: none;
+    }
+    .hero-copy h1 {
+      max-width: 720px;
+      font-size: clamp(46px, 13vw, 82px);
+    }
+    .hero-panel {
+      grid-column: auto;
+      grid-row: auto;
+      width: 100%;
+      max-width: none;
+      justify-self: stretch;
+    }
     .chapter-bar {
       padding: 0 24px 22px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -421,12 +648,95 @@
     .hero-stat:last-child { border-bottom: none; }
     .chapter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .progression-rail { grid-template-columns: repeat(6, minmax(254px, 88vw)); }
-    .aircraft-body { grid-template-rows: auto auto auto auto auto; }
-    .aircraft-body h2 { font-size: 24px; }
+    .aircraft-media,
+    .aircraft-media img {
+      height: 238px;
+      min-height: 238px;
+    }
+    .aircraft-body {
+      padding-top: 50px;
+      grid-template-rows: auto auto auto auto auto auto;
+      gap: 12px;
+    }
+    .aircraft-body p {
+      font-size: 14px;
+      line-height: 1.34;
+    }
+    .aircraft-body > p { min-height: 96px; }
+    .spec-meta { gap: 8px; }
+    .meta-pill {
+      min-height: 78px;
+      padding: 8px;
+    }
+    .meta-pill strong { font-size: 11px; }
+    .mission-list { min-height: 190px; }
+    .evidence { min-height: 124px; }
+    .spec {
+      min-height: 58px;
+      padding: 9px;
+    }
+    .aircraft-title h2 {
+      max-width: 214px;
+      font-size: 27px;
+    }
   }
 </style>
 </head>
 <body>
+<div class="topography-bg" aria-hidden="true">
+  <svg class="terrain-map" viewBox="0 0 1600 3200" preserveAspectRatio="xMidYMin slice" focusable="false">
+    <g class="terrain-contours">
+      <path class="minor" d="M-90 740 C140 678 320 706 506 646 C690 588 850 588 1030 642 C1206 694 1384 670 1690 594" />
+      <path class="minor" d="M-92 812 C144 754 338 776 520 724 C708 670 866 672 1042 720 C1226 770 1390 744 1692 674" />
+      <path class="minor" d="M-94 888 C158 832 350 858 532 804 C724 748 888 754 1060 804 C1242 856 1414 826 1694 758" />
+      <path class="minor" d="M-96 969 C176 910 374 938 560 884 C748 830 906 836 1086 886 C1268 936 1448 912 1696 848" />
+
+      <path class="major" d="M104 320 C132 238 242 178 376 188 C520 198 646 306 626 438 C606 566 472 652 326 620 C184 590 64 438 104 320 Z" />
+      <path d="M158 344 C188 278 270 238 374 246 C488 256 576 330 562 430 C548 524 448 586 338 562 C230 538 128 428 158 344 Z" />
+      <path class="accent" d="M214 366 C244 322 300 296 372 304 C452 312 510 362 500 428 C490 494 424 532 350 516 C278 502 188 430 214 366 Z" />
+      <path d="M270 384 C296 354 334 342 374 348 C424 356 454 388 448 426 C442 464 404 486 360 478 C314 470 248 430 270 384 Z" />
+      <path class="index" d="M326 402 C342 388 364 382 386 388 C410 394 424 412 420 430 C416 450 392 462 368 456 C344 450 312 424 326 402 Z" />
+
+      <path class="major" d="M916 372 C978 252 1134 208 1282 264 C1434 320 1534 472 1492 610 C1450 748 1286 816 1120 764 C960 714 846 506 916 372 Z" />
+      <path d="M988 406 C1040 316 1152 286 1264 326 C1386 370 1450 488 1416 592 C1382 698 1260 742 1140 706 C1020 670 930 506 988 406 Z" />
+      <path class="accent" d="M1060 440 C1102 384 1174 366 1244 392 C1322 420 1368 494 1344 566 C1320 640 1238 668 1162 644 C1080 620 1018 508 1060 440 Z" />
+      <path d="M1128 468 C1158 440 1202 432 1240 448 C1282 466 1302 506 1288 546 C1274 588 1228 602 1188 588 C1144 574 1098 506 1128 468 Z" />
+      <path class="index" d="M1184 496 C1202 486 1228 488 1244 500 C1264 514 1268 536 1254 554 C1240 572 1214 576 1194 562 C1174 548 1166 510 1184 496 Z" />
+
+      <path class="major" d="M-140 1232 C-8 1044 238 984 430 1090 C604 1186 620 1384 482 1510 C330 1650 86 1596 -54 1448 C-124 1372 -178 1294 -140 1232 Z" />
+      <path d="M-52 1240 C52 1118 238 1082 382 1160 C506 1228 526 1370 418 1462 C300 1564 106 1530 4 1420 C-56 1356 -92 1294 -52 1240 Z" />
+      <path class="accent" d="M42 1256 C124 1182 250 1164 350 1220 C434 1268 446 1364 372 1430 C292 1502 154 1478 78 1398 C34 1350 8 1298 42 1256 Z" />
+      <path d="M128 1276 C182 1234 260 1228 320 1262 C370 1290 378 1350 332 1392 C280 1438 190 1424 144 1374 C114 1340 104 1302 128 1276 Z" />
+      <path class="index" d="M202 1302 C234 1282 278 1284 306 1308 C334 1332 330 1366 298 1386 C264 1408 220 1396 200 1364 C184 1338 184 1316 202 1302 Z" />
+
+      <path class="major" d="M858 1276 C954 1124 1180 1068 1358 1162 C1516 1246 1570 1420 1472 1562 C1360 1724 1102 1778 928 1662 C756 1548 746 1454 858 1276 Z" />
+      <path d="M936 1306 C1018 1198 1178 1160 1310 1232 C1430 1298 1464 1426 1392 1534 C1308 1656 1118 1692 986 1606 C856 1520 850 1422 936 1306 Z" />
+      <path class="accent" d="M1016 1338 C1078 1268 1188 1246 1280 1296 C1360 1340 1380 1432 1328 1510 C1266 1598 1134 1620 1044 1562 C956 1504 952 1412 1016 1338 Z" />
+      <path d="M1088 1368 C1126 1334 1188 1326 1238 1354 C1286 1382 1296 1434 1262 1480 C1222 1530 1144 1542 1096 1504 C1046 1466 1046 1406 1088 1368 Z" />
+      <path class="index" d="M1148 1402 C1172 1388 1206 1390 1230 1410 C1254 1430 1252 1464 1226 1482 C1200 1502 1164 1496 1144 1470 C1126 1446 1128 1416 1148 1402 Z" />
+
+      <path class="minor" d="M-112 1718 C94 1664 246 1680 416 1628 C590 1574 770 1576 964 1628 C1166 1682 1334 1662 1712 1578" />
+      <path class="minor" d="M-112 1788 C106 1738 272 1750 438 1702 C616 1650 800 1654 988 1702 C1190 1754 1354 1738 1712 1660" />
+      <path class="minor" d="M-112 1862 C120 1814 290 1824 462 1778 C640 1728 820 1732 1014 1782 C1220 1834 1388 1818 1714 1750" />
+
+      <path class="major" d="M164 2058 C234 1900 440 1830 618 1906 C804 1986 854 2186 730 2326 C602 2470 372 2492 226 2380 C82 2270 86 2234 164 2058 Z" />
+      <path d="M238 2078 C300 1974 442 1932 574 1988 C706 2044 744 2188 650 2292 C554 2398 390 2416 286 2334 C186 2256 180 2180 238 2078 Z" />
+      <path class="accent" d="M314 2102 C358 2038 450 2016 536 2054 C620 2090 646 2180 586 2248 C524 2318 420 2328 350 2272 C284 2218 280 2152 314 2102 Z" />
+      <path d="M386 2128 C414 2096 464 2088 512 2108 C556 2128 570 2176 536 2212 C502 2252 442 2258 404 2226 C368 2196 366 2152 386 2128 Z" />
+      <path class="index" d="M442 2150 C460 2138 488 2140 508 2156 C526 2172 526 2198 506 2214 C486 2232 456 2228 440 2206 C426 2188 428 2162 442 2150 Z" />
+
+      <path class="major" d="M844 2468 C934 2310 1160 2242 1340 2334 C1518 2424 1578 2658 1438 2826 C1302 2990 1058 3008 904 2876 C758 2750 746 2640 844 2468 Z" />
+      <path d="M920 2492 C990 2378 1160 2328 1300 2400 C1434 2468 1472 2642 1368 2768 C1264 2892 1084 2906 974 2808 C864 2710 850 2608 920 2492 Z" />
+      <path class="accent" d="M1002 2524 C1054 2452 1162 2424 1260 2474 C1350 2520 1378 2644 1304 2734 C1230 2822 1108 2830 1034 2764 C958 2696 954 2596 1002 2524 Z" />
+      <path d="M1078 2560 C1110 2528 1168 2518 1222 2546 C1270 2572 1284 2642 1240 2692 C1198 2740 1130 2742 1090 2702 C1050 2662 1048 2594 1078 2560 Z" />
+      <path class="index" d="M1136 2594 C1156 2580 1188 2582 1214 2604 C1238 2624 1240 2662 1216 2686 C1190 2710 1154 2702 1134 2674 C1116 2648 1118 2608 1136 2594 Z" />
+
+      <path class="minor" d="M-90 2998 C166 2922 354 2946 554 2890 C760 2830 948 2828 1154 2888 C1374 2952 1514 2934 1690 2876" />
+      <path class="minor" d="M-96 3082 C170 3008 370 3034 578 2974 C780 2916 964 2918 1174 2976 C1382 3036 1530 3028 1690 2972" />
+      <path class="minor" d="M-102 3166 C184 3094 388 3122 606 3060 C814 3000 984 3008 1196 3064 C1396 3118 1542 3112 1692 3062" />
+    </g>
+  </svg>
+</div>
 <div class="site-shell">
   <header class="topbar">
     <div class="topbar-inner">
@@ -434,9 +744,7 @@
         <img class="brand-logo" src="../Logos/Other%20Logo%20Files/logo-white-transparent-background.png" alt="Skyways">
       </a>
       <nav class="nav-actions" aria-label="Platform navigation">
-        <a class="nav-link" href="../">History | Timeline</a>
-        <a class="nav-link" href="../#event-12">V2 Event Card</a>
-        <a class="nav-link" href="../#event-37">V3 Event Card</a>
+        <a class="nav-link" href="../">Timeline</a>
       </nav>
     </div>
   </header>
@@ -445,7 +753,7 @@
     <section class="hero" aria-labelledby="page-title">
       <div class="hero-copy">
         <h1 id="page-title">Platform Progression Timeline</h1>
-        <p>Aircraft generations, mission evidence, and specs that matter. This page keeps the main timeline clean while giving the platform story its own operating view.</p>
+        <p>Aircraft generations, mission evidence, and engineering-backed specs from the first prototype through production-intent V3.</p>
       </div>
       <div class="hero-panel">
         <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft in flight">
@@ -471,20 +779,40 @@
         <article class="aircraft-card" id="v1">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp" alt="Early Skyways aircraft video still">
-            <div class="aircraft-year">2016</div>
+            <div class="aircraft-title">
+              <div class="aircraft-year">2016</div>
+              <h2>V1</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V1</h2>
-            <p>First aircraft built in San Francisco. A COTS foam wing modified for VTOL cargo autonomy and precision landing software.</p>
+            <p>First San Francisco aircraft: a COTS foam-wing VTOL fixed-wing quadplane for cargo autonomy and precision landing.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Prototype proof</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>A-B-C-A demo</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 4</strong></div>
+            </div>
             <div class="stat-grid">
-              <div class="spec"><strong>2 lb</strong><span>Cargo target</span></div>
-              <div class="spec"><strong>Under 30 min</strong><span>Endurance</span></div>
-              <div class="spec"><strong>A-B-C-A</strong><span>Autonomous loop</span></div>
-              <div class="spec"><strong>Proto</strong><span>Build phase</span></div>
+              <div class="spec"><strong>2 lb</strong><span>Payload</span></div>
+              <div class="spec"><strong>Under 30 min</strong><span>Range / endurance</span></div>
+              <div class="spec"><strong>COTS wing</strong><span>Wingspan</span></div>
+              <div class="spec spec-muted"><strong>Prototype</strong><span>Weight class</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cruise / speed</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>5 motors</strong><span>Architecture</span></div>
+              <div class="spec"><strong>A-B-C-A</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>Cargo pickup-delivery-return loop.</li>
+                <li>Precision landing software shakedown.</li>
+                <li>Local VTOL fixed-wing flight tests.</li>
+                <li>Code-to-aircraft autonomy proof.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
-              <p>Prototype proof: autonomous takeoff, cargo pickup, delivery, return, and landing without human intervention.</p>
+              <p>Autonomous takeoff, cargo pickup, delivery, return, and landing proved the first flight-software loop.</p>
             </div>
             <div class="event-links">
               <a class="event-link" href="../#event-103">2016 | V1 first aircraft</a>
@@ -494,21 +822,41 @@
 
         <article class="aircraft-card" id="v20">
           <div class="aircraft-media">
-            <img src="https://www.skyways.com/_astro/hype-still.zGCakefh_1kEicT.webp" alt="Skyways V2 aircraft video still">
-            <div class="aircraft-year">2017</div>
+            <img src="https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp" alt="Skyways V2 aircraft on ship deck">
+            <div class="aircraft-title">
+              <div class="aircraft-year">2017</div>
+              <h2>V2.0</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V2.0</h2>
-            <p>First carbon fiber composite airframe. The 12 ft X8 quadplane established the aircraft architecture used to earn early investor conviction.</p>
+            <p>First carbon fiber composite airframe. The 12 ft X8 quadplane became the investor demo and architecture baseline.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Composite prototype</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>Investor demo</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 5</strong></div>
+            </div>
             <div class="stat-grid">
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Payload</span></div>
+              <div class="spec spec-muted"><strong>Demo flight</strong><span>Range / endurance</span></div>
               <div class="spec"><strong>12 ft</strong><span>Wingspan</span></div>
-              <div class="spec"><strong>Carbon</strong><span>Composite airframe</span></div>
-              <div class="spec"><strong>X8</strong><span>Quadplane layout</span></div>
-              <div class="spec"><strong>Demo</strong><span>Investor proof</span></div>
+              <div class="spec spec-muted"><strong>Composite</strong><span>Weight class</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cruise / speed</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>X8</strong><span>Architecture</span></div>
+              <div class="spec"><strong>Investor demo</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>Investor demo flights.</li>
+                <li>X8 quadplane architecture validation.</li>
+                <li>Composite airframe build and flight tests.</li>
+                <li>Baseline for defense evaluation aircraft.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
-              <p>Prototype build and flight evidence: first composite aircraft and fundraising demonstration platform.</p>
+              <p>Build and flight evidence for the first composite aircraft and repeatable demonstration platform.</p>
             </div>
             <div class="event-links">
               <a class="event-link" href="../#event-107">2017 | V2.0 carbon composite</a>
@@ -519,16 +867,36 @@
         <article class="aircraft-card" id="v22">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp" alt="Skyways aircraft during early flight testing">
-            <div class="aircraft-year">2017 | 2018</div>
+            <div class="aircraft-title">
+              <div class="aircraft-year">2017 | 2018</div>
+              <h2>V2.1 | V2.2</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V2.1 | V2.2</h2>
-            <p>Larger composite aircraft for defense evaluation. White Sands marked the first Skyways BVLOS flight beyond 60 miles.</p>
+            <p>Larger all-electric composite aircraft for defense evaluation, including Skyways' first BVLOS flight beyond 60 miles.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Defense demo</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>60+ mi BVLOS</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 6</strong></div>
+            </div>
             <div class="stat-grid">
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Payload</span></div>
+              <div class="spec"><strong>60+ mi</strong><span>Range / endurance</span></div>
               <div class="spec"><strong>18 ft</strong><span>Wingspan</span></div>
-              <div class="spec"><strong>140 lb</strong><span>All-up weight</span></div>
-              <div class="spec"><strong>60+ mi</strong><span>BVLOS flight</span></div>
-              <div class="spec"><strong>USMC</strong><span>Defense demo</span></div>
+              <div class="spec"><strong>140 lb</strong><span>Weight class</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cruise / speed</span></div>
+              <div class="spec spec-muted"><strong>Not logged</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>All-electric</strong><span>Architecture</span></div>
+              <div class="spec"><strong>White Sands</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>USMC-linked aircraft delivery.</li>
+                <li>60+ mi White Sands BVLOS flight.</li>
+                <li>NMSU / GTRI test support.</li>
+                <li>Defense-relevant mission testing.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
@@ -544,20 +912,40 @@
         <article class="aircraft-card current" id="v26">
           <div class="aircraft-media">
             <img src="https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg" alt="Skyways V2 aircraft on runway">
-            <div class="aircraft-year">2020 | 2024</div>
+            <div class="aircraft-title">
+              <div class="aircraft-year">2020 | 2024</div>
+              <h2>V2.5 | V2.6b</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V2.5 | V2.6b</h2>
-            <p>Operational V2 fleet matured through Navy-driven sub-variants and maritime logistics missions across ship-to-ship, ship-to-shore, and allied demos.</p>
+            <p>Operational V2 fleet matured through Navy-driven variants and maritime logistics missions across fleet and commercial demos.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Operational fleet</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>1,100+ flights</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 8</strong></div>
+            </div>
             <div class="stat-grid">
-              <div class="spec"><strong>25 lb</strong><span>Max cargo</span></div>
-              <div class="spec"><strong>390 NM</strong><span>Max range</span></div>
-              <div class="spec"><strong>7.9 hr</strong><span>Endurance</span></div>
-              <div class="spec"><strong>1,100+</strong><span>Flights cited</span></div>
+              <div class="spec"><strong>30 lb</strong><span>Payload</span></div>
+              <div class="spec"><strong>390 NM</strong><span>Range / endurance</span></div>
+              <div class="spec"><strong>18.5 ft</strong><span>Wingspan</span></div>
+              <div class="spec"><strong>156.3 lb</strong><span>Weight class</span></div>
+              <div class="spec"><strong>52.5 kts</strong><span>Cruise / speed</span></div>
+              <div class="spec"><strong>1.8 ft3</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>Hybrid VTOL</strong><span>Architecture</span></div>
+              <div class="spec"><strong>1,100+ flights</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>Ford-class carrier cargo delivery.</li>
+                <li>Fleet Battle Problem logistics tests.</li>
+                <li>RIMPAC Just In Time Delivery ops.</li>
+                <li>RWE offshore and ANA island trials.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
-              <p>Operational fleet evidence: sustained V2 campaign, carrier work, RIMPAC, Project ULTRA support, and ANA commercial entry.</p>
+              <p>Operational evidence across the V2 campaign, Ford-class carrier work, RIMPAC, ULTRA support, and commercial demos.</p>
             </div>
             <div class="event-links">
               <a class="event-link" href="../#event-12">2020-24 | V2 flight campaign</a>
@@ -570,20 +958,40 @@
         <article class="aircraft-card" id="v3b1">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft in hover">
-            <div class="aircraft-year">2022 | 2025</div>
+            <div class="aircraft-title">
+              <div class="aircraft-year">2022 | 2025</div>
+              <h2>V3 Block 1</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V3 Block 1</h2>
-            <p>V3 moved from subscale flights to full-scale first flight, then customer missions during Project ULTRA at GrandSKY.</p>
+            <p>V3 moved from subscale work to full-scale prototype testing and customer-facing Project ULTRA logistics missions.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Test mule</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>267 flights</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 6</strong></div>
+            </div>
             <div class="stat-grid">
-              <div class="spec"><strong>Subscale</strong><span>2022 test flights</span></div>
-              <div class="spec"><strong>Full scale</strong><span>2024 first flight</span></div>
-              <div class="spec"><strong>8 hr</strong><span>Endurance flights</span></div>
-              <div class="spec"><strong>~200</strong><span>Test flights</span></div>
+              <div class="spec spec-muted"><strong>Test mule</strong><span>Payload</span></div>
+              <div class="spec"><strong>521 NM</strong><span>Range / endurance</span></div>
+              <div class="spec"><strong>26.2 ft</strong><span>Wingspan</span></div>
+              <div class="spec"><strong>326.8 lb</strong><span>Weight class</span></div>
+              <div class="spec"><strong>52.5 kts</strong><span>Cruise / speed</span></div>
+              <div class="spec spec-muted"><strong>Not defined</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>V3 test mule</strong><span>Architecture</span></div>
+              <div class="spec"><strong>267 flights</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>Full-scale V3 flight test campaign.</li>
+                <li>Heavy-fuel endurance expansion.</li>
+                <li>Project ULTRA BVLOS customer demo.</li>
+                <li>Blood and cargo delivery profiles.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
-              <p>Customer demo evidence: BVLOS customer missions, heavy-fuel endurance work, and the bridge into production-intent design.</p>
+              <p>Customer demo evidence across BVLOS missions, heavy-fuel endurance, and Block 2 bridge testing.</p>
             </div>
             <div class="event-links">
               <a class="event-link" href="../#event-21">2022 | V3 subscale</a>
@@ -596,20 +1004,40 @@
         <article class="aircraft-card" id="v3b2">
           <div class="aircraft-media">
             <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft forward profile">
-            <div class="aircraft-year">2026 | next</div>
+            <div class="aircraft-title">
+              <div class="aircraft-year">2026 | next</div>
+              <h2>V3 Block 2 | V3.2</h2>
+            </div>
           </div>
           <div class="aircraft-body">
-            <h2>V3 Block 2 | V3.2</h2>
-            <p>Production-intent V3 path for low-rate production, expanded payload, and long-range logistics operations.</p>
+            <p>Production-intent V3 path for low-rate production, expanded useful load, and long-range logistics envelopes.</p>
+            <div class="spec-meta">
+              <div class="meta-pill"><span>Maturity</span><strong>Design intent</strong></div>
+              <div class="meta-pill"><span>Mission record</span><strong>First article path</strong></div>
+              <div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>TRL 5</strong></div>
+            </div>
             <div class="stat-grid">
-              <div class="spec"><strong>105 lb</strong><span>Useful load</span></div>
-              <div class="spec"><strong>750+ NM</strong><span>Primary range</span></div>
-              <div class="spec"><strong>1,200+ NM</strong><span>Minimal cargo mode</span></div>
-              <div class="spec"><strong>87+ kts</strong><span>Cruise speed</span></div>
+              <div class="spec"><strong>105 lb</strong><span>Payload</span></div>
+              <div class="spec"><strong>750+ NM</strong><span>Range / endurance</span></div>
+              <div class="spec"><strong>22 ft</strong><span>Wingspan</span></div>
+              <div class="spec"><strong>360 lb</strong><span>Weight class</span></div>
+              <div class="spec"><strong>87+ kts</strong><span>Cruise / speed</span></div>
+              <div class="spec"><strong>7.0 ft3</strong><span>Cargo volume</span></div>
+              <div class="spec"><strong>Production V3</strong><span>Architecture</span></div>
+              <div class="spec"><strong>First article</strong><span>Proof point</span></div>
+            </div>
+            <div class="mission-list">
+              <div class="mission-list-label">Mission list</div>
+              <ul>
+                <li>Production-intent first article path.</li>
+                <li>STRATFI / AFWERX transition work.</li>
+                <li>Distributed long-range logistics envelope.</li>
+                <li>Heavy cargo modes with range caveat.</li>
+              </ul>
             </div>
             <div class="evidence">
               <div class="evidence-label">Readiness evidence</div>
-              <p>CDR-level design maturity: first article build, production ramp path, and V3.2 placeholder pending build-phase details.</p>
+              <p>Engineering-approved maturity path across heavy-fuel architecture, in-flight recharge, first article build, and production ramp.</p>
             </div>
             <div class="event-links">
               <a class="event-link" href="../#event-45">2026 | V3 Block 2 first article</a>
@@ -622,15 +1050,52 @@
 
     <section class="notes" aria-label="Platform notes">
       <div class="note-panel">
-        <h2>Readiness Language</h2>
-        <p>Readiness is expressed as evidence from the timeline, not as a formal TRL certification. That keeps the page useful for internal review without overstating program status.</p>
+        <h2>Range Language</h2>
+        <p>Range and payload are shown as separate operating envelopes. The page does not combine max payload with max range unless a source explicitly validates that pairing.</p>
       </div>
       <div class="note-panel">
-        <h2>Source Model</h2>
-        <p>Full source context remains on the linked event cards. This page summarizes aircraft progression and avoids linking any internal documents directly.</p>
+        <h2>Source + TRL Model</h2>
+        <p>Full source context remains on the linked event cards, with no internal document links exposed. TRL is shown as an assessed platform-level read, not a formal certification claim, because V2 and V3 configurations are evaluated separately.</p>
       </div>
     </section>
   </main>
 </div>
+<script>
+  (() => {
+    const terrain = document.querySelector('.topography-bg');
+    const rail = document.querySelector('.progression-rail');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let ticking = false;
+
+    const updateTerrain = () => {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const railMax = rail ? Math.max(rail.scrollWidth - rail.clientWidth, 1) : 1;
+      const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+      const railProgress = rail ? Math.min(Math.max(rail.scrollLeft / railMax, 0), 1) : 0;
+      const terrainProgress = progress + (railProgress * 0.82);
+      const travel = (window.scrollY * 0.24) + (railProgress * 104);
+      const crosswind = (Math.sin(terrainProgress * Math.PI * 2) * 22) - (railProgress * 172);
+      const tilt = (progress * 1.4) + (railProgress * 0.7) - 0.7;
+
+      terrain.style.setProperty('--terrain-y', `${(-travel).toFixed(1)}px`);
+      terrain.style.setProperty('--terrain-x', `${crosswind.toFixed(1)}px`);
+      terrain.style.setProperty('--terrain-tilt', `${tilt.toFixed(2)}deg`);
+      ticking = false;
+    };
+
+    const requestTerrainUpdate = () => {
+      if (reduceMotion.matches || ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateTerrain);
+    };
+
+    if (terrain && !reduceMotion.matches) {
+      updateTerrain();
+      window.addEventListener('scroll', requestTerrainUpdate, { passive: true });
+      window.addEventListener('resize', requestTerrainUpdate);
+      if (rail) rail.addEventListener('scroll', requestTerrainUpdate, { passive: true });
+    }
+  })();
+</script>
 </body>
 </html>
