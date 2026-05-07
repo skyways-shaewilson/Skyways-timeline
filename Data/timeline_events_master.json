@@ -994,13 +994,15 @@
     "tag": "Contract | U.S. Air Force",
     "sources": [
       "SBIR.gov",
-      "Skyways Internal | Contract FA228024D0003 / Task Order FA228024F0013 (approx. $2.2M obligated as of Jul 2024 across Mods #1 and #2; $4.99M IDIQ ceiling; not publicly disclosed)"
+      "AFRL Active OTSB-SB Contracts PDF (Sep 2025)",
+      "Skyways Internal | Task Order FA228024F0013 (approx. $2.2M obligated as of Jul 2024 across Mods #1 and #2; obligation/mod detail not publicly disclosed)"
     ],
     "charles_corrections": [
       "Round III: Cleaned up 'initial millions' language."
     ],
     "source_urls": {
-      "SBIR.gov": "https://www.sbir.gov/portfolio/1542801"
+      "SBIR.gov": "https://www.sbir.gov/portfolio/1542801",
+      "AFRL Active OTSB-SB Contracts PDF (Sep 2025)": "https://www.afrl.af.mil/Portals/90/Documents/SB/AFRL_Active_OTSB-SB_Contracts.pdf?ver=0Nqv4Y75fMtqdXzHORfaiA%3D%3D"
     },
     "sort_date": "2024-06",
     "source_thumbnails": {
@@ -1012,6 +1014,7 @@
       "Sept 2023: STRATFI package submitted",
       "Early 2024: USAF AFWERX issued RFP for V3 development",
       "Jun 19, 2024: IDIQ contract FA228024D0003 awarded; 5-year ordering period; $4,999,999 ceiling",
+      "Sep 2025 AFRL public active-contracts PDF confirms FA228024D0003 as Rapid Cargo Resupply with $4,999,999 total contract value and Jun 19, 2029 ultimate completion",
       "Mods #1 + #2: Task Order FA228024F0013 obligations grew to approx. $2.2M",
       "Jan 6, 2025: Mod #3 extended CLIN dates (no $ change)",
       "June 2024: STRATFI selection announced leading to the $37M contract awarded May 2025"
