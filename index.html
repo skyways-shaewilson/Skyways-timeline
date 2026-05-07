@@ -952,7 +952,6 @@
     text-transform: uppercase; letter-spacing: 0.5px;
   }
   .src-pill.src-public { background: rgba(52,168,83,0.12); color: #1f7a3a; }
-  .src-pill.src-mixed { background: rgba(192,86,33,0.12); color: #8a3d14; }
   .src-pill.src-internal { background: rgba(255,144,19,0.12); color: #b86200; }
   .stat-menu.contracts-table .stat-menu-source {
     text-transform: none; font-weight: 450; letter-spacing: 0;
@@ -2851,7 +2850,7 @@
               <div class="c-name">USAF SBIR Phase 3 IDIQ TO 1 (FA228024D0003)</div>
               <div class="c-amount">Approx. $2.2M obligated ($4.99M ceiling)</div>
               <div class="c-year">2024</div>
-              <div class="c-source"><span class="src-pill src-mixed">Mixed</span></div>
+              <div class="c-source"><span class="src-pill src-public">Public</span></div>
             </div>
             <div class="contracts-row" onclick="scrollToContract(111)">
               <div class="c-name">CLIN 0005 Project ULTRA Demo (Mod P00002)</div>
@@ -2893,7 +2892,8 @@
               <div class="c-source"></div>
             </div>
           </div>
-          <div class="stat-menu-source">Internal = no public press release found. Mixed = public parent contract or press source exists, but obligation/mod detail remains internal.</div>
+          <div class="stat-menu-source">Public source: <a href="https://www.afrl.af.mil/Portals/90/Documents/SB/AFRL_Active_OTSB-SB_Contracts.pdf?ver=0Nqv4Y75fMtqdXzHORfaiA%3D%3D" target="_blank" rel="noopener">AFRL Active OTSB-SB Contracts PDF</a> confirms FA228024D0003, Rapid Cargo Resupply, and the $4.99M ceiling.</div>
+          <div class="stat-menu-source">Internal = no public press release found.</div>
           <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
           <div class="contracts-export-row">
             <button type="button" class="contracts-export-btn" onclick="event.stopPropagation(); exportContractsCSV();" aria-label="Export contracts table to CSV">

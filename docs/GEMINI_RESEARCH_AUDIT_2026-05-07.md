@@ -8,7 +8,7 @@ Purpose: determine whether the Gemini forensic research adds new source coverage
 
 No date, amount, or milestone timeline adjustment is required from the Gemini report.
 
-One source-visibility adjustment is justified: FA228024D0003 should be treated as mixed. The parent IDIQ is now publicly confirmed by AFRL, but the task-order obligation detail remains internal.
+One source-visibility adjustment is justified: FA228024D0003 should be treated as public in the contracts drawer. The parent IDIQ, requirement name, and ceiling are publicly confirmed by AFRL. The task-order obligation detail remains internally sourced in the event card.
 
 One local source-description cleanup was also required: the media mention summary for the Austin American-Statesman / DroneXL-derived facility profile had repeated the already-debunked `250,000 sq ft` typo. Charles's correction supersedes this; the correct facility size remains `25,000 sq ft`.
 
@@ -17,7 +17,7 @@ One local source-description cleanup was also required: the media mention summar
 | Finding | Status | Action |
 |---|---|---|
 | AFRL Active OTSB-SB Contracts PDF publicly lists `FA228024D0003` for Skyways. | New public source captured. | Add AFRL PDF to event `id=28` source URLs. |
-| AFRL PDF confirms requirement name `Rapid Cargo Resupply`, UEI `DATMBHX83MN7`, ultimate completion `2029-06-19`, and total contract value `$4,999,999.00`. | Useful source detail. | Add event `id=28` bullet and mark the contracts drawer row as `Mixed`. |
+| AFRL PDF confirms requirement name `Rapid Cargo Resupply`, UEI `DATMBHX83MN7`, ultimate completion `2029-06-19`, and total contract value `$4,999,999.00`. | Useful source detail. | Add event `id=28` bullet and mark the contracts drawer row as `Public`. |
 | AFRL PDF does not confirm task order `FA228024F0013` obligations or Mods #1/#2 math. | Still internal. | Keep approx. `$2.2M obligated` sourced to internal task-order records. |
 
 Primary source: [AFRL Portfolio Active Contracts as of 22 Sep 2025](https://www.afrl.af.mil/Portals/90/Documents/SB/AFRL_Active_OTSB-SB_Contracts.pdf?ver=0Nqv4Y75fMtqdXzHORfaiA%3D%3D).
@@ -51,7 +51,7 @@ Completed:
 
 - Event `id=28`: added AFRL public PDF as a source for the parent FA228024D0003 IDIQ.
 - Event `id=28`: clarified that the AFRL source covers the parent contract, while the approx. `$2.2M` task-order obligation remains internal.
-- Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Mixed`.
+- Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Public` and added the AFRL PDF link in the drawer note.
 - Media mention source summary: corrected `250,000 sq ft` back to `25,000 sq ft`.
 
 Not required:
