@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skyways | Platform Progression</title>
+<link rel="icon" href="../Logos/Other%20Logo%20Files/logo-white-transparent-background.png">
 <style>
   @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -39,15 +40,16 @@
     --terrain-y: 0px;
     --terrain-x: 0px;
     --terrain-tilt: 0deg;
+    --terrain-scale: 1.04;
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
     background:
-      linear-gradient(180deg, rgba(17,30,38,0.5), rgba(17,30,38,0.94) 72%, #111E26 100%),
-      linear-gradient(128deg, rgba(0,154,235,0.1), transparent 44%),
-      linear-gradient(310deg, rgba(66,198,193,0.07), transparent 48%),
+      linear-gradient(180deg, rgba(17,30,38,0.42), rgba(17,30,38,0.9) 70%, #111E26 100%),
+      linear-gradient(126deg, rgba(0,154,235,0.1), transparent 42%),
+      linear-gradient(304deg, rgba(66,198,193,0.08), transparent 50%),
       var(--navy);
   }
   .topography-bg::before {
@@ -56,8 +58,9 @@
     inset: 0;
     z-index: 2;
     background:
-      linear-gradient(90deg, rgba(17,30,38,0.98), rgba(17,30,38,0.22) 18%, rgba(17,30,38,0.12) 76%, rgba(17,30,38,0.94)),
-      linear-gradient(180deg, rgba(17,30,38,0.1), transparent 28%, rgba(17,30,38,0.84) 100%);
+      radial-gradient(circle at 70% 12%, rgba(194,242,19,0.08), transparent 28%),
+      linear-gradient(90deg, rgba(17,30,38,0.98), rgba(17,30,38,0.28) 18%, rgba(17,30,38,0.18) 74%, rgba(17,30,38,0.96)),
+      linear-gradient(180deg, rgba(17,30,38,0.16), transparent 30%, rgba(17,30,38,0.88) 100%);
   }
   .topography-bg::after {
     content: '';
@@ -65,58 +68,62 @@
     inset: 0;
     z-index: 0;
     background:
-      linear-gradient(150deg, rgba(255,255,255,0.032), transparent 30%),
-      linear-gradient(24deg, transparent 0%, rgba(255,255,255,0.018) 48%, transparent 72%);
-    opacity: 0.42;
+      linear-gradient(150deg, rgba(255,255,255,0.026), transparent 30%),
+      linear-gradient(24deg, transparent 0%, rgba(255,255,255,0.016) 48%, transparent 72%);
+    opacity: 0.36;
     mask-image: linear-gradient(to bottom, rgba(0,0,0,0.82), transparent 78%);
   }
   .terrain-map {
     position: absolute;
-    top: -62vh;
+    top: -74vh;
     left: 50%;
     z-index: 1;
-    width: max(2100px, 190vw);
-    height: 540vh;
-    min-height: 5200px;
+    width: max(2500px, 220vw);
+    height: 650vh;
+    min-height: 6400px;
     transform:
       translate3d(calc(-50% + var(--terrain-x)), var(--terrain-y), 0)
       rotate(var(--terrain-tilt))
-      scale(1.035);
+      scale(var(--terrain-scale));
     transform-origin: 50% 8%;
-    opacity: 0.74;
+    opacity: 0.84;
     will-change: transform;
   }
   .terrain-contours {
     fill: none;
-    stroke: rgba(255,255,255,0.25);
-    stroke-width: 1.05;
+    stroke: rgba(173,208,202,0.32);
+    stroke-width: 0.95;
     stroke-linecap: round;
     stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
+    shape-rendering: geometricPrecision;
   }
   .terrain-contours path {
     display: none;
   }
-  .terrain-contours .mapline {
+  #generatedContours path {
     display: inline;
   }
+  .terrain-contours .mapline {
+    display: none;
+  }
   .terrain-contours .major {
-    stroke: rgba(255,255,255,0.38);
-    stroke-width: 1.35;
+    stroke: rgba(198,222,217,0.44);
+    stroke-width: 1.15;
   }
   .terrain-contours .minor {
-    stroke: rgba(255,255,255,0.18);
+    stroke: rgba(180,210,205,0.24);
   }
   .terrain-contours .accent {
-    stroke: rgba(66,198,193,0.34);
+    stroke: rgba(66,198,193,0.36);
   }
   .terrain-contours .index {
-    stroke: rgba(194,242,19,0.22);
-    stroke-width: 1.2;
+    stroke: rgba(194,242,19,0.28);
+    stroke-width: 1.25;
   }
   @media (prefers-reduced-motion: reduce) {
     .terrain-map {
-      transform: translate3d(-50%, 0, 0) scale(1.035);
+      transform: translate3d(-50%, 0, 0) scale(var(--terrain-scale));
     }
   }
   a { color: inherit; }
@@ -278,13 +285,52 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 48px 88px;
+    position: relative;
+  }
+  .progression::before,
+  .progression::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 88px;
+    z-index: 2;
+    width: 54px;
+    pointer-events: none;
+  }
+  .progression::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(17,30,38,0.98), rgba(17,30,38,0));
+  }
+  .progression::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(17,30,38,0.98), rgba(17,30,38,0));
   }
   .progression-rail {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(360px, 420px);
+    grid-template-columns: none;
     gap: 16px;
-    overflow: visible;
-    padding: 10px 0 20px;
+    overflow-x: auto;
+    overflow-y: visible;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 48px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(194,242,19,0.74) rgba(255,255,255,0.08);
+    margin: 0 -48px;
+    padding: 10px 48px 30px;
+  }
+  .progression-rail::-webkit-scrollbar {
+    height: 8px;
+  }
+  .progression-rail::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+  }
+  .progression-rail::-webkit-scrollbar-thumb {
+    background: rgba(194,242,19,0.72);
+    border-radius: 999px;
   }
   .aircraft-card {
     --aircraft-image: none;
@@ -297,6 +343,7 @@
     display: flex;
     flex-direction: column;
     color: var(--navy);
+    scroll-snap-align: start;
   }
   #v1 { order: 1; }
   #v20 { order: 2; }
@@ -634,7 +681,17 @@
       justify-self: stretch;
     }
     .progression { padding: 0 24px 62px; }
-    .progression-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .progression::before,
+    .progression::after {
+      bottom: 62px;
+      width: 28px;
+    }
+    .progression-rail {
+      grid-auto-columns: minmax(320px, 74vw);
+      margin: 0 -24px;
+      padding: 10px 24px 28px;
+      scroll-padding-inline: 24px;
+    }
     .notes {
       padding: 0 24px 54px;
       grid-template-columns: 1fr;
@@ -656,7 +713,11 @@
       border-bottom: 1px solid var(--ink-12);
     }
     .hero-stat:last-child { border-bottom: none; }
-    .progression-rail { grid-template-columns: 1fr; }
+    .progression-rail {
+      grid-auto-columns: minmax(286px, 86vw);
+      gap: 12px;
+      padding-bottom: 24px;
+    }
     .aircraft-media,
     .aircraft-media img {
       height: 276px;
@@ -702,6 +763,7 @@
 <body>
 <div class="topography-bg" aria-hidden="true">
   <svg class="terrain-map" viewBox="0 0 1600 3200" preserveAspectRatio="xMidYMin slice" focusable="false">
+    <g class="terrain-contours" id="generatedContours"></g>
     <g class="terrain-contours">
       <path class="mapline minor" d="M-210 210 C16 120 196 184 382 114 C588 36 752 116 946 86 C1162 52 1328 -24 1810 36" />
       <path class="mapline minor" d="M-206 292 C28 204 214 258 404 194 C604 126 770 196 970 166 C1192 134 1360 58 1812 118" />
@@ -1299,16 +1361,118 @@
   })();
 
   (() => {
+    const group = document.getElementById('generatedContours');
+    if (!group || group.dataset.rendered) return;
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const xMin = -300;
+    const xMax = 1900;
+    const yMin = -180;
+    const yMax = 3380;
+    const step = 34;
+
+    function rounded(value) {
+      return Number(value).toFixed(1);
+    }
+
+    function ridge(x, y, cx, cy, rx, ry, angle, height) {
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      const dx = x - cx;
+      const dy = y - cy;
+      const rotatedX = (dx * cos) + (dy * sin);
+      const rotatedY = (-dx * sin) + (dy * cos);
+      return height * Math.exp(-((rotatedX * rotatedX) / (rx * rx) + (rotatedY * rotatedY) / (ry * ry)));
+    }
+
+    function elevation(x, y) {
+      const regionalSlope = (y * 0.14) - (x * 0.038);
+      const longWave = (58 * Math.sin((x * 0.0052) + (y * 0.0018))) + (42 * Math.cos((x * 0.0016) - (y * 0.0048)));
+      const northRidge = ridge(x, y, 320, 420, 760, 180, -0.24, 255);
+      const centerRidge = ridge(x, y, 1070, 1450, 840, 230, 0.2, 315);
+      const southRidge = ridge(x, y, 760, 2550, 620, 180, -0.34, 270);
+      const easternSaddle = ridge(x, y, 1540, 850, 460, 260, 0.48, 140);
+      const westernValley = ridge(x, y, 140, 1780, 420, 520, -0.15, -210);
+      const southeastValley = ridge(x, y, 1350, 2640, 520, 430, 0.28, -185);
+      return regionalSlope + longWave + northRidge + centerRidge + southRidge + easternSaddle + westernValley + southeastValley;
+    }
+
+    function range(min, max, increment) {
+      const values = [];
+      for (let value = min; value <= max; value += increment) values.push(value);
+      return values;
+    }
+
+    const xs = range(xMin, xMax, step);
+    const ys = range(yMin, yMax, step);
+    const grid = ys.map((y) => xs.map((x) => elevation(x, y)));
+
+    function interpolate(a, b, valueA, valueB, level) {
+      const span = valueB - valueA;
+      const ratio = Math.abs(span) < 0.0001 ? 0.5 : (level - valueA) / span;
+      return [
+        a[0] + ((b[0] - a[0]) * ratio),
+        a[1] + ((b[1] - a[1]) * ratio)
+      ];
+    }
+
+    function segmentPath(level) {
+      let d = '';
+      for (let yIndex = 0; yIndex < ys.length - 1; yIndex += 1) {
+        for (let xIndex = 0; xIndex < xs.length - 1; xIndex += 1) {
+          const x0 = xs[xIndex];
+          const x1 = xs[xIndex + 1];
+          const y0 = ys[yIndex];
+          const y1 = ys[yIndex + 1];
+          const topLeft = grid[yIndex][xIndex];
+          const topRight = grid[yIndex][xIndex + 1];
+          const bottomRight = grid[yIndex + 1][xIndex + 1];
+          const bottomLeft = grid[yIndex + 1][xIndex];
+          const points = [];
+
+          if ((topLeft < level) !== (topRight < level)) points.push(interpolate([x0, y0], [x1, y0], topLeft, topRight, level));
+          if ((topRight < level) !== (bottomRight < level)) points.push(interpolate([x1, y0], [x1, y1], topRight, bottomRight, level));
+          if ((bottomRight < level) !== (bottomLeft < level)) points.push(interpolate([x1, y1], [x0, y1], bottomRight, bottomLeft, level));
+          if ((bottomLeft < level) !== (topLeft < level)) points.push(interpolate([x0, y1], [x0, y0], bottomLeft, topLeft, level));
+
+          if (points.length === 2) {
+            d += `M ${rounded(points[0][0])} ${rounded(points[0][1])} L ${rounded(points[1][0])} ${rounded(points[1][1])} `;
+          } else if (points.length === 4) {
+            d += `M ${rounded(points[0][0])} ${rounded(points[0][1])} L ${rounded(points[1][0])} ${rounded(points[1][1])} `;
+            d += `M ${rounded(points[2][0])} ${rounded(points[2][1])} L ${rounded(points[3][0])} ${rounded(points[3][1])} `;
+          }
+        }
+      }
+      return d;
+    }
+
+    range(-180, 940, 18).forEach((level, index) => {
+      const d = segmentPath(level);
+      if (!d) return;
+      const path = document.createElementNS(ns, 'path');
+      const contourClass = index % 15 === 0 ? 'index' : index % 5 === 0 ? 'major' : index % 9 === 0 ? 'accent' : 'minor';
+      path.setAttribute('class', contourClass);
+      path.setAttribute('d', d);
+      group.appendChild(path);
+    });
+
+    group.dataset.rendered = 'true';
+  })();
+
+  (() => {
     const terrain = document.querySelector('.topography-bg');
+    const rail = document.querySelector('.progression-rail');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let ticking = false;
 
     const updateTerrain = () => {
       const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
-      const travel = window.scrollY * 0.42;
-      const crosswind = Math.sin(progress * Math.PI * 2.4) * 54;
-      const tilt = (progress * 1.2) - 0.6;
+      const railMax = rail ? Math.max(rail.scrollWidth - rail.clientWidth, 1) : 1;
+      const railProgress = rail ? Math.min(Math.max(rail.scrollLeft / railMax, 0), 1) : 0;
+      const travel = (window.scrollY * 0.38) + (railProgress * 430);
+      const crosswind = (Math.sin(progress * Math.PI * 2.15) * 38) - (railProgress * 260);
+      const tilt = (progress * 0.85) - 0.48 + (railProgress * 0.28);
 
       terrain.style.setProperty('--terrain-y', `${(-travel).toFixed(1)}px`);
       terrain.style.setProperty('--terrain-x', `${crosswind.toFixed(1)}px`);
@@ -1326,6 +1490,7 @@
       updateTerrain();
       window.addEventListener('scroll', requestTerrainUpdate, { passive: true });
       window.addEventListener('resize', requestTerrainUpdate);
+      if (rail) rail.addEventListener('scroll', requestTerrainUpdate, { passive: true });
     }
   })();
 </script>
