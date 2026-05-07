@@ -1057,9 +1057,9 @@
           </div>
         </article>
 
-        <article class="aircraft-card" id="v26" style="--aircraft-image: url('https://www.skyways.com/_astro/v2-ship-takeoff-sunset.B1AIPOc1_ZeJpqJ.webp'); --aircraft-focus: center center;">
+        <article class="aircraft-card" id="v26" style="--aircraft-image: url('https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
-            <img src="https://www.skyways.com/_astro/v2-ship-takeoff-sunset.B1AIPOc1_ZeJpqJ.webp" alt="Skyways V2 aircraft launching from ship deck">
+            <img src="https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp" alt="Skyways V2 aircraft aboard ship">
             <div class="aircraft-title">
               <div class="aircraft-year">2024 | 2026</div>
               <h2>V2.6B</h2>
@@ -1254,6 +1254,151 @@
   </main>
 </div>
 <script>
+  (() => {
+    const nav = document.querySelector('.chapter-bar');
+    const rail = document.querySelector('.progression-rail');
+    if (!nav || !rail || !window.fetch) return;
+
+    const specOrder = [
+      ['payload', 'Payload'],
+      ['range_endurance', 'Range / endurance'],
+      ['wingspan', 'Wingspan'],
+      ['weight_class', 'Weight class'],
+      ['cruise_speed', 'Cruise / speed'],
+      ['cargo_volume', 'Cargo volume'],
+      ['architecture', 'Architecture'],
+      ['proof_point', 'Proof point']
+    ];
+    const navLabelById = {
+      v1: 'V1',
+      v20: 'V2.0',
+      v22: 'V2.2',
+      v25: 'V2.5',
+      v3b0: 'V3 B0',
+      v26: 'V2.6B',
+      v3b1: 'V3 B1',
+      v3b2: 'V3 B2'
+    };
+    const navYearById = {
+      v1: '2016',
+      v20: '2017',
+      v22: '2018',
+      v25: '2021',
+      v3b0: '2023',
+      v26: '2024',
+      v3b1: '2025',
+      v3b2: '2026'
+    };
+    const eventLabelById = {
+      10: '2019 | V2 specs',
+      12: '2020-24 | V2 flight campaign',
+      13: '2021 | USS Gerald R. Ford',
+      21: '2022 | V3 subscale',
+      23: '2023 | V3 Block 0 first flight',
+      26: '2024 | V3 Block 1 first flight',
+      27: '2024 | RIMPAC',
+      29: '2024 | JMSDF Akizuki',
+      32: '2024 | CVSI',
+      37: '2025 | V3 customer flights',
+      44: '2025-26 | ANA',
+      45: '2026 | V3 Block 2 first article',
+      46: '2026 | V3 production ramp',
+      103: '2016 | V1 first aircraft',
+      105: '2017 | V2.1 | V2.2 airframes',
+      106: '2018 | White Sands BVLOS',
+      107: '2017 | V2.0 carbon composite',
+      114: '2026 | V3.2 forthcoming'
+    };
+
+    function html(text) {
+      return String(text == null ? '' : text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    function firstYear(label) {
+      const match = String(label || '').match(/\d{4}/);
+      return match ? match[0] : String(label || '');
+    }
+    function isMutedSpec(value) {
+      return /^(not logged|not defined|prototype|composite|demo flight|v2 class|v3 class|full scale|test mule)$/i.test(String(value || '').trim());
+    }
+    function renderNav(platforms) {
+      nav.innerHTML = platforms.map((platform) => (
+        '<a href="#' + html(platform.id) + '">' +
+          '<span class="chapter-year">' + html(navYearById[platform.id] || firstYear(platform.year_label)) + '</span>' +
+          '<span class="chapter-name">' + html(navLabelById[platform.id] || platform.generation) + '</span>' +
+        '</a>'
+      )).join('');
+    }
+    function renderSpecGrid(stats) {
+      return specOrder.map(([key, label]) => {
+        const value = stats && stats[key] ? stats[key] : 'Not logged';
+        const muted = isMutedSpec(value) ? ' spec-muted' : '';
+        return '<div class="spec' + muted + '"><strong>' + html(value) + '</strong><span>' + html(label) + '</span></div>';
+      }).join('');
+    }
+    function renderMissions(missions) {
+      return (missions || []).map((mission) => '<li>' + html(mission) + '</li>').join('');
+    }
+    function renderEventLinks(ids) {
+      return (ids || []).map((id) => (
+        '<a class="event-link" href="../#event-' + html(id) + '">' +
+          html(eventLabelById[id] || ('Event ' + id)) +
+        '</a>'
+      )).join('');
+    }
+    function renderCard(platform) {
+      const image = platform.image || '';
+      const focus = platform.image_focus || 'center center';
+      const alt = platform.image_alt || ('Skyways ' + platform.generation + ' aircraft');
+      const style = '--aircraft-image: url(&quot;' + html(image) + '&quot;); --aircraft-focus: ' + html(focus) + ';';
+      return (
+        '<article class="aircraft-card" id="' + html(platform.id) + '" style="' + style + '">' +
+          '<div class="aircraft-media">' +
+            '<img src="' + html(image) + '" alt="' + html(alt) + '">' +
+            '<div class="aircraft-title">' +
+              '<div class="aircraft-year">' + html(platform.year_label) + '</div>' +
+              '<h2>' + html(platform.generation) + '</h2>' +
+            '</div>' +
+          '</div>' +
+          '<div class="aircraft-body">' +
+            '<p>' + html(platform.description) + '</p>' +
+            '<div class="spec-meta">' +
+              '<div class="meta-pill"><span>Maturity</span><strong>' + html(platform.maturity) + '</strong></div>' +
+              '<div class="meta-pill"><span>Mission record</span><strong>' + html(platform.mission_record) + '</strong></div>' +
+              '<div class="meta-pill trl-pill"><span>Assessed TRL</span><strong>' + html(platform.assessed_trl) + '</strong></div>' +
+            '</div>' +
+            '<div class="stat-grid">' + renderSpecGrid(platform.stats) + '</div>' +
+            '<div class="mission-list">' +
+              '<div class="mission-list-label">Mission list</div>' +
+              '<ul>' + renderMissions(platform.missions) + '</ul>' +
+            '</div>' +
+            '<div class="evidence">' +
+              '<div class="evidence-label">Readiness evidence</div>' +
+              '<p>' + html(platform.readiness_evidence) + '</p>' +
+            '</div>' +
+            '<div class="event-links">' + renderEventLinks(platform.source_event_ids) + '</div>' +
+          '</div>' +
+        '</article>'
+      );
+    }
+
+    fetch('platform-data.json', { cache: 'no-store' })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Platform data unavailable')))
+      .then((data) => {
+        if (!data || !Array.isArray(data.platforms) || !data.platforms.length) return;
+        renderNav(data.platforms);
+        rail.innerHTML = data.platforms.map(renderCard).join('');
+        window.dispatchEvent(new Event('resize'));
+      })
+      .catch(() => {
+        // Keep the authored HTML fallback in place if the JSON cannot load.
+      });
+  })();
+
   (() => {
     const terrain = document.querySelector('.topography-bg');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
