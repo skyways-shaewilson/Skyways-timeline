@@ -40,10 +40,12 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background:
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 88px 88px;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='1'%3E%3Cpath d='M76 142 C120 90 190 78 244 112 C304 150 338 130 374 78 C416 18 506 20 554 82 C600 142 574 224 504 248 C438 270 398 246 350 292 C294 346 208 352 150 306 C96 264 42 206 76 142Z'/%3E%3Cpath d='M110 152 C150 116 196 112 236 138 C284 168 326 160 356 116 C392 64 468 64 508 112 C546 158 530 210 482 226 C426 246 390 226 346 266 C296 312 226 314 178 278 C136 246 84 196 110 152Z'/%3E%3Cpath d='M146 164 C176 140 206 140 236 160 C276 186 322 184 348 148 C376 108 430 104 462 134 C496 166 486 204 450 214 C410 226 382 214 340 248 C300 282 244 286 208 260 C174 236 120 196 146 164Z'/%3E%3Cpath d='M42 492 C96 438 172 430 226 468 C274 502 318 494 360 450 C416 392 506 398 558 454 C604 504 596 574 532 604 C474 632 410 606 362 580 C308 550 248 584 190 574 C130 564 70 548 42 492Z'/%3E%3Cpath d='M90 498 C136 466 186 466 228 492 C274 520 314 518 352 478 C398 430 480 432 526 478 C562 514 556 560 512 582 C468 604 410 584 364 560 C312 532 260 560 210 552 C156 544 112 532 90 498Z'/%3E%3Cpath d='M330 26 C370 4 420 8 454 42 C486 76 480 122 440 142 C398 164 352 146 322 112 C292 78 294 46 330 26Z'/%3E%3Cpath d='M350 52 C378 36 414 42 434 66 C454 92 446 116 420 128 C392 140 362 128 344 104 C326 82 326 66 350 52Z'/%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 620px 620px, 88px 88px, 88px 88px;
+    background-position: center top, 0 0, 0 0;
     mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 76%);
   }
   a { color: inherit; }
@@ -74,25 +76,12 @@
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
   }
-  .brand-mark {
-    width: 26px;
-    height: 26px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-  }
-  .brand-mark span {
-    background: var(--lime);
-    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  }
-  .brand-name {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-    text-transform: uppercase;
+  .brand-logo {
+    width: auto;
+    height: 38px;
+    object-fit: contain;
   }
   .nav-actions {
     display: flex;
@@ -273,8 +262,8 @@
   }
   .aircraft-body {
     padding: 18px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 58px 92px 136px 132px minmax(76px, auto);
     flex: 1;
   }
   .aircraft-body h2 {
@@ -285,7 +274,7 @@
     text-transform: uppercase;
   }
   .aircraft-body p {
-    margin-top: 10px;
+    margin-top: 0;
     color: rgba(255,255,255,0.7);
     font-size: 14.5px;
     line-height: 1.38;
@@ -339,11 +328,11 @@
     line-height: 1.32;
   }
   .event-links {
-    margin-top: auto;
-    padding-top: 18px;
+    padding-top: 14px;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    align-content: flex-start;
   }
   .event-link {
     min-height: 34px;
@@ -421,6 +410,7 @@
       flex-direction: column;
       gap: 14px;
     }
+    .brand-logo { height: 32px; }
     .nav-actions { justify-content: flex-start; }
     .nav-link { font-size: 11px; }
     .hero-panel-footer { grid-template-columns: 1fr; }
@@ -431,6 +421,7 @@
     .hero-stat:last-child { border-bottom: none; }
     .chapter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .progression-rail { grid-template-columns: repeat(6, minmax(254px, 88vw)); }
+    .aircraft-body { grid-template-rows: auto auto auto auto auto; }
     .aircraft-body h2 { font-size: 24px; }
   }
 </style>
@@ -440,8 +431,7 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="../" aria-label="Skyways history and timeline">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-        <span class="brand-name">Skyways</span>
+        <img class="brand-logo" src="../Logos/Other%20Logo%20Files/logo-white-transparent-background.png" alt="Skyways">
       </a>
       <nav class="nav-actions" aria-label="Platform navigation">
         <a class="nav-link" href="../">History | Timeline</a>
@@ -497,7 +487,7 @@
               <p>Prototype proof: autonomous takeoff, cargo pickup, delivery, return, and landing without human intervention.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-103">Event 103</a>
+              <a class="event-link" href="../#event-103">2016 | V1 first aircraft</a>
             </div>
           </div>
         </article>
@@ -521,7 +511,7 @@
               <p>Prototype build and flight evidence: first composite aircraft and fundraising demonstration platform.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-107">Event 107</a>
+              <a class="event-link" href="../#event-107">2017 | V2.0 carbon composite</a>
             </div>
           </div>
         </article>
@@ -545,8 +535,8 @@
               <p>Relevant environment proof: aircraft delivered for USMC-linked testing with NMSU and GTRI at White Sands.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-105">Event 105</a>
-              <a class="event-link" href="../#event-106">Event 106</a>
+              <a class="event-link" href="../#event-105">2017 | V2.1 | V2.2 airframes</a>
+              <a class="event-link" href="../#event-106">2018 | White Sands BVLOS</a>
             </div>
           </div>
         </article>
@@ -570,9 +560,9 @@
               <p>Operational fleet evidence: sustained V2 campaign, carrier work, RIMPAC, Project ULTRA support, and ANA commercial entry.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-12">Event 12</a>
-              <a class="event-link" href="../#event-27">RIMPAC</a>
-              <a class="event-link" href="../#event-44">ANA</a>
+              <a class="event-link" href="../#event-12">2020-24 | V2 flight campaign</a>
+              <a class="event-link" href="../#event-27">2024 | RIMPAC</a>
+              <a class="event-link" href="../#event-44">2025-26 | ANA</a>
             </div>
           </div>
         </article>
@@ -596,9 +586,9 @@
               <p>Customer demo evidence: BVLOS customer missions, heavy-fuel endurance work, and the bridge into production-intent design.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-21">Event 21</a>
-              <a class="event-link" href="../#event-26">Event 26</a>
-              <a class="event-link" href="../#event-37">Event 37</a>
+              <a class="event-link" href="../#event-21">2022 | V3 subscale</a>
+              <a class="event-link" href="../#event-26">2024 | V3 Block 1 first flight</a>
+              <a class="event-link" href="../#event-37">2025 | V3 customer flights</a>
             </div>
           </div>
         </article>
@@ -622,8 +612,8 @@
               <p>CDR-level design maturity: first article build, production ramp path, and V3.2 placeholder pending build-phase details.</p>
             </div>
             <div class="event-links">
-              <a class="event-link" href="../#event-45">Event 45</a>
-              <a class="event-link" href="../#event-114">Event 114</a>
+              <a class="event-link" href="../#event-45">2026 | V3 Block 2 first article</a>
+              <a class="event-link" href="../#event-114">2026 | V3.2 forthcoming</a>
             </div>
           </div>
         </article>
