@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyways | Platform Progression</title>
+<style>
+  @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-semibold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+  :root {
+    --navy: #111E26;
+    --lime: #C2F213;
+    --blue: #009AEB;
+    --teal: #42C6C1;
+    --orange: #FF9013;
+    --white: #FFFFFF;
+    --gray-05: #F3F4F4;
+    --gray-15: #DCDEE0;
+    --gray-50: #888F92;
+    --gray-75: #4D575C;
+    --ink-06: rgba(255,255,255,0.06);
+    --ink-12: rgba(255,255,255,0.12);
+    --ink-18: rgba(255,255,255,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    font-family: 'Founders Grotesk', Arial, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 76%);
+  }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  .site-shell {
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(17,30,38,0.88);
+    border-bottom: 1px solid var(--ink-12);
+    backdrop-filter: blur(18px);
+  }
+  .topbar-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .brand-mark span {
+    background: var(--lime);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-link {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ink-18);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--white);
+    border-color: var(--lime);
+    background: rgba(194,242,19,0.08);
+    outline: none;
+  }
+
+  .hero {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 74px 48px 42px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr);
+    gap: 48px;
+    align-items: end;
+  }
+  .hero-copy h1 {
+    max-width: 760px;
+    font-size: clamp(52px, 8vw, 118px);
+    line-height: 0.88;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .hero-copy p {
+    max-width: 600px;
+    margin-top: 24px;
+    color: rgba(255,255,255,0.72);
+    font-size: 19px;
+    line-height: 1.34;
+    font-weight: 400;
+  }
+  .hero-panel {
+    border: 1px solid var(--ink-12);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-panel img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    filter: saturate(0.82) contrast(1.08);
+  }
+  .hero-panel-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--ink-12);
+  }
+  .hero-stat {
+    padding: 16px 18px;
+    border-right: 1px solid var(--ink-12);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat strong {
+    display: block;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--lime);
+    font-weight: 700;
+  }
+  .hero-stat span {
+    display: block;
+    margin-top: 6px;
+    color: rgba(255,255,255,0.62);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .chapter-bar {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px 28px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .chapter-bar a {
+    border: 1px solid var(--ink-12);
+    border-radius: 6px;
+    padding: 12px 10px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    text-align: center;
+    background: rgba(255,255,255,0.03);
+  }
+  .chapter-bar a:hover,
+  .chapter-bar a:focus-visible {
+    color: var(--navy);
+    background: var(--lime);
+    border-color: var(--lime);
+    outline: none;
+  }
+
+  .progression {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px 88px;
+  }
+  .progression-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(280px, 1fr));
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 10px 0 20px;
+    scrollbar-color: var(--lime) rgba(255,255,255,0.08);
+  }
+  .progression-rail::-webkit-scrollbar { height: 8px; }
+  .progression-rail::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 4px; }
+  .progression-rail::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 4px; }
+  .aircraft-card {
+    min-height: 100%;
+    border: 1px solid var(--ink-12);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.045);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .aircraft-card.current {
+    border-color: rgba(194,242,19,0.55);
+    box-shadow: 0 0 0 1px rgba(194,242,19,0.2), 0 24px 60px rgba(0,0,0,0.22);
+  }
+  .aircraft-media {
+    position: relative;
+    background: #0B151B;
+  }
+  .aircraft-media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .aircraft-year {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 6px;
+    padding: 5px 8px;
+    background: rgba(17,30,38,0.78);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+  }
+  .aircraft-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .aircraft-body h2 {
+    font-size: 27px;
+    line-height: 0.96;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .aircraft-body p {
+    margin-top: 10px;
+    color: rgba(255,255,255,0.7);
+    font-size: 14.5px;
+    line-height: 1.38;
+  }
+  .stat-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .spec {
+    min-height: 64px;
+    border: 1px solid var(--ink-12);
+    border-radius: 6px;
+    padding: 10px;
+    background: rgba(255,255,255,0.035);
+  }
+  .spec strong {
+    display: block;
+    color: var(--lime);
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 700;
+  }
+  .spec span {
+    display: block;
+    margin-top: 7px;
+    color: rgba(255,255,255,0.58);
+    font-size: 10px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .evidence {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink-12);
+  }
+  .evidence-label {
+    color: var(--gray-50);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .evidence p {
+    margin-top: 6px;
+    color: rgba(255,255,255,0.78);
+    font-size: 13.5px;
+    line-height: 1.32;
+  }
+  .event-links {
+    margin-top: auto;
+    padding-top: 18px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .event-link {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ink-18);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: rgba(255,255,255,0.78);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .event-link:hover,
+  .event-link:focus-visible {
+    color: var(--navy);
+    background: var(--lime);
+    border-color: var(--lime);
+    outline: none;
+  }
+
+  .notes {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .note-panel {
+    border: 1px solid var(--ink-12);
+    border-radius: 8px;
+    padding: 22px;
+    background: rgba(255,255,255,0.04);
+  }
+  .note-panel h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .note-panel p {
+    margin-top: 10px;
+    color: rgba(255,255,255,0.68);
+    font-size: 15px;
+    line-height: 1.42;
+  }
+
+  @media (max-width: 980px) {
+    .topbar-inner { padding: 16px 24px; }
+    .hero {
+      padding: 44px 24px 28px;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .hero-copy h1 { font-size: clamp(46px, 14vw, 82px); }
+    .chapter-bar {
+      padding: 0 24px 22px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .progression { padding: 0 24px 62px; }
+    .progression-rail { grid-template-columns: repeat(6, minmax(270px, 82vw)); }
+    .notes {
+      padding: 0 24px 54px;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .topbar-inner {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .nav-actions { justify-content: flex-start; }
+    .nav-link { font-size: 11px; }
+    .hero-panel-footer { grid-template-columns: 1fr; }
+    .hero-stat {
+      border-right: none;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .hero-stat:last-child { border-bottom: none; }
+    .chapter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .progression-rail { grid-template-columns: repeat(6, minmax(254px, 88vw)); }
+    .aircraft-body h2 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="site-shell">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../" aria-label="Skyways history and timeline">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-name">Skyways</span>
+      </a>
+      <nav class="nav-actions" aria-label="Platform navigation">
+        <a class="nav-link" href="../">History | Timeline</a>
+        <a class="nav-link" href="../#event-12">V2 Event Card</a>
+        <a class="nav-link" href="../#event-37">V3 Event Card</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <h1 id="page-title">Platform Progression Timeline</h1>
+        <p>Aircraft generations, mission evidence, and specs that matter. This page keeps the main timeline clean while giving the platform story its own operating view.</p>
+      </div>
+      <div class="hero-panel">
+        <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft in flight">
+        <div class="hero-panel-footer">
+          <div class="hero-stat"><strong>20+</strong><span>UAVs built</span></div>
+          <div class="hero-stat"><strong>1,100+</strong><span>Flights cited publicly</span></div>
+          <div class="hero-stat"><strong>11</strong><span>Design iterations</span></div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="chapter-bar" aria-label="Aircraft generations">
+      <a href="#v1">V1</a>
+      <a href="#v20">V2.0</a>
+      <a href="#v22">V2.2</a>
+      <a href="#v26">V2.6</a>
+      <a href="#v3b1">V3 B1</a>
+      <a href="#v3b2">V3 B2</a>
+    </nav>
+
+    <section class="progression" aria-label="Aircraft platform progression">
+      <div class="progression-rail">
+        <article class="aircraft-card" id="v1">
+          <div class="aircraft-media">
+            <img src="https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp" alt="Early Skyways aircraft video still">
+            <div class="aircraft-year">2016</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V1</h2>
+            <p>First aircraft built in San Francisco. A COTS foam wing modified for VTOL cargo autonomy and precision landing software.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>2 lb</strong><span>Cargo target</span></div>
+              <div class="spec"><strong>Under 30 min</strong><span>Endurance</span></div>
+              <div class="spec"><strong>A-B-C-A</strong><span>Autonomous loop</span></div>
+              <div class="spec"><strong>Proto</strong><span>Build phase</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>Prototype proof: autonomous takeoff, cargo pickup, delivery, return, and landing without human intervention.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-103">Event 103</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="aircraft-card" id="v20">
+          <div class="aircraft-media">
+            <img src="https://www.skyways.com/_astro/hype-still.zGCakefh_1kEicT.webp" alt="Skyways V2 aircraft video still">
+            <div class="aircraft-year">2017</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V2.0</h2>
+            <p>First carbon fiber composite airframe. The 12 ft X8 quadplane established the aircraft architecture used to earn early investor conviction.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>12 ft</strong><span>Wingspan</span></div>
+              <div class="spec"><strong>Carbon</strong><span>Composite airframe</span></div>
+              <div class="spec"><strong>X8</strong><span>Quadplane layout</span></div>
+              <div class="spec"><strong>Demo</strong><span>Investor proof</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>Prototype build and flight evidence: first composite aircraft and fundraising demonstration platform.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-107">Event 107</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="aircraft-card" id="v22">
+          <div class="aircraft-media">
+            <img src="https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp" alt="Skyways aircraft during early flight testing">
+            <div class="aircraft-year">2017 | 2018</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V2.1 | V2.2</h2>
+            <p>Larger composite aircraft for defense evaluation. White Sands marked the first Skyways BVLOS flight beyond 60 miles.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>18 ft</strong><span>Wingspan</span></div>
+              <div class="spec"><strong>140 lb</strong><span>All-up weight</span></div>
+              <div class="spec"><strong>60+ mi</strong><span>BVLOS flight</span></div>
+              <div class="spec"><strong>USMC</strong><span>Defense demo</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>Relevant environment proof: aircraft delivered for USMC-linked testing with NMSU and GTRI at White Sands.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-105">Event 105</a>
+              <a class="event-link" href="../#event-106">Event 106</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="aircraft-card current" id="v26">
+          <div class="aircraft-media">
+            <img src="https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg" alt="Skyways V2 aircraft on runway">
+            <div class="aircraft-year">2020 | 2024</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V2.5 | V2.6b</h2>
+            <p>Operational V2 fleet matured through Navy-driven sub-variants and maritime logistics missions across ship-to-ship, ship-to-shore, and allied demos.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>25 lb</strong><span>Max cargo</span></div>
+              <div class="spec"><strong>390 NM</strong><span>Max range</span></div>
+              <div class="spec"><strong>7.9 hr</strong><span>Endurance</span></div>
+              <div class="spec"><strong>1,100+</strong><span>Flights cited</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>Operational fleet evidence: sustained V2 campaign, carrier work, RIMPAC, Project ULTRA support, and ANA commercial entry.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-12">Event 12</a>
+              <a class="event-link" href="../#event-27">RIMPAC</a>
+              <a class="event-link" href="../#event-44">ANA</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="aircraft-card" id="v3b1">
+          <div class="aircraft-media">
+            <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft in hover">
+            <div class="aircraft-year">2022 | 2025</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V3 Block 1</h2>
+            <p>V3 moved from subscale flights to full-scale first flight, then customer missions during Project ULTRA at GrandSKY.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>Subscale</strong><span>2022 test flights</span></div>
+              <div class="spec"><strong>Full scale</strong><span>2024 first flight</span></div>
+              <div class="spec"><strong>8 hr</strong><span>Endurance flights</span></div>
+              <div class="spec"><strong>~200</strong><span>Test flights</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>Customer demo evidence: BVLOS customer missions, heavy-fuel endurance work, and the bridge into production-intent design.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-21">Event 21</a>
+              <a class="event-link" href="../#event-26">Event 26</a>
+              <a class="event-link" href="../#event-37">Event 37</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="aircraft-card" id="v3b2">
+          <div class="aircraft-media">
+            <img src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft forward profile">
+            <div class="aircraft-year">2026 | next</div>
+          </div>
+          <div class="aircraft-body">
+            <h2>V3 Block 2 | V3.2</h2>
+            <p>Production-intent V3 path for low-rate production, expanded payload, and long-range logistics operations.</p>
+            <div class="stat-grid">
+              <div class="spec"><strong>105 lb</strong><span>Useful load</span></div>
+              <div class="spec"><strong>750+ NM</strong><span>Primary range</span></div>
+              <div class="spec"><strong>1,200+ NM</strong><span>Minimal cargo mode</span></div>
+              <div class="spec"><strong>87+ kts</strong><span>Cruise speed</span></div>
+            </div>
+            <div class="evidence">
+              <div class="evidence-label">Readiness evidence</div>
+              <p>CDR-level design maturity: first article build, production ramp path, and V3.2 placeholder pending build-phase details.</p>
+            </div>
+            <div class="event-links">
+              <a class="event-link" href="../#event-45">Event 45</a>
+              <a class="event-link" href="../#event-114">Event 114</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="notes" aria-label="Platform notes">
+      <div class="note-panel">
+        <h2>Readiness Language</h2>
+        <p>Readiness is expressed as evidence from the timeline, not as a formal TRL certification. That keeps the page useful for internal review without overstating program status.</p>
+      </div>
+      <div class="note-panel">
+        <h2>Source Model</h2>
+        <p>Full source context remains on the linked event cards. This page summarizes aircraft progression and avoids linking any internal documents directly.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

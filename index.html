@@ -2981,15 +2981,82 @@
       </div>
       <!-- km Flown removed | now shown live in the Fleet Flight Telemetry panel -->
       <div class="stat"><div class="stat-value">20+</div><div class="stat-label">UAVs Built</div>
-        <div class="stat-menu">
-          <div class="stat-menu-info">
-            <p>Per SBIR.gov: &ldquo;We have built over 20 UAVs and flown over 1,100 flights.&rdquo;</p>
-            <p class="lead">11 design iterations since 2017:</p>
-            <ul>
-              <li><strong>V1</strong>, first aircraft (2016)</li>
-              <li><strong>V2.0 to V2.6b</strong>, V2 generations (2017 to 2024)</li>
-              <li><strong>V3 Block 0 to V3 Block 2L</strong>, V3 generations (2023 to present)</li>
-            </ul>
+        <div class="stat-menu contracts-table aircraft-table">
+          <div class="contracts-title">Aircraft progression | event-card links</div>
+          <div class="contracts-grid">
+            <div class="contracts-row contracts-head" data-section="aircraft">
+              <div class="c-name">Generation</div>
+              <div class="c-amount">Progression evidence</div>
+              <div class="c-year">Year</div>
+              <div class="c-source">Event</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(103)">
+              <div class="c-name">V1 | first aircraft</div>
+              <div class="c-amount">2 lb autonomous cargo loop</div>
+              <div class="c-year">2016</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(107)">
+              <div class="c-name">V2.0 | carbon composite</div>
+              <div class="c-amount">12 ft X8 quadplane</div>
+              <div class="c-year">2017</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(105)">
+              <div class="c-name">V2.1 | V2.2 | first 18 ft airframes</div>
+              <div class="c-amount">140 lb all-up weight</div>
+              <div class="c-year">2017</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(106)">
+              <div class="c-name">V2.2 | White Sands BVLOS</div>
+              <div class="c-amount">60+ mile BVLOS flight</div>
+              <div class="c-year">2018</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(12)">
+              <div class="c-name">V2.2 to V2.6b | flight campaign</div>
+              <div class="c-amount">Navy-driven sub-variants</div>
+              <div class="c-year">2020-24</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(21)">
+              <div class="c-name">V3 subscale | first test flights</div>
+              <div class="c-amount">Hybrid concept validation</div>
+              <div class="c-year">2022</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(26)">
+              <div class="c-name">V3 Block 1 | full-scale first flight</div>
+              <div class="c-amount">Full-scale V3 flight proof</div>
+              <div class="c-year">2024</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(37)">
+              <div class="c-name">V3 Block 1 | first customer flights</div>
+              <div class="c-amount">Nearly 200 test flights</div>
+              <div class="c-year">2025</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(45)">
+              <div class="c-name">V3 Block 2 | first article build</div>
+              <div class="c-amount">Production-intent variant</div>
+              <div class="c-year">2026</div>
+              <div class="c-source">Open</div>
+            </div>
+            <div class="contracts-row" onclick="scrollToContract(114)">
+              <div class="c-name">V3.2 | forthcoming</div>
+              <div class="c-amount">Next V3 family iteration</div>
+              <div class="c-year">2026</div>
+              <div class="c-source">Open</div>
+            </div>
+          </div>
+          <div class="stat-menu-source">Per SBIR.gov: "We have built over 20 UAVs and flown over 1,100 flights."</div>
+          <div class="stat-menu-source">Click any row to jump to its timeline card.</div>
+          <div class="contracts-export-row">
+            <a class="contracts-export-btn" href="platform-progression/" onclick="event.stopPropagation();" aria-label="Open Platform Progression page">
+              <span>Full specs + images</span>
+            </a>
           </div>
           <div class="stat-menu-source">Verified Sources:</div>
           <div class="stat-menu-links">
