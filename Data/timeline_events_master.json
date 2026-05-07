@@ -882,10 +882,12 @@
     "detail": "Autonomous flights from USNS Patuxent to Marines at Camp Lejeune, NC during Fleet Battle Problem 23-1. Skyways team worked with Naval Air Warfare Center Aircraft Division (NAWCAD), UX-24 Unmanned Test Squadron, United States Marine Corps (USMC), and Military Sealift Command (MSC). Five test flights with two drones demonstrating autonomous cargo delivery ship-to-shore and shore-to-ship.",
     "tag": "Defense | U.S. Navy / USMC",
     "sources": [
+      "Military Sealift Command (Jun 2023)",
       "DVIDS (Jun 2023)",
       "Potomac Officers Club (Jun 2023)"
     ],
     "source_urls": {
+      "Military Sealift Command (Jun 2023)": "https://www.msc.usff.navy.mil/Press-Room/News-Stories/Article/3443999/naval-air-warfare-center-teams-up-with-military-sealift-command-us-marines-to-t/",
       "DVIDS (Jun 2023)": "https://www.dvidshub.net/news/447537/",
       "Potomac Officers Club (Jun 2023)": "https://www.potomacofficersclub.com/us-naval-components-test-skyways-developed-blue-water-logistics-uas/"
     },
