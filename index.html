@@ -1781,6 +1781,253 @@
     color: var(--gray-75);
   }
 
+  /* Platform progression band: hard-tech lineage module above the event stream. */
+  .platform-progression-shell {
+    width: 100%;
+    margin: 0;
+    padding: 28px 64px 24px;
+    background:
+      linear-gradient(180deg, #111e26 0%, #13242e 100%);
+    color: var(--white);
+  }
+  .platform-progression {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .platform-progression-head {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
+    gap: 28px;
+    align-items: end;
+    margin-bottom: 18px;
+  }
+  .platform-progression-kicker {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--thrust-green);
+    letter-spacing: 0;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .platform-progression-title {
+    margin: 0;
+    color: var(--white);
+    font-size: 34px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .platform-progression-subtitle {
+    margin: 8px 0 0;
+    max-width: 560px;
+    color: rgba(255,255,255,0.68);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 450;
+  }
+  .platform-readouts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.08);
+  }
+  .platform-readout {
+    background: rgba(255,255,255,0.04);
+    padding: 12px 14px;
+    min-width: 0;
+  }
+  .platform-readout-value {
+    display: block;
+    color: var(--white);
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .platform-readout-label {
+    display: block;
+    margin-top: 5px;
+    color: rgba(255,255,255,0.52);
+    font-size: 9px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .platform-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    padding-top: 16px;
+  }
+  .platform-track::before {
+    content: '';
+    position: absolute;
+    top: 29px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(194, 242, 19, 0.28);
+    pointer-events: none;
+  }
+  .platform-card {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    background: rgba(248,250,251,0.98);
+    overflow: hidden;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    top: -21px;
+    left: 12px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--card-accent, var(--thrust-green));
+    box-shadow: 0 0 0 4px rgba(17,30,38,1);
+    z-index: 2;
+  }
+  .platform-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--thrust-green));
+  }
+  .platform-card.v1 { --card-accent: var(--orange); }
+  .platform-card.v2-early { --card-accent: var(--teal); }
+  .platform-card.v2-fleet { --card-accent: var(--blue); }
+  .platform-card.v3-b1 { --card-accent: #6f52ae; }
+  .platform-card.v3-b2 { --card-accent: var(--thrust-green); }
+  .platform-image {
+    width: 100%;
+    aspect-ratio: 1.85 / 1;
+    object-fit: cover;
+    background: var(--navy);
+    filter: saturate(0.95) contrast(1.04);
+  }
+  .platform-body {
+    padding: 12px 12px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex: 1;
+  }
+  .platform-year {
+    color: var(--gray-50);
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .platform-name {
+    color: var(--navy);
+    font-size: 16px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .platform-maturity {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(17,30,38,0.08);
+    color: var(--navy);
+    font-size: 9.5px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .platform-stat-list {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--gray-75);
+    font-size: 11.5px;
+    line-height: 1.28;
+    font-weight: 450;
+  }
+  .platform-stat-list strong {
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .platform-event-link {
+    margin-top: auto;
+    color: var(--navy);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-top: 1px solid rgba(17,30,38,0.1);
+    padding-top: 9px;
+  }
+  .platform-event-link:hover,
+  .platform-event-link:focus-visible {
+    color: var(--blue);
+    outline: none;
+  }
+  .platform-data-note {
+    margin: 14px 0 0;
+    color: rgba(255,255,255,0.52);
+    font-size: 10.5px;
+    line-height: 1.4;
+    font-weight: 450;
+  }
+  body.search-focused .platform-progression-shell { display: none; }
+  @media (max-width: 1180px) {
+    .platform-track {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 1024px) {
+    .platform-progression-shell { padding: 24px 32px 20px; }
+    .platform-progression-head {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+  @media (max-width: 720px) {
+    .platform-progression-shell { padding: 18px 16px 16px; }
+    .platform-progression-head { margin-bottom: 12px; }
+    .platform-progression-title { font-size: 22px; }
+    .platform-progression-subtitle { font-size: 12px; }
+    .platform-readouts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .platform-readout { padding: 9px 8px; }
+    .platform-readout-value { font-size: 14px; }
+    .platform-readout-label { font-size: 8px; }
+    .platform-track {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 16px 0 6px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .platform-card {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
+    }
+  }
+
   /* Annual summary strip — sits above each year's event cards. One
      tight line: "N events | Year headline". Headlines authored in the
      YEAR_HEADLINES config in the script block; counts auto-computed
@@ -3100,6 +3347,102 @@
      block injects text and it gets read. Kept outside #timeline-container
      so renderTimeline()'s innerHTML replace doesn't wipe it. -->
 <div id="a11y-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<section class="platform-progression-shell" aria-label="Platform progression timeline">
+  <div class="platform-progression">
+    <div class="platform-progression-head">
+      <div>
+        <div class="platform-progression-kicker">Platform Progression</div>
+        <h2 class="platform-progression-title">From V1 cargo code to production-intent V3</h2>
+        <p class="platform-progression-subtitle">A compact aircraft lineage: what changed, what was proven, and where the platform stands today.</p>
+      </div>
+      <div class="platform-readouts" aria-label="Platform progression summary">
+        <div class="platform-readout">
+          <span class="platform-readout-value">V1 to V3.2</span>
+          <span class="platform-readout-label">Generation span</span>
+        </div>
+        <div class="platform-readout">
+          <span class="platform-readout-value">20+</span>
+          <span class="platform-readout-label">Aircraft built</span>
+        </div>
+        <div class="platform-readout">
+          <span class="platform-readout-value">2016 to 2027</span>
+          <span class="platform-readout-label">Build arc</span>
+        </div>
+      </div>
+    </div>
+    <div class="platform-track">
+      <article class="platform-card v1">
+        <img class="platform-image" loading="lazy" src="https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp" alt="Skyways V1 early aircraft video still">
+        <div class="platform-body">
+          <div class="platform-year">2016</div>
+          <div class="platform-name">V1 | Hobby-kit origin</div>
+          <div class="platform-maturity">Prototype | TRL not assigned</div>
+          <ul class="platform-stat-list">
+            <li><strong>Stats:</strong> 2 lb cargo, &lt;30 min endurance, VTOL added to a Skywalker X-5 kit</li>
+            <li><strong>Mission:</strong> autonomous A to B to C to A cargo loop</li>
+          </ul>
+          <a class="platform-event-link" href="#event-103" onclick="event.preventDefault(); scrollToContract(103);">View V1 event</a>
+        </div>
+      </article>
+      <article class="platform-card v2-early">
+        <img class="platform-image" loading="lazy" src="https://www.skyways.com/_astro/hype-still.zGCakefh_1kEicT.webp" alt="Skyways early V2 composite aircraft">
+        <div class="platform-body">
+          <div class="platform-year">2017 | 2018</div>
+          <div class="platform-name">V2.0 to V2.2 | Composite leap</div>
+          <div class="platform-maturity">Relevant environment proof</div>
+          <ul class="platform-stat-list">
+            <li><strong>Stats:</strong> 12 ft carbon X8, then 18 ft / 140 lb AUW composite airframes</li>
+            <li><strong>Mission:</strong> 60+ mile BVLOS at White Sands for USMC</li>
+          </ul>
+          <a class="platform-event-link" href="#event-106" onclick="event.preventDefault(); scrollToContract(106);">View BVLOS event</a>
+        </div>
+      </article>
+      <article class="platform-card v2-fleet">
+        <img class="platform-image" loading="lazy" src="https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg?w=1600&amp;fit=max&amp;auto=format" alt="Skyways V2 aircraft in flight testing">
+        <div class="platform-body">
+          <div class="platform-year">2019 | 2025</div>
+          <div class="platform-name">V2.5 to V2.6b | Operational fleet</div>
+          <div class="platform-maturity">Operational fleet evidence</div>
+          <ul class="platform-stat-list">
+            <li><strong>Stats:</strong> 25 lb max cargo, 390 NM max range, 7.9 hr endurance</li>
+            <li><strong>Flights:</strong> 1,100+ cited publicly; current flight log shown above</li>
+            <li><strong>Missions:</strong> carrier ops, ship-to-ship, RIMPAC, ULTRA, RWE, ANA</li>
+          </ul>
+          <a class="platform-event-link" href="#event-12" onclick="event.preventDefault(); scrollToContract(12);">View V2 campaign</a>
+        </div>
+      </article>
+      <article class="platform-card v3-b1">
+        <img class="platform-image" loading="lazy" src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 aircraft hovering">
+        <div class="platform-body">
+          <div class="platform-year">2022 | 2025</div>
+          <div class="platform-name">V3 Block 0 to Block 1 | Scale test</div>
+          <div class="platform-maturity">Customer demo evidence</div>
+          <ul class="platform-stat-list">
+            <li><strong>Stats:</strong> heavy-fuel endurance path, controlled NAS BVLOS, customer demo</li>
+            <li><strong>Missions:</strong> nearly 200 test flights, including 8 hr endurance flights</li>
+          </ul>
+          <a class="platform-event-link" href="#event-37" onclick="event.preventDefault(); scrollToContract(37);">View V3 demo</a>
+        </div>
+      </article>
+      <article class="platform-card v3-b2">
+        <img class="platform-image" loading="lazy" src="https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp" alt="Skyways V3 Block 2 production-intent aircraft">
+        <div class="platform-body">
+          <div class="platform-year">2026 | 2027</div>
+          <div class="platform-name">V3 Block 2 to V3.2 | Production intent</div>
+          <div class="platform-maturity">CDR-level design maturity</div>
+          <ul class="platform-stat-list">
+            <li><strong>Useful load:</strong> 105 lb</li>
+            <li><strong>Range:</strong> 750+ NM primary; 1,200+ NM long-range mode at minimal cargo</li>
+            <li><strong>Mission:</strong> first article build, production ramp, Program of Record path</li>
+          </ul>
+          <a class="platform-event-link" href="#event-45" onclick="event.preventDefault(); scrollToContract(45);">View V3B2 event</a>
+        </div>
+      </article>
+    </div>
+    <p class="platform-data-note">Range and payload values are shown separately. Paired V3 Block 2 claims require engineering approval before publication.</p>
+  </div>
+</section>
 
 <div class="timeline-wrapper" id="timeline-container" aria-busy="true">
   <!-- Loading skeleton — replaced by renderTimeline() when Firestore data
