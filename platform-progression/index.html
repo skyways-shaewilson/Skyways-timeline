@@ -274,57 +274,6 @@
     text-transform: uppercase;
   }
 
-  .chapter-bar {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 48px 28px;
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 8px;
-  }
-  .chapter-bar a {
-    display: grid;
-    gap: 4px;
-    border: 1px solid var(--ink-12);
-    border-radius: 6px;
-    padding: 10px;
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
-    text-align: center;
-    background: rgba(13,24,31,0.94);
-  }
-  .chapter-year {
-    color: var(--white);
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 700;
-  }
-  .chapter-name {
-    color: rgba(255,255,255,0.52);
-    font-size: 9px;
-    line-height: 1;
-    font-weight: 700;
-    letter-spacing: 0.65px;
-    text-transform: uppercase;
-  }
-  .chapter-bar a:hover,
-  .chapter-bar a:focus-visible {
-    color: var(--navy);
-    background: var(--lime);
-    border-color: var(--lime);
-    outline: none;
-  }
-  .chapter-bar a:hover .chapter-year,
-  .chapter-bar a:focus-visible .chapter-year,
-  .chapter-bar a:hover .chapter-name,
-  .chapter-bar a:focus-visible .chapter-name {
-    color: var(--navy);
-  }
-
   .progression {
     max-width: 1440px;
     margin: 0 auto;
@@ -684,10 +633,6 @@
       max-width: none;
       justify-self: stretch;
     }
-    .chapter-bar {
-      padding: 0 24px 22px;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
     .progression { padding: 0 24px 62px; }
     .progression-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .notes {
@@ -711,7 +656,6 @@
       border-bottom: 1px solid var(--ink-12);
     }
     .hero-stat:last-child { border-bottom: none; }
-    .chapter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .progression-rail { grid-template-columns: 1fr; }
     .aircraft-media,
     .aircraft-media img {
@@ -865,17 +809,6 @@
         </div>
       </div>
     </section>
-
-    <nav class="chapter-bar" aria-label="Aircraft generations">
-      <a href="#v1"><span class="chapter-year">2016</span><span class="chapter-name">V1</span></a>
-      <a href="#v20"><span class="chapter-year">2017</span><span class="chapter-name">V2.0</span></a>
-      <a href="#v22"><span class="chapter-year">2018</span><span class="chapter-name">V2.2</span></a>
-      <a href="#v25"><span class="chapter-year">2021</span><span class="chapter-name">V2.5</span></a>
-      <a href="#v3b0"><span class="chapter-year">2023</span><span class="chapter-name">V3 B0</span></a>
-      <a href="#v26"><span class="chapter-year">2024</span><span class="chapter-name">V2.6B</span></a>
-      <a href="#v3b1"><span class="chapter-year">2025</span><span class="chapter-name">V3 B1</span></a>
-      <a href="#v3b2"><span class="chapter-year">2026</span><span class="chapter-name">V3 B2</span></a>
-    </nav>
 
     <section class="progression" aria-label="Aircraft platform progression">
       <div class="progression-rail">
@@ -1255,9 +1188,8 @@
 </div>
 <script>
   (() => {
-    const nav = document.querySelector('.chapter-bar');
     const rail = document.querySelector('.progression-rail');
-    if (!nav || !rail || !window.fetch) return;
+    if (!rail || !window.fetch) return;
 
     const specOrder = [
       ['payload', 'Payload'],
@@ -1269,26 +1201,6 @@
       ['architecture', 'Architecture'],
       ['proof_point', 'Proof point']
     ];
-    const navLabelById = {
-      v1: 'V1',
-      v20: 'V2.0',
-      v22: 'V2.2',
-      v25: 'V2.5',
-      v3b0: 'V3 B0',
-      v26: 'V2.6B',
-      v3b1: 'V3 B1',
-      v3b2: 'V3 B2'
-    };
-    const navYearById = {
-      v1: '2016',
-      v20: '2017',
-      v22: '2018',
-      v25: '2021',
-      v3b0: '2023',
-      v26: '2024',
-      v3b1: '2025',
-      v3b2: '2026'
-    };
     const eventLabelById = {
       10: '2019 | V2 specs',
       12: '2020-24 | V2 flight campaign',
@@ -1318,20 +1230,8 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
-    function firstYear(label) {
-      const match = String(label || '').match(/\d{4}/);
-      return match ? match[0] : String(label || '');
-    }
     function isMutedSpec(value) {
       return /^(not logged|not defined|prototype|composite|demo flight|v2 class|v3 class|full scale|test mule)$/i.test(String(value || '').trim());
-    }
-    function renderNav(platforms) {
-      nav.innerHTML = platforms.map((platform) => (
-        '<a href="#' + html(platform.id) + '">' +
-          '<span class="chapter-year">' + html(navYearById[platform.id] || firstYear(platform.year_label)) + '</span>' +
-          '<span class="chapter-name">' + html(navLabelById[platform.id] || platform.generation) + '</span>' +
-        '</a>'
-      )).join('');
     }
     function renderSpecGrid(stats) {
       return specOrder.map(([key, label]) => {
@@ -1390,7 +1290,6 @@
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('Platform data unavailable')))
       .then((data) => {
         if (!data || !Array.isArray(data.platforms) || !data.platforms.length) return;
-        renderNav(data.platforms);
         rail.innerHTML = data.platforms.map(renderCard).join('');
         window.dispatchEvent(new Event('resize'));
       })
