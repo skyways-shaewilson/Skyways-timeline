@@ -151,6 +151,38 @@
   .sticky-header.minimized .logo-white { opacity: 1; }
   .sticky-header.minimized .logo-color { opacity: 0; }
 
+  .brand-primary-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .brand-nav-link {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 6px;
+    padding: 7px 11px;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .brand-nav-link:hover,
+  .brand-nav-link:focus-visible {
+    color: var(--navy);
+    border-color: var(--thrust-green);
+    background: var(--thrust-green);
+    outline: none;
+  }
+
   /* ══ SEARCH ══ */
   .search-wrap {
     position: relative;
@@ -1601,6 +1633,45 @@
     text-decoration: none;
     white-space: nowrap;
   }
+  .project-export {
+    position: relative;
+    display: inline-flex;
+  }
+  .project-export-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 7px);
+    min-width: 190px;
+    padding: 6px;
+    border: 1px solid var(--gray-15);
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: 0 16px 42px rgba(17,30,38,0.24);
+    display: none;
+    z-index: 30;
+  }
+  .project-export-menu.open { display: grid; gap: 3px; }
+  .project-export-option {
+    appearance: none;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    padding: 9px 10px;
+    background: transparent;
+    color: var(--navy);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .project-export-option:hover,
+  .project-export-option:focus-visible {
+    background: rgba(0,154,235,0.1);
+    outline: none;
+  }
   .density-icon {
     width: 14px; height: 10px;
     display: inline-flex; flex-direction: column; justify-content: space-between;
@@ -2447,6 +2518,17 @@
     .logo-wrap { height: 40px; margin-left: -8px; flex-shrink: 0; }
     .sticky-header.minimized .logo-wrap { height: 34px; }
     .sticky-header.minimized .brand-bar { height: 52px; }
+    .brand-primary-nav { flex-shrink: 0; }
+    .brand-nav-link {
+      min-height: 30px;
+      padding: 6px 8px;
+      font-size: 9px;
+      letter-spacing: 0.45px;
+    }
+    .brand-bar-divider,
+    .brand-bar-inline-title {
+      display: none;
+    }
     /* Mobile title: two stacked lines ("HISTORY &" / "TIMELINE") next to
        the divider. Each .bbit-line becomes a block so they stack; the
        wrapper sizes to the width of the longer of the two lines and
@@ -2742,6 +2824,9 @@
       <img class="logo-img logo-white" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NzUuMzkgMTk5LjkxIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjYzJmMjEzOwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZmZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik01NjcuNDEsNzEuNTdsLTIyLjE5LDY1LjI3Yy0uNzMsMi4xNi0yLjc2LDMuNjEtNS4wNSwzLjYxaC0xMS40N2w0LjM5LTEyLjg2LTE5LjA0LTU2LjAyaDE1LjNsMTEuMzksMzUuNywxMS4zOS0zNS43aDE1LjI4WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjYxLjA3LDk4LjI1Yy0xLjU5LTIuNC0zLjUxLTQuMzUtNS43LTUuNzktMi4xNy0xLjQzLTQuNC0yLjQ4LTYuNjEtMy4xNC0yLjE3LS42NC0zLjg5LTEuMDktNS4xLTEuMzMtNC4wOS0xLjA0LTcuNC0xLjg5LTkuOTMtMi41Ni0yLjQ5LS42Ni00LjQ2LTEuMzItNS44NS0xLjk4LTEuMzItLjYyLTIuMjEtMS4yOC0yLjY0LTEuOTgtLjQzLS43LS42NS0xLjY0LS42NS0yLjgxLDAtMS4yOC4yOC0yLjM0LjgyLTMuMTYuNTYtLjg0LDEuMjktMS41NiwyLjE3LTIuMTIuODgtLjU3LDEuODgtLjk3LDIuOTYtMS4yLDIuODUtLjYsNS43NS0uMzksOC4xNC4wOSwxLjQyLjI5LDIuNy43OSwzLjc5LDEuNDgsMS4wNy42OCwxLjk0LDEuNjIsMi41OSwyLjgxLjY2LDEuMiwxLjA1LDIuNzUsMS4xNyw0LjYxbC4wMy41NGgxNS4wNHYtLjU4YzAtMy44Ni0uNzUtNy4yLTIuMjItOS45My0xLjQ3LTIuNzItMy40OS00Ljk5LTUuOTktNi43NS0yLjQ5LTEuNzQtNS4zNy0zLjAyLTguNTctMy44LTUuOTEtMS40My0xMi40OS0xLjY5LTE4LjkyLjA1LTIuOTguODEtNS42OSwyLjA3LTguMDYsMy43NS0yLjM4LDEuNjktNC4zMywzLjgzLTUuOCw2LjM2LTEuNDgsMi41NS0yLjIzLDUuNTktMi4yMyw5LjAzLDAsMy4wOC41OSw1Ljc0LDEuNzYsNy45MiwxLjE2LDIuMTcsMi43MSw0LDQuNiw1LjQ1LDEuODYsMS40Myw0LjAxLDIuNjEsNi4zNywzLjUxLDIuMzQuODksNC43NiwxLjY1LDcuMTksMi4yNiwyLjM1LjY2LDQuNzMsMS4yOCw3LjA3LDEuODQsMi4yOC41NCw0LjM1LDEuMTgsNi4xNCwxLjksMS43NS43LDMuMTgsMS41OCw0LjI1LDIuNjIsMS4wMi45OSwxLjUyLDIuMjcsMS41MiwzLjg5LDAsMS41LS4zOSwyLjc1LTEuMTUsMy43MS0uOCwxLTEuODEsMS43OS0zLDIuMzYtMS4yMi41OC0yLjU1Ljk4LTMuOTUsMS4xOS0zLjUuNTEtNi41LjM5LTkuMzgtLjM2LTEuNjktLjQ0LTMuMTgtMS4xMi00LjQzLTIuMDEtMS4yMy0uODgtMi4yNC0yLjA2LTIuOTgtMy41aDBjLS43NS0xLjQzLTEuMTItMy4yMi0xLjEyLTUuMzJ2LS41OGgtMTUuMDd2LjU3Yy0uMDcsNC4xMS42OSw3LjcxLDIuMjUsMTAuNzEsMS41NiwzLDMuNyw1LjUsNi4zNSw3LjQzLDIuNjQsMS45Myw1LjcyLDMuMzYsOS4xNyw0LjI2LDMuNDIuODksNywxLjM1LDEwLjYzLDEuMzUsNC40OSwwLDguNTEtLjUzLDExLjkzLTEuNTgsMy40NC0xLjA1LDYuMzctMi41NSw4LjcxLTQuNDUsMi4zNS0xLjkxLDQuMTQtNC4yMSw1LjMzLTYuODUsMS4xOS0yLjYzLDEuNzktNS41MSwxLjc5LTguNTcsMC0zLjc2LS44Mi02LjktMi40My05LjM0WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDQ2LjU3LDcxLjU3bC0xMC4zLDM3Ljk1aC0uMjFsLTkuNTQtMzcuOTVoLTE0Ljk2bC05LjMzLDM4LjA3aC0uMjFsLTEwLjMtMzguMDdoLTE2LjI2bDE3Ljc3LDU2LjA2aDE1Ljk1bDkuNTQtMzcuNjNoLjIxbDkuOTcsMzcuNjNoMTUuODRsMTcuNjctNTYuMDZoLTE1Ljg0WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNjE2LjIzLDEwMy4wN2MtMS4wMS0xLjc4LTIuMzUtMy4yNS00LjAyLTQuNDUtMS42Ny0xLjE5LTMuNTYtMi4xNS01LjctMi44OC0yLjEzLS43Mi00LjMxLTEuMzMtNi41NS0xLjg0LTIuMTctLjUxLTQuMzEtLjk4LTYuNC0xLjQyLTIuMDktLjQzLTMuOTUtLjkyLTUuNTgtMS40Ni0xLjYyLS41NC0yLjk1LTEuMjUtMy45Ni0yLjEyLTEuMDEtLjg3LTEuNTEtMS45OC0xLjUxLTMuMzUsMC0xLjE2LjI4LTIuMDguODctMi43Ny41Ny0uNjksMS4yOC0xLjIsMi4xLTEuNTguODMtLjM2LDEuNzYtLjYsMi43Ny0uNywxLjAxLS4xMSwxLjk2LS4xNywyLjgzLS4xNywyLjc1LDAsNS4xMy41Myw3LjE1LDEuNTgsMi4wMywxLjA1LDMuMTUsMy4wNSwzLjM3LDYuMDJoMTQuNjRjLS4yOS0zLjQ4LTEuMTgtNi4zNS0yLjY2LTguNjItMS40OS0yLjI4LTMuMzQtNC4xMS01LjU4LTUuNDgtMi4yNS0xLjM3LTQuNzktMi4zNC03LjY1LTIuOTMtMi44NS0uNTctNS44LS44Ny04Ljg0LS44N3MtNiwuMjctOC44OS44MWMtMi44OS41NC01LjQ5LDEuNDktNy44MSwyLjgzLTIuMzEsMS4zNC00LjE2LDMuMTYtNS41OCw1LjQ3LTEuNDEsMi4zMi0yLjEyLDUuMjgtMi4xMiw4Ljg5LDAsMi40Ny41MSw0LjU0LDEuNTIsNi4yNCwxLjAxLDEuNywyLjM1LDMuMTIsNC4wMiw0LjIzLDEuNjcsMS4xMywzLjU2LDIuMDMsNS43LDIuNzEsMi4xMy42OSw0LjMxLDEuMjgsNi41NSwxLjc5LDUuNSwxLjE2LDkuNzgsMi4zMSwxMi44NSwzLjQ3LDMuMDcsMS4xNiw0LjYxLDIuODksNC42MSw1LjIxLDAsMS4zNy0uMzMsMi41MS0uOTgsMy40MS0uNjUuOS0xLjQ2LDEuNjMtMi40NCwyLjE3LS45OC41NC0yLjA2LjkzLTMuMjUsMS4xOS0xLjE5LjI1LTIuMzMuMzctMy40MS4zNy0xLjUyLDAtMi45OC0uMTgtNC40LS41NC0xLjQxLS4zNi0yLjY2LS45Mi0zLjc0LTEuNjgtMS4wOC0uNzctMS45Ny0xLjczLTIuNjYtMi45My0uNjktMS4xOS0xLjA0LTIuNjItMS4wNC00LjI5aC0xNC42M2MuMTUsMy43Ni45OSw2Ljg5LDIuNTQsOS4zOSwxLjU1LDIuNDksMy41NSw0LjQ5LDUuOTcsNi4wMSwyLjQyLDEuNTIsNS4xOSwyLjYxLDguMywzLjI1LDMuMTEuNjUsNi4yOS45OCw5LjU0Ljk4czYuMy0uMyw5LjM4LS45MmMzLjA3LS42MSw1LjgxLTEuNjgsOC4xOS0zLjIsMi4zOS0xLjUyLDQuMzEtMy41Miw1LjgtNi4wMiwxLjQ5LTIuNDksMi4yMy01LjU4LDIuMjMtOS4yNiwwLTIuNjEtLjUxLTQuOC0xLjUyLTYuNTZaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNzUuMjYsNzEuNTdsLTIyLjE5LDY1LjI3Yy0uNzMsMi4xNi0yLjc2LDMuNjEtNS4wNSwzLjYxaC0xMS40N2w0LjM5LTEyLjg2LTE5LjA0LTU2LjAyaDE1LjNsMTEuMzksMzUuNywxMS4zOS0zNS43aDE1LjI4WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTEwLjk4LDc3LjgxYy0xLjUyLTIuMDYtMy40Ny0zLjY3LTUuODUtNC44My0yLjM5LTEuMTYtNS4wMy0xLjk0LTcuOTEtMi4zMy0yLjg5LS4zOS01Ljc1LS42LTguNTgtLjYtMy4xMSwwLTYuMTkuMy05LjI2LjkyLTMuMDcuNjEtNS44NCwxLjY0LTguMywzLjA4LTIuNDYsMS40NS00LjQ5LDMuMzctNi4wOCw1Ljc1LTEuNTksMi4zOS0yLjQ5LDUuMzgtMi43MSw5aDE1LjRjLjI5LTMuMDQsMS4zMS01LjIxLDMuMDQtNi41MiwxLjczLTEuMjksNC4xMi0xLjk1LDcuMTYtMS45NSwxLjM3LDAsMi42Ni4wOSwzLjg1LjI3LDEuMTkuMTgsMi4yNC41NCwzLjE0LDEuMDguOTEuNTUsMS42MywxLjMxLDIuMTcsMi4yOC44OSwxLjYyLDEuNjQsNS43NS0uNiw3LjU5LTEuMDEuODMtMi4zOSwxLjQ2LTQuMTIsMS45LTEuNzMuNDMtMy43My43NS01Ljk3Ljk3LTIuMjQuMjMtNC41MS41Mi02LjgzLjg4LTIuMzEuMzYtNC42Ljg0LTYuODksMS40Ni0yLjI3LjYxLTQuMywxLjUzLTYuMDcsMi43Ni0xLjc4LDEuMjQtMy4yMiwyLjg4LTQuMzQsNC45NC0xLjExLDIuMDYtMS42OCw0LjY4LTEuNjgsNy44NiwwLDIuODkuNSw1LjM5LDEuNDYsNy40OC45OCwyLjA5LDIuMzMsMy44Myw0LjA2LDUuMiwxLjc0LDEuMzcsMy43NiwyLjM5LDYuMDgsMy4wNCwyLjMyLjY1LDQuODEuOTgsNy40OC45OCwzLjQ3LDAsNi44Ny0uNTEsMTAuMTktMS41MiwzLjA0LS45Miw1LjcyLTIuNDgsOC4wMy00LjY4djQuNzZsMTUuNC4wMnYtNDEuNjNjMC0zLjQtLjc1LTYuMTItMi4yNy04LjE4Wk00OTcuODYsMTA1Ljk0YzAsLjg3LS4wOSwyLjAzLS4yNywzLjQ3LS4xOCwxLjQ1LS42NiwyLjg3LTEuNDYsNC4yOS0uOCwxLjQxLTIuMDMsMi42MS0zLjY4LDMuNjItMS42NywxLjAxLTQuMDIsMS41Mi03LjA2LDEuNTItMS4yMywwLTIuNDItLjExLTMuNTgtLjMzLTEuMTUtLjIxLTIuMTYtLjYtMy4wMy0xLjE0LS44Ny0uNTQtMS41NS0xLjI4LTIuMDYtMi4yMi0uNTEtLjk1LS43Ny0yLjEtLjc3LTMuNDgsMC0xLjQ0LjI2LTIuNjMuNzctMy41OC41MS0uOTMsMS4xNy0xLjcxLDItMi4zMy44My0uNjEsMS44LTEuMSwyLjkzLTEuNDYsMS4xMy0uMzYsMi4yNi0uNjUsMy40MS0uODcsMS4yNC0uMjEsMi40Ni0uMzksMy42OS0uNTQsMS4yMy0uMTUsMi40LS4zMywzLjUyLS41NCwxLjEzLS4yMywyLjE3LS41LDMuMTUtLjgxLjk3LS4zMywxLjc5LS43OCwyLjQzLTEuMzZ2NS43NVoiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzMDAuMTcgOTkuNTUgMzIxLjY4IDEyNy41OCAzMDQuNyAxMjcuNTggMjg0LjMyIDk5LjU1IDMwNC43IDcxLjUxIDMyMS42OCA3MS41MSAzMDAuMTcgOTkuNTUiLz4KICAgIDxyZWN0IGNsYXNzPSJjbHMtMiIgeD0iMjY4LjkyIiB5PSI2MC4yMiIgd2lkdGg9IjE1LjQiIGhlaWdodD0iNjcuNDEiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01Ny42Myw5OS45NXYtMTkuMzNjMC0uNTcuNDctMS4wMiwxLjA0LTEuMDIsMjkuMjQsMCw0Mi44MSwwLDcyLjIzLDAsMi45MiwwLDUuNDEtMS4wOSw3LjQ4LTMuMjgsMS45Ny0yLjA4LDMuOTUtNC4xNSw1Ljg3LTYuMjgsMi43MS0yLjk5LDUuNi01LjcxLDkuMTUtNy41MywyLjgzLTEuNDUsNS43OC0yLjkzLDguOTItMy4wMiwyLjg2LS4wOCwxMC40OC0uMDIsMTMuMzMsMCwuODYsMCwuODcuMzQuODcuOTQsMCw2LjQ3LDAsMTIuOTQsMCwxOS40MXEwLC45OS0uOTMuOTljLTEwLjI2LDAtMjUuMzIsMC0zNS41OCwwLTIuNzksMC01LjI1Ljk5LTcuMjYsMy4wOS0yLjM3LDIuNDctNC43Myw0Ljk2LTcuMDMsNy41MS01Ljg4LDYuNS0xMy4wMSw5LjU5LTIxLjQ5LDkuNTctMjAuNTMtLjA3LTI1LjI5LS4wNC00NS41Ny0uMDMtLjU3LDAtMS4wNC0uNDYtMS4wNC0xLjAyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTc2LjUzLDk5Ljk2djE5LjMzYzAsLjU3LS40NywxLjAyLTEuMDQsMS4wMi0yOS4yNCwwLTQyLjgxLDAtNzIuMjMsMC0yLjkyLDAtNS40MSwxLjA5LTcuNDgsMy4yOC0xLjk3LDIuMDgtMy45NSw0LjE1LTUuODcsNi4yOC0yLjcxLDIuOTktNS42LDUuNzEtOS4xNSw3LjUzLTIuODMsMS40NS01Ljc4LDIuOTMtOC45MiwzLjAyLTIuODYuMDgtMTAuNDguMDItMTMuMzMsMC0uODYsMC0uODctLjM0LS44Ny0uOTQsMC02LjQ3LDAtMTIuOTQsMC0xOS40MXEwLS45OS45My0uOTljMTAuMjYsMCwyNS4zMiwwLDM1LjU4LDAsMi43OSwwLDUuMjUtLjk5LDcuMjYtMy4wOSwyLjM3LTIuNDcsNC43My00Ljk2LDcuMDMtNy41MSw1Ljg4LTYuNSwxMy4wMS05LjU5LDIxLjQ5LTkuNTcsMjAuNTMuMDcsMjUuMjkuMDQsNDUuNTcuMDMuNTcsMCwxLjA0LjQ2LDEuMDQsMS4wMloiLz4KICA8L2c+Cjwvc3ZnPg==" alt="Skyways">
       <img class="logo-img logo-color" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NzUuMzkgMTk5LjkxIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjYzJmMjEzOwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogIzExMWUyNjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik01NjcuNDEsNzEuNTdsLTIyLjE5LDY1LjI3Yy0uNzMsMi4xNi0yLjc2LDMuNjEtNS4wNSwzLjYxaC0xMS40N2w0LjM5LTEyLjg2LTE5LjA0LTU2LjAyaDE1LjNsMTEuMzksMzUuNywxMS4zOS0zNS43aDE1LjI4WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjYxLjA3LDk4LjI1Yy0xLjU5LTIuNC0zLjUxLTQuMzUtNS43LTUuNzktMi4xNy0xLjQzLTQuNC0yLjQ4LTYuNjEtMy4xNC0yLjE3LS42NC0zLjg5LTEuMDktNS4xLTEuMzMtNC4wOS0xLjA0LTcuNC0xLjg5LTkuOTMtMi41Ni0yLjQ5LS42Ni00LjQ2LTEuMzItNS44NS0xLjk4LTEuMzItLjYyLTIuMjEtMS4yOC0yLjY0LTEuOTgtLjQzLS43LS42NS0xLjY0LS42NS0yLjgxLDAtMS4yOC4yOC0yLjM0LjgyLTMuMTYuNTYtLjg0LDEuMjktMS41NiwyLjE3LTIuMTIuODgtLjU3LDEuODgtLjk3LDIuOTYtMS4yLDIuODUtLjYsNS43NS0uMzksOC4xNC4wOSwxLjQyLjI5LDIuNy43OSwzLjc5LDEuNDgsMS4wNy42OCwxLjk0LDEuNjIsMi41OSwyLjgxLjY2LDEuMiwxLjA1LDIuNzUsMS4xNyw0LjYxbC4wMy41NGgxNS4wNHYtLjU4YzAtMy44Ni0uNzUtNy4yLTIuMjItOS45My0xLjQ3LTIuNzItMy40OS00Ljk5LTUuOTktNi43NS0yLjQ5LTEuNzQtNS4zNy0zLjAyLTguNTctMy44LTUuOTEtMS40My0xMi40OS0xLjY5LTE4LjkyLjA1LTIuOTguODEtNS42OSwyLjA3LTguMDYsMy43NS0yLjM4LDEuNjktNC4zMywzLjgzLTUuOCw2LjM2LTEuNDgsMi41NS0yLjIzLDUuNTktMi4yMyw5LjAzLDAsMy4wOC41OSw1Ljc0LDEuNzYsNy45MiwxLjE2LDIuMTcsMi43MSw0LDQuNiw1LjQ1LDEuODYsMS40Myw0LjAxLDIuNjEsNi4zNywzLjUxLDIuMzQuODksNC43NiwxLjY1LDcuMTksMi4yNiwyLjM1LjY2LDQuNzMsMS4yOCw3LjA3LDEuODQsMi4yOC41NCw0LjM1LDEuMTgsNi4xNCwxLjksMS43NS43LDMuMTgsMS41OCw0LjI1LDIuNjIsMS4wMi45OSwxLjUyLDIuMjcsMS41MiwzLjg5LDAsMS41LS4zOSwyLjc1LTEuMTUsMy43MS0uOCwxLTEuODEsMS43OS0zLDIuMzYtMS4yMi41OC0yLjU1Ljk4LTMuOTUsMS4xOS0zLjUuNTEtNi41LjM5LTkuMzgtLjM2LTEuNjktLjQ0LTMuMTgtMS4xMi00LjQzLTIuMDEtMS4yMy0uODgtMi4yNC0yLjA2LTIuOTgtMy41aDBjLS43NS0xLjQzLTEuMTItMy4yMi0xLjEyLTUuMzJ2LS41OGgtMTUuMDd2LjU3Yy0uMDcsNC4xMS42OSw3LjcxLDIuMjUsMTAuNzEsMS41NiwzLDMuNyw1LjUsNi4zNSw3LjQzLDIuNjQsMS45Myw1LjcyLDMuMzYsOS4xNyw0LjI2LDMuNDIuODksNywxLjM1LDEwLjYzLDEuMzUsNC40OSwwLDguNTEtLjUzLDExLjkzLTEuNTgsMy40NC0xLjA1LDYuMzctMi41NSw4LjcxLTQuNDUsMi4zNS0xLjkxLDQuMTQtNC4yMSw1LjMzLTYuODUsMS4xOS0yLjYzLDEuNzktNS41MSwxLjc5LTguNTcsMC0zLjc2LS44Mi02LjktMi40My05LjM0WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDQ2LjU3LDcxLjU3bC0xMC4zLDM3Ljk1aC0uMjFsLTkuNTQtMzcuOTVoLTE0Ljk2bC05LjMzLDM4LjA3aC0uMjFsLTEwLjMtMzguMDdoLTE2LjI2bDE3Ljc3LDU2LjA2aDE1Ljk1bDkuNTQtMzcuNjNoLjIxbDkuOTcsMzcuNjNoMTUuODRsMTcuNjctNTYuMDZoLTE1Ljg0WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNjE2LjIzLDEwMy4wN2MtMS4wMS0xLjc4LTIuMzUtMy4yNS00LjAyLTQuNDUtMS42Ny0xLjE5LTMuNTYtMi4xNS01LjctMi44OC0yLjEzLS43Mi00LjMxLTEuMzMtNi41NS0xLjg0LTIuMTctLjUxLTQuMzEtLjk4LTYuNC0xLjQyLTIuMDktLjQzLTMuOTUtLjkyLTUuNTgtMS40Ni0xLjYyLS41NC0yLjk1LTEuMjUtMy45Ni0yLjEyLTEuMDEtLjg3LTEuNTEtMS45OC0xLjUxLTMuMzUsMC0xLjE2LjI4LTIuMDguODctMi43Ny41Ny0uNjksMS4yOC0xLjIsMi4xLTEuNTguODMtLjM2LDEuNzYtLjYsMi43Ny0uNywxLjAxLS4xMSwxLjk2LS4xNywyLjgzLS4xNywyLjc1LDAsNS4xMy41Myw3LjE1LDEuNTgsMi4wMywxLjA1LDMuMTUsMy4wNSwzLjM3LDYuMDJoMTQuNjRjLS4yOS0zLjQ4LTEuMTgtNi4zNS0yLjY2LTguNjItMS40OS0yLjI4LTMuMzQtNC4xMS01LjU4LTUuNDgtMi4yNS0xLjM3LTQuNzktMi4zNC03LjY1LTIuOTMtMi44NS0uNTctNS44LS44Ny04Ljg0LS44N3MtNiwuMjctOC44OS44MWMtMi44OS41NC01LjQ5LDEuNDktNy44MSwyLjgzLTIuMzEsMS4zNC00LjE2LDMuMTYtNS41OCw1LjQ3LTEuNDEsMi4zMi0yLjEyLDUuMjgtMi4xMiw4Ljg5LDAsMi40Ny41MSw0LjU0LDEuNTIsNi4yNCwxLjAxLDEuNywyLjM1LDMuMTIsNC4wMiw0LjIzLDEuNjcsMS4xMywzLjU2LDIuMDMsNS43LDIuNzEsMi4xMy42OSw0LjMxLDEuMjgsNi41NSwxLjc5LDUuNSwxLjE2LDkuNzgsMi4zMSwxMi44NSwzLjQ3LDMuMDcsMS4xNiw0LjYxLDIuODksNC42MSw1LjIxLDAsMS4zNy0uMzMsMi41MS0uOTgsMy40MS0uNjUuOS0xLjQ2LDEuNjMtMi40NCwyLjE3LS45OC41NC0yLjA2LjkzLTMuMjUsMS4xOS0xLjE5LjI1LTIuMzMuMzctMy40MS4zNy0xLjUyLDAtMi45OC0uMTgtNC40LS41NC0xLjQxLS4zNi0yLjY2LS45Mi0zLjc0LTEuNjgtMS4wOC0uNzctMS45Ny0xLjczLTIuNjYtMi45My0uNjktMS4xOS0xLjA0LTIuNjItMS4wNC00LjI5aC0xNC42M2MuMTUsMy43Ni45OSw2Ljg5LDIuNTQsOS4zOSwxLjU1LDIuNDksMy41NSw0LjQ5LDUuOTcsNi4wMSwyLjQyLDEuNTIsNS4xOSwyLjYxLDguMywzLjI1LDMuMTEuNjUsNi4yOS45OCw5LjU0Ljk4czYuMy0uMyw5LjM4LS45MmMzLjA3LS42MSw1LjgxLTEuNjgsOC4xOS0zLjIsMi4zOS0xLjUyLDQuMzEtMy41Miw1LjgtNi4wMiwxLjQ5LTIuNDksMi4yMy01LjU4LDIuMjMtOS4yNiwwLTIuNjEtLjUxLTQuOC0xLjUyLTYuNTZaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNzUuMjYsNzEuNTdsLTIyLjE5LDY1LjI3Yy0uNzMsMi4xNi0yLjc2LDMuNjEtNS4wNSwzLjYxaC0xMS40N2w0LjM5LTEyLjg2LTE5LjA0LTU2LjAyaDE1LjNsMTEuMzksMzUuNywxMS4zOS0zNS43aDE1LjI4WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTEwLjk4LDc3LjgxYy0xLjUyLTIuMDYtMy40Ny0zLjY3LTUuODUtNC44My0yLjM5LTEuMTYtNS4wMy0xLjk0LTcuOTEtMi4zMy0yLjg5LS4zOS01Ljc1LS42LTguNTgtLjYtMy4xMSwwLTYuMTkuMy05LjI2LjkyLTMuMDcuNjEtNS44NCwxLjY0LTguMywzLjA4LTIuNDYsMS40NS00LjQ5LDMuMzctNi4wOCw1Ljc1LTEuNTksMi4zOS0yLjQ5LDUuMzgtMi43MSw5aDE1LjRjLjI5LTMuMDQsMS4zMS01LjIxLDMuMDQtNi41MiwxLjczLTEuMjksNC4xMi0xLjk1LDcuMTYtMS45NSwxLjM3LDAsMi42Ni4wOSwzLjg1LjI3LDEuMTkuMTgsMi4yNC41NCwzLjE0LDEuMDguOTEuNTUsMS42MywxLjMxLDIuMTcsMi4yOC44OSwxLjYyLDEuNjQsNS43NS0uNiw3LjU5LTEuMDEuODMtMi4zOSwxLjQ2LTQuMTIsMS45LTEuNzMuNDMtMy43My43NS01Ljk3Ljk3LTIuMjQuMjMtNC41MS41Mi02LjgzLjg4LTIuMzEuMzYtNC42Ljg0LTYuODksMS40Ni0yLjI3LjYxLTQuMywxLjUzLTYuMDcsMi43Ni0xLjc4LDEuMjQtMy4yMiwyLjg4LTQuMzQsNC45NC0xLjExLDIuMDYtMS42OCw0LjY4LTEuNjgsNy44NiwwLDIuODkuNSw1LjM5LDEuNDYsNy40OC45OCwyLjA5LDIuMzMsMy44Myw0LjA2LDUuMiwxLjc0LDEuMzcsMy43NiwyLjM5LDYuMDgsMy4wNCwyLjMyLjY1LDQuODEuOTgsNy40OC45OCwzLjQ3LDAsNi44Ny0uNTEsMTAuMTktMS41MiwzLjA0LS45Miw1LjcyLTIuNDgsOC4wMy00LjY4djQuNzZsMTUuNC4wMnYtNDEuNjNjMC0zLjQtLjc1LTYuMTItMi4yNy04LjE4Wk00OTcuODYsMTA1Ljk0YzAsLjg3LS4wOSwyLjAzLS4yNywzLjQ3LS4xOCwxLjQ1LS42NiwyLjg3LTEuNDYsNC4yOS0uOCwxLjQxLTIuMDMsMi42MS0zLjY4LDMuNjItMS42NywxLjAxLTQuMDIsMS41Mi03LjA2LDEuNTItMS4yMywwLTIuNDItLjExLTMuNTgtLjMzLTEuMTUtLjIxLTIuMTYtLjYtMy4wMy0xLjE0LS44Ny0uNTQtMS41NS0xLjI4LTIuMDYtMi4yMi0uNTEtLjk1LS43Ny0yLjEtLjc3LTMuNDgsMC0xLjQ0LjI2LTIuNjMuNzctMy41OC41MS0uOTMsMS4xNy0xLjcxLDItMi4zMy44My0uNjEsMS44LTEuMSwyLjkzLTEuNDYsMS4xMy0uMzYsMi4yNi0uNjUsMy40MS0uODcsMS4yNC0uMjEsMi40Ni0uMzksMy42OS0uNTQsMS4yMy0uMTUsMi40LS4zMywzLjUyLS41NCwxLjEzLS4yMywyLjE3LS41LDMuMTUtLjgxLjk3LS4zMywxLjc5LS43OCwyLjQzLTEuMzZ2NS43NVoiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzMDAuMTcgOTkuNTUgMzIxLjY4IDEyNy41OCAzMDQuNyAxMjcuNTggMjg0LjMyIDk5LjU1IDMwNC43IDcxLjUxIDMyMS42OCA3MS41MSAzMDAuMTcgOTkuNTUiLz4KICAgIDxyZWN0IGNsYXNzPSJjbHMtMiIgeD0iMjY4LjkyIiB5PSI2MC4yMiIgd2lkdGg9IjE1LjQiIGhlaWdodD0iNjcuNDEiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01Ny42Myw5OS45NXYtMTkuMzNjMC0uNTcuNDctMS4wMiwxLjA0LTEuMDIsMjkuMjQsMCw0Mi44MSwwLDcyLjIzLDAsMi45MiwwLDUuNDEtMS4wOSw3LjQ4LTMuMjgsMS45Ny0yLjA4LDMuOTUtNC4xNSw1Ljg3LTYuMjgsMi43MS0yLjk5LDUuNi01LjcxLDkuMTUtNy41MywyLjgzLTEuNDUsNS43OC0yLjkzLDguOTItMy4wMiwyLjg2LS4wOCwxMC40OC0uMDIsMTMuMzMsMCwuODYsMCwuODcuMzQuODcuOTQsMCw2LjQ3LDAsMTIuOTQsMCwxOS40MXEwLC45OS0uOTMuOTljLTEwLjI2LDAtMjUuMzIsMC0zNS41OCwwLTIuNzksMC01LjI1Ljk5LTcuMjYsMy4wOS0yLjM3LDIuNDctNC43Myw0Ljk2LTcuMDMsNy41MS01Ljg4LDYuNS0xMy4wMSw5LjU5LTIxLjQ5LDkuNTctMjAuNTMtLjA3LTI1LjI5LS4wNC00NS41Ny0uMDMtLjU3LDAtMS4wNC0uNDYtMS4wNC0xLjAyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTc2LjUzLDk5Ljk2djE5LjMzYzAsLjU3LS40NywxLjAyLTEuMDQsMS4wMi0yOS4yNCwwLTQyLjgxLDAtNzIuMjMsMC0yLjkyLDAtNS40MSwxLjA5LTcuNDgsMy4yOC0xLjk3LDIuMDgtMy45NSw0LjE1LTUuODcsNi4yOC0yLjcxLDIuOTktNS42LDUuNzEtOS4xNSw3LjUzLTIuODMsMS40NS01Ljc4LDIuOTMtOC45MiwzLjAyLTIuODYuMDgtMTAuNDguMDItMTMuMzMsMC0uODYsMC0uODctLjM0LS44Ny0uOTQsMC02LjQ3LDAtMTIuOTQsMC0xOS40MXEwLS45OS45My0uOTljMTAuMjYsMCwyNS4zMiwwLDM1LjU4LDAsMi43OSwwLDUuMjUtLjk5LDcuMjYtMy4wOSwyLjM3LTIuNDcsNC43My00Ljk2LDcuMDMtNy41MSw1Ljg4LTYuNSwxMy4wMS05LjU5LDIxLjQ5LTkuNTcsMjAuNTMuMDcsMjUuMjkuMDQsNDUuNTcuMDMuNTcsMCwxLjA0LjQ2LDEuMDQsMS4wMloiLz4KICA8L2c+Cjwvc3ZnPg==" alt="Skyways">
     </div>
+    <nav class="brand-primary-nav" aria-label="Primary navigation">
+      <a class="brand-nav-link" href="platform-progression/">Platform</a>
+    </nav>
     <div class="brand-bar-divider"></div>
     <div class="brand-bar-inline-title"><span class="bbit-line">History &amp;</span> <span class="bbit-line">Timeline</span></div>
     <div class="search-wrap">
@@ -3196,14 +3281,22 @@
           </span>
           <span class="density-label" id="orderLabel">Newest</span>
         </button>
-        <a class="density-toggle view-link" href="platform-progression/" aria-label="Open Platform Progression page">
-          <span class="density-icon" aria-hidden="true">
-            <span class="density-icon-line"></span>
-            <span class="density-icon-line"></span>
-            <span class="density-icon-line"></span>
-          </span>
-          <span class="density-label">Platform</span>
-        </a>
+        <div class="project-export" id="projectExport">
+          <button type="button" class="density-toggle" id="projectExportToggle" aria-expanded="false" aria-controls="projectExportMenu" onclick="toggleProjectExportMenu(event)" aria-label="Export Skyways timeline project">
+            <span class="density-icon" aria-hidden="true">
+              <span class="density-icon-line"></span>
+              <span class="density-icon-line"></span>
+              <span class="density-icon-line"></span>
+            </span>
+            <span class="density-label">Export</span>
+          </button>
+          <div class="project-export-menu" id="projectExportMenu" role="menu" aria-label="Export options">
+            <button type="button" class="project-export-option" role="menuitem" onclick="exportProject('csv')">Excel CSV</button>
+            <button type="button" class="project-export-option" role="menuitem" onclick="exportProject('json')">JSON</button>
+            <button type="button" class="project-export-option" role="menuitem" onclick="exportProject('md')">Markdown</button>
+            <button type="button" class="project-export-option" role="menuitem" onclick="exportProject('png')">Condensed PNG</button>
+          </div>
+        </div>
       </div>
     </div>
   </div></div>
@@ -3495,6 +3588,309 @@
     announce('Contracts CSV exported: ' + filename, true);
   }
   window.exportContractsCSV = exportContractsCSV;
+
+  // Whole-project export for the main timeline control strip.
+  function exportDateStamp() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  function csvEscape(cell) {
+    return '"' + String(cell == null ? '' : cell).replace(/"/g, '""') + '"';
+  }
+  function downloadBlobFile(filename, content, type) {
+    var blob = content instanceof Blob ? content : new Blob([content], { type: type || 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+  }
+  function eventSourceObjects(ev) {
+    var sourceUrls = ev.source_urls || ev.sourceUrls || {};
+    return (ev.sources || []).map(function(src) {
+      if (typeof src === 'string') {
+        return { label: src, url: sourceUrls[src] || '' };
+      }
+      var label = src && (src.label || src.title || src.name) || 'Source';
+      return { label: label, url: src && (src.url || src.href) || sourceUrls[label] || '' };
+    });
+  }
+  function normalizeProjectEvent(ev) {
+    var sortDate = ev.sort_date || ev.sortDate || ev.date || '';
+    var year = ev.year || parseInt(String(sortDate || '').substring(0, 4), 10) || '';
+    return {
+      id: ev.id || ev.slug || '',
+      year: year,
+      date: ev.date || ev.display_date || sortDate || String(year),
+      sort_date: sortDate,
+      category: (ev.category || 'milestone').toLowerCase(),
+      title: ev.title || '',
+      value: ev.value || '',
+      detail: ev.detail || ev.description || '',
+      sources: eventSourceObjects(ev)
+    };
+  }
+  function getProjectEventsForExport() {
+    var source = (window._lastTimelineEvents || ALL_EVENTS || []).slice();
+    source.sort(function(a, b) {
+      var ad = a.sort_date || a.sortDate || a.date || String(a.year || '');
+      var bd = b.sort_date || b.sortDate || b.date || String(b.year || '');
+      if (ad < bd) return -1;
+      if (ad > bd) return 1;
+      return 0;
+    });
+    return source.map(normalizeProjectEvent);
+  }
+  function getProjectStatExportSummary() {
+    var stats = [];
+    document.querySelectorAll('.stats-row .stat').forEach(function(item) {
+      var value = ((item.querySelector('.stat-value') || {}).textContent || '').trim();
+      var label = ((item.querySelector('.stat-label') || {}).textContent || '').trim();
+      if (value || label) stats.push({ label: label, value: value });
+    });
+    return stats;
+  }
+  function closeProjectExportMenu() {
+    var menu = document.getElementById('projectExportMenu');
+    var toggle = document.getElementById('projectExportToggle');
+    if (menu) menu.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+  function toggleProjectExportMenu(event) {
+    if (event) event.stopPropagation();
+    var menu = document.getElementById('projectExportMenu');
+    var toggle = document.getElementById('projectExportToggle');
+    if (!menu || !toggle) return;
+    var isOpen = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+  document.addEventListener('click', function(event) {
+    var exportWrap = document.getElementById('projectExport');
+    if (exportWrap && !exportWrap.contains(event.target)) closeProjectExportMenu();
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeProjectExportMenu();
+  });
+  function exportProjectCSV(events, stamp) {
+    var rows = [['Year', 'Date', 'Category', 'Title', 'Value', 'Detail', 'Source Labels', 'Source URLs']];
+    events.forEach(function(ev) {
+      rows.push([
+        ev.year,
+        ev.date,
+        ev.category,
+        ev.title,
+        ev.value,
+        ev.detail,
+        ev.sources.map(function(s) { return s.label; }).join(' | '),
+        ev.sources.map(function(s) { return s.url; }).filter(Boolean).join(' | ')
+      ]);
+    });
+    var csv = rows.map(function(row) { return row.map(csvEscape).join(','); }).join('\r\n');
+    downloadBlobFile('skyways_timeline_project_' + stamp + '.csv', csv, 'text/csv;charset=utf-8');
+  }
+  function exportProjectJSON(events, stamp) {
+    var payload = {
+      title: 'Skyways History & Timeline',
+      generated_at: new Date().toISOString(),
+      stats: getProjectStatExportSummary(),
+      event_count: events.length,
+      events: events
+    };
+    downloadBlobFile(
+      'skyways_timeline_project_' + stamp + '.json',
+      JSON.stringify(payload, null, 2),
+      'application/json;charset=utf-8'
+    );
+  }
+  function markdownEscape(text) {
+    return String(text == null ? '' : text).replace(/\|/g, '\\|');
+  }
+  function exportProjectMarkdown(events, stamp) {
+    var grouped = {};
+    events.forEach(function(ev) {
+      var key = String(ev.year || 'Undated');
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(ev);
+    });
+    var md = '# Skyways History & Timeline\n\n';
+    md += 'Generated: ' + new Date().toISOString() + '\n\n';
+    md += '| Year | Date | Category | Title | Value | Sources |\n';
+    md += '| --- | --- | --- | --- | --- | --- |\n';
+    events.forEach(function(ev) {
+      var sources = ev.sources.map(function(s) {
+        return s.url ? '[' + markdownEscape(s.label) + '](' + s.url + ')' : markdownEscape(s.label);
+      }).join('<br>');
+      md += '| ' + markdownEscape(ev.year) +
+        ' | ' + markdownEscape(ev.date) +
+        ' | ' + markdownEscape(ev.category) +
+        ' | ' + markdownEscape(ev.title) +
+        ' | ' + markdownEscape(ev.value) +
+        ' | ' + sources + ' |\n';
+    });
+    downloadBlobFile('skyways_timeline_project_' + stamp + '.md', md, 'text/markdown;charset=utf-8');
+  }
+  function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+    var words = String(text || '').split(/\s+/).filter(Boolean);
+    var line = '';
+    var lines = 0;
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxWidth && line) {
+        ctx.fillText(line, x, y);
+        y += lineHeight;
+        lines++;
+        line = words[i];
+        if (maxLines && lines >= maxLines - 1) {
+          var remaining = words.slice(i).join(' ');
+          var finalLine = line + (remaining.length > line.length ? '...' : '');
+          while (ctx.measureText(finalLine).width > maxWidth && finalLine.length > 4) {
+            finalLine = finalLine.slice(0, -4) + '...';
+          }
+          ctx.fillText(finalLine, x, y);
+          return y + lineHeight;
+        }
+      } else {
+        line = test;
+      }
+    }
+    if (line) ctx.fillText(line, x, y);
+    return y + lineHeight;
+  }
+  function exportProjectPNG(events, stamp) {
+    var years = [];
+    events.forEach(function(ev) {
+      var y = String(ev.year || 'Undated');
+      if (years.indexOf(y) === -1) years.push(y);
+    });
+    var colWidth = 235;
+    var width = Math.max(1800, years.length * colWidth + 220);
+    var height = 1280;
+    var canvas = document.createElement('canvas');
+    var scale = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+
+    ctx.fillStyle = '#0B1720';
+    ctx.fillRect(0, 0, width, height);
+    ctx.strokeStyle = 'rgba(194,242,19,0.16)';
+    ctx.lineWidth = 1;
+    for (var g = 0; g < width; g += 90) {
+      ctx.beginPath();
+      ctx.moveTo(g, 0);
+      ctx.lineTo(g + 220, height);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#C2F213';
+    ctx.fillRect(72, 62, 48, 8);
+    ctx.fillRect(94, 78, 48, 8);
+    ctx.fillRect(116, 94, 48, 8);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '700 34px Arial, sans-serif';
+    ctx.fillText('SKYWAYS', 184, 94);
+    ctx.fillStyle = '#C2F213';
+    ctx.font = '700 54px Arial, sans-serif';
+    ctx.fillText('History & Timeline', 72, 180);
+    ctx.fillStyle = 'rgba(255,255,255,0.72)';
+    ctx.font = '500 20px Arial, sans-serif';
+    ctx.fillText(events.length + ' events exported on ' + stamp, 74, 218);
+
+    var statX = width - 640;
+    var stats = getProjectStatExportSummary().slice(0, 4);
+    stats.forEach(function(stat, i) {
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.fillRect(statX + i * 150, 72, 128, 82);
+      ctx.fillStyle = '#C2F213';
+      ctx.font = '700 28px Arial, sans-serif';
+      ctx.fillText(stat.value || '-', statX + 14 + i * 150, 108);
+      ctx.fillStyle = 'rgba(255,255,255,0.66)';
+      ctx.font = '700 11px Arial, sans-serif';
+      wrapCanvasText(ctx, stat.label || '', statX + 14 + i * 150, 132, 104, 13, 2);
+    });
+
+    var colorMap = {
+      contracts: '#009AEB',
+      funding: '#C2F213',
+      product: '#38D582',
+      defense: '#FF9F43',
+      milestone: '#FFFFFF'
+    };
+    var baseY = 330;
+    var startX = 86;
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(startX, baseY);
+    ctx.lineTo(width - 86, baseY);
+    ctx.stroke();
+
+    years.forEach(function(year, idx) {
+      var x = startX + idx * colWidth;
+      var yearEvents = events.filter(function(ev) { return String(ev.year || 'Undated') === year; });
+      ctx.fillStyle = '#C2F213';
+      ctx.font = '700 34px Arial, sans-serif';
+      ctx.fillText(year, x, baseY - 28);
+      ctx.fillStyle = 'rgba(255,255,255,0.58)';
+      ctx.font = '700 12px Arial, sans-serif';
+      ctx.fillText(yearEvents.length + (yearEvents.length === 1 ? ' event' : ' events'), x, baseY - 8);
+      ctx.fillStyle = '#C2F213';
+      ctx.beginPath();
+      ctx.arc(x, baseY, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      var y = baseY + 42;
+      yearEvents.slice(0, 7).forEach(function(ev) {
+        var dotColor = colorMap[ev.category] || colorMap.milestone;
+        ctx.fillStyle = dotColor;
+        ctx.beginPath();
+        ctx.arc(x + 5, y - 6, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.font = '700 14px Arial, sans-serif';
+        y = wrapCanvasText(ctx, ev.title, x + 18, y, colWidth - 44, 17, 2) + 8;
+      });
+      if (yearEvents.length > 7) {
+        ctx.fillStyle = 'rgba(255,255,255,0.52)';
+        ctx.font = '700 13px Arial, sans-serif';
+        ctx.fillText('+' + (yearEvents.length - 7) + ' more', x + 18, y + 6);
+      }
+    });
+
+    canvas.toBlob(function(blob) {
+      if (!blob) {
+        announce('PNG export failed. Try another format.', true);
+        return;
+      }
+      downloadBlobFile('skyways_timeline_condensed_' + stamp + '.png', blob, 'image/png');
+      announce('Condensed PNG exported.', true);
+    }, 'image/png');
+  }
+  function exportProject(format) {
+    closeProjectExportMenu();
+    var stamp = exportDateStamp();
+    var events = getProjectEventsForExport();
+    if (!events.length) {
+      announce('Timeline data is still loading. Try export again in a moment.', true);
+      return;
+    }
+    if (format === 'csv') exportProjectCSV(events, stamp);
+    else if (format === 'json') exportProjectJSON(events, stamp);
+    else if (format === 'md') exportProjectMarkdown(events, stamp);
+    else if (format === 'png') exportProjectPNG(events, stamp);
+    else return;
+    if (format !== 'png') announce('Project export created: ' + format.toUpperCase(), true);
+  }
+  window.toggleProjectExportMenu = toggleProjectExportMenu;
+  window.exportProject = exportProject;
 
   // ═══ DENSITY TOGGLE (SCAN / FULL) ═══
   // Two-state toggle in the stats banner. "Scan" collapses each card to

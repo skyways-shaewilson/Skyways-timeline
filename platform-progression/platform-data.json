@@ -1,0 +1,240 @@
+{
+  "updated": "2026-05-07",
+  "source_model": "Timeline event-card backed platform progression data. Internal document links are not included.",
+  "spec_fields": [
+    "payload",
+    "range_endurance",
+    "wingspan",
+    "weight_class",
+    "cruise_speed",
+    "cargo_volume",
+    "architecture",
+    "proof_point"
+  ],
+  "platforms": [
+    {
+      "id": "v1",
+      "year_label": "2016",
+      "generation": "V1",
+      "description": "First San Francisco aircraft: a COTS foam-wing VTOL fixed-wing quadplane for cargo autonomy and precision landing.",
+      "image": "https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp",
+      "maturity": "Prototype proof",
+      "mission_record": "A-B-C-A demo",
+      "assessed_trl": "TRL 4",
+      "stats": {
+        "payload": "2 lb",
+        "range_endurance": "Under 30 min",
+        "wingspan": "COTS wing",
+        "weight_class": "Prototype",
+        "cruise_speed": "Not logged",
+        "cargo_volume": "Not logged",
+        "architecture": "5 motors",
+        "proof_point": "A-B-C-A"
+      },
+      "missions": [
+        "Cargo pickup-delivery-return loop",
+        "Precision landing software shakedown",
+        "Local VTOL fixed-wing flight tests",
+        "Code-to-aircraft autonomy proof"
+      ],
+      "readiness_evidence": "Autonomous takeoff, cargo pickup, delivery, return, and landing proved the first flight-software loop.",
+      "source_event_ids": [103]
+    },
+    {
+      "id": "v20",
+      "year_label": "2017",
+      "generation": "V2.0",
+      "description": "First carbon fiber composite airframe. The 12 ft X8 quadplane became the investor demo and architecture baseline.",
+      "image": "https://www.skyways.com/_astro/image2.CrwZsZIk_v3iRL.webp",
+      "maturity": "Composite prototype",
+      "mission_record": "Investor demo",
+      "assessed_trl": "TRL 5",
+      "stats": {
+        "payload": "Not logged",
+        "range_endurance": "Demo flight",
+        "wingspan": "12 ft",
+        "weight_class": "Composite",
+        "cruise_speed": "Not logged",
+        "cargo_volume": "Not logged",
+        "architecture": "X8",
+        "proof_point": "Investor demo"
+      },
+      "missions": [
+        "Investor demo flights",
+        "X8 quadplane architecture validation",
+        "Composite airframe build and flight tests",
+        "Baseline for defense evaluation aircraft"
+      ],
+      "readiness_evidence": "Build and flight evidence for the first composite aircraft and repeatable demonstration platform.",
+      "source_event_ids": [107]
+    },
+    {
+      "id": "v22",
+      "year_label": "2017 | 2018",
+      "generation": "V2.1 | V2.2",
+      "description": "Larger all-electric composite aircraft for defense evaluation, including Skyways' first BVLOS flight beyond 60 miles.",
+      "image": "https://www.skyways.com/_astro/image1.CXqs2Yt9_20n9Rg.webp",
+      "maturity": "Defense demo",
+      "mission_record": "60+ mi BVLOS",
+      "assessed_trl": "TRL 6",
+      "stats": {
+        "payload": "Not logged",
+        "range_endurance": "60+ mi",
+        "wingspan": "18 ft",
+        "weight_class": "140 lb",
+        "cruise_speed": "Not logged",
+        "cargo_volume": "Not logged",
+        "architecture": "All-electric",
+        "proof_point": "White Sands"
+      },
+      "missions": [
+        "USMC-linked aircraft delivery",
+        "60+ mi White Sands BVLOS flight",
+        "NMSU / GTRI test support",
+        "Defense-relevant mission testing"
+      ],
+      "readiness_evidence": "Relevant environment proof: aircraft delivered for USMC-linked testing with NMSU and GTRI at White Sands.",
+      "source_event_ids": [105, 106]
+    },
+    {
+      "id": "v25",
+      "year_label": "2020 | 2021",
+      "generation": "V2.5",
+      "description": "Navy-driven V2.5 work moved Skyways from prototype logistics flights into shipboard deck trials and Blue Water UAS evaluation.",
+      "image": "https://cdn.sanity.io/images/zlpq6b94/production/26eae760def6fb627bc7b06cb64c19e354354371-1024x687.jpg",
+      "maturity": "Shipboard demo",
+      "mission_record": "Ford deck trials",
+      "assessed_trl": "TRL 7",
+      "stats": {
+        "payload": "20 lb",
+        "range_endurance": "400 NM",
+        "wingspan": "18.5 ft",
+        "weight_class": "V2 class",
+        "cruise_speed": "Not logged",
+        "cargo_volume": "1.0 ft3",
+        "architecture": "Hybrid VTOL",
+        "proof_point": "CVN-78"
+      },
+      "missions": [
+        "Ford-class carrier cargo delivery",
+        "Blue Water Maritime Logistics UAS evaluation",
+        "Ship-to-ship and ship-to-shore spare-parts model",
+        "Hybrid propulsion logistics envelope maturation"
+      ],
+      "readiness_evidence": "Public event cards document the Navy requirement set, two weeks of CVN-78 deck trials, and source caveats around higher V2.5 payload/range claims.",
+      "source_event_ids": [10, 12, 13]
+    },
+    {
+      "id": "v3b0",
+      "year_label": "2023",
+      "generation": "V3 Block 0",
+      "description": "First full-scale V3 aircraft, bridging subscale proof-of-concept into a flyable full-size long-range logistics platform.",
+      "image": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp",
+      "maturity": "Full-scale prototype",
+      "mission_record": "First flight",
+      "assessed_trl": "TRL 5",
+      "stats": {
+        "payload": "Not defined",
+        "range_endurance": "Not defined",
+        "wingspan": "V3 class",
+        "weight_class": "Full scale",
+        "cruise_speed": "Not logged",
+        "cargo_volume": "Not defined",
+        "architecture": "V3 prototype",
+        "proof_point": "Maiden flight"
+      },
+      "missions": [
+        "First full-scale V3 flight",
+        "Subscale-to-full-scale engineering bridge",
+        "Baseline for Block 1 customer demonstration work",
+        "Airframe and autonomy integration shakedown"
+      ],
+      "readiness_evidence": "Internal event-card evidence marks early 2023 as the transition from V3 concept/subscale work to a full-scale flyable aircraft.",
+      "source_event_ids": [23]
+    },
+    {
+      "id": "v26",
+      "year_label": "2024 | 2026",
+      "generation": "V2.6B",
+      "description": "Operational V2.6B fleet proof across Navy exercises, allied-nation resupply, offshore energy, ANA island trials, and Project ULTRA support.",
+      "image": "https://www.skyways.com/_astro/v2-ship-takeoff-sunset.B1AIPOc1_ZeJpqJ.webp",
+      "maturity": "Operational fleet",
+      "mission_record": "1,100+ flights",
+      "assessed_trl": "TRL 8",
+      "stats": {
+        "payload": "30 lb",
+        "range_endurance": "390 NM",
+        "wingspan": "18.5 ft",
+        "weight_class": "156.3 lb",
+        "cruise_speed": "52.5 kts",
+        "cargo_volume": "1.8 ft3",
+        "architecture": "Hybrid VTOL",
+        "proof_point": "1,100+ flights"
+      },
+      "missions": [
+        "RIMPAC Just In Time Delivery ops",
+        "JMSDF Akizuki autonomous resupply",
+        "DIU computer-vision ship intercept demo",
+        "RWE offshore and ANA island trials"
+      ],
+      "readiness_evidence": "Operational evidence across the V2.6/V2.6B campaign, RIMPAC, JMSDF resupply, CVSI, Project ULTRA support, and commercial demos.",
+      "source_event_ids": [27, 29, 32, 44]
+    },
+    {
+      "id": "v3b1",
+      "year_label": "2022 | 2025",
+      "generation": "V3 Block 1",
+      "description": "V3 moved from subscale work to full-scale prototype testing and customer-facing Project ULTRA logistics missions.",
+      "image": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp",
+      "maturity": "Test mule",
+      "mission_record": "267 flights",
+      "assessed_trl": "TRL 6",
+      "stats": {
+        "payload": "Test mule",
+        "range_endurance": "521 NM",
+        "wingspan": "26.2 ft",
+        "weight_class": "326.8 lb",
+        "cruise_speed": "52.5 kts",
+        "cargo_volume": "Not defined",
+        "architecture": "V3 test mule",
+        "proof_point": "267 flights"
+      },
+      "missions": [
+        "Full-scale V3 flight test campaign",
+        "Heavy-fuel endurance expansion",
+        "Project ULTRA BVLOS customer demo",
+        "Blood and cargo delivery profiles"
+      ],
+      "readiness_evidence": "Customer demo evidence across BVLOS missions, heavy-fuel endurance, and Block 2 bridge testing.",
+      "source_event_ids": [21, 26, 37]
+    },
+    {
+      "id": "v3b2",
+      "year_label": "2026 | next",
+      "generation": "V3 Block 2 | V3.2",
+      "description": "Production-intent V3 path for low-rate production, expanded useful load, and long-range logistics envelopes.",
+      "image": "https://www.skyways.com/_astro/v3-hover.BZwWRBFB_t27Og.webp",
+      "maturity": "Design intent",
+      "mission_record": "First article path",
+      "assessed_trl": "TRL 5",
+      "stats": {
+        "payload": "105 lb",
+        "range_endurance": "750+ NM",
+        "wingspan": "22 ft",
+        "weight_class": "360 lb",
+        "cruise_speed": "87+ kts",
+        "cargo_volume": "7.0 ft3",
+        "architecture": "Production V3",
+        "proof_point": "First article"
+      },
+      "missions": [
+        "Production-intent first article path",
+        "STRATFI / AFWERX transition work",
+        "Distributed long-range logistics envelope",
+        "Heavy cargo modes with range caveat"
+      ],
+      "readiness_evidence": "Engineering-approved maturity path across heavy-fuel architecture, in-flight recharge, first article build, and production ramp.",
+      "source_event_ids": [45, 46, 114]
+    }
+  ]
+}
