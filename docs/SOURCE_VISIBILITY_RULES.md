@@ -43,6 +43,14 @@ else:
   no banner  (fully public)
 ```
 
+## Source URL Rule
+
+Timeline source drawers may link only to external/public sources: public press, company press releases, public government databases, public government PDFs, public social posts, public corporate profiles, and similar open-web sources.
+
+Internal source labels are allowed for auditability, but internal documents must not be linked from the timeline. Do not add Google Drive, Google Docs, Google Sheets, Slack, Asana, local file, internal repository, or other private artifact URLs to `source_urls` or Firestore source objects. For internal contracts, CLINs, POs, master sheets, or Charles/Tom corrections, keep the source label and leave the URL blank.
+
+This rule applies even when the underlying internal document is unclassified. "Unclassified" is not the same thing as approved for public linking.
+
 ## Why these rules
 
 - **Red is the reputational risk state.** Articles citing US government agencies need agency approval to publish if there is no press release. A card citing only a contract number or CLIN is effectively an unpublished government document. Sharing such a card publicly without approval is a real risk; the red banner is a hard-stop warning.
@@ -56,6 +64,7 @@ else:
 - Recolor the title, detail, or tag text
 - Add inline pills or stamps in the meta row
 - Use background tints or gradients on the card body
+- Link internal Google Drive/Docs/Sheets, Slack, Asana, local files, contract PDFs, signed POs, CLINs, or private working docs from a public timeline source drawer
 
 ## Code references
 
@@ -72,3 +81,4 @@ else:
 ## Revision history
 
 - **2026-04-23**: Four-state rules formalized with distinct colors (red / orange / beige / no banner). Classifier refactored to 3 buckets (internal / charles-approved / external) from the earlier 2-bucket split. Charles-only cards now show the beige banner (previously showed no banner). Separator regex now accepts `|` in addition to em dash / en dash / hyphen after the em-dash cleanup migrated source labels to pipe format. Contracts stat drawer also gained an "Internal = no public press release found" disclaimer at the bottom to match the Internal pill semantics.
+- **2026-05-07**: Added the source URL rule: public timeline drawers may link only to external/public sources. Internal source labels can remain visible for auditability, but internal documents stay unlinked even when they are unclassified.
