@@ -29,7 +29,7 @@ Primary source: [AFRL Portfolio Active Contracts as of 22 Sep 2025](https://www.
 | USAF SBIR Phase I `FA8649-21-P-0539` | Captured in event `id=14` via SBIR.gov Award #191434. | No change. |
 | USAF SBIR Phase II `FA8649-22-P-0719` | Captured in event `id=20` via SBIR.gov Award #195821. | SBIR also lists Daniel Feldman / skyborncreative as historical business contact; not timeline-worthy. |
 | Navy Blue Water OTA `N00421-19-9-0007` | Captured in event `id=9` via NASC, Janes, and USNI. | No change. |
-| USMC/GTRI, DIU/USN OTA, DLA PO lines, NAWCAD BWUAS 2.0 base | Captured as internal contract records. | Gemini did not provide public source evidence for these line items. |
+| USMC/GTRI, DIU/USN OTA, DLA PO lines, NAWCAD BWUAS 2.0 base | Captured as internal contract records, with public relationship/program support where available. | Updated after follow-on check: Federal Compass publicly lists `N004212390013` / NAWCAD BWUAS 2.0 Prototype Project for Skyways. DLA Skyways-specific PO line items remain internal. |
 | STRATFI / `$37M` AFWERX contract | Captured in event `id=34` via SBIR.gov Award #220016, BusinessWire, and DroneLife. | `$3,550,613` is the public SBIR component of the larger `$37M` STRATFI structure, not a new standalone timeline event. |
 | V2/V3 public capabilities and production ramp | Captured via BusinessWire, DroneLife, Austin American-Statesman/DroneXL, and internal correction docs. | Keep internal V3 spec rule: 100 lb payload OR 1,000 nautical mile range, not both simultaneously. |
 | Tech Ridge / Giddings footprint | Captured in event `id=33`. | Charles correction supersedes public/AI repeats of `250,000 sq ft`; correct size is `25,000 sq ft`. |
@@ -51,7 +51,9 @@ Completed:
 
 - Event `id=28`: added AFRL public PDF as a source for the parent FA228024D0003 IDIQ.
 - Event `id=28`: clarified that the AFRL source covers the parent contract, while the approx. `$2.2M` task-order obligation remains internal.
+- Event `id=110`: added Federal Compass as a public source for the parent NAWCAD BWUAS 2.0 Prototype Project award `N004212390013`; kept the `$479,052.96` base line-item amount internally sourced.
 - Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Public`; the AFRL PDF link belongs in the event card source list.
+- Contracts drawer: changed the NAWCAD BWUAS 2.0 base row source pill from `Internal` to `Public` because the parent award identifier/program is externally indexed.
 - Media mention source summary: corrected `250,000 sq ft` back to `25,000 sq ft`.
 
 Not required:

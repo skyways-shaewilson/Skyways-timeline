@@ -824,9 +824,12 @@
     "detail": "U.S. Navy Naval Air Warfare Center Aircraft Division (NAWCAD) awarded Skyways the Blue Water Maritime Logistics Unmanned Aircraft System 2.0 (BWUAS 2.0) Prototype Project contract through the Naval Aviation Systems Consortium (NASC), effective May 4, 2023.",
     "tag": "Contract | U.S. Navy",
     "sources": [
+      "Federal Compass | N004212390013",
       "Skyways Internal | Contract N00421-23-9-0013 ($479,052.96, effective May 4, 2023, not publicly disclosed)"
     ],
-    "source_urls": {},
+    "source_urls": {
+      "Federal Compass | N004212390013": "https://www.federalcompass.com/award-contract-detail/N004212390013"
+    },
     "sort_date": "2023-05",
     "source_thumbnails": {
       "Skyways (V2 aboard ship)": "https://www.skyways.com/_astro/v2-aboard-ship.Dm1shnLv_ZVithb.webp"
@@ -837,6 +840,7 @@
       "Lead division: NAWCAD Rapid Prototyping and Experimentation Division (RPED)",
       "Partner: PMA-263",
       "Focus: autonomous logistical replenishment (shore-to-ship, ship-to-ship, ship-to-shore)",
+      "Public Federal Compass listing confirms N004212390013 as the BWUAS 2.0 Prototype Project, awarded to Skyways by NAWCAD on May 4, 2023, with approx. $1.8M obligations/ceiling and Apr 30, 2027 ultimate completion",
       "Builds on: 2019 Blue Water work",
       "Mods added: Project ULTRA Demonstration (May 2025), V3 TCP Development (May 2025)"
     ],
