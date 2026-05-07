@@ -51,7 +51,7 @@ Completed:
 
 - Event `id=28`: added AFRL public PDF as a source for the parent FA228024D0003 IDIQ.
 - Event `id=28`: clarified that the AFRL source covers the parent contract, while the approx. `$2.2M` task-order obligation remains internal.
-- Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Public` and added the AFRL PDF link in the drawer note.
+- Contracts drawer: changed the FA228024D0003 row source pill from `Internal` to `Public`; the AFRL PDF link belongs in the event card source list.
 - Media mention source summary: corrected `250,000 sq ft` back to `25,000 sq ft`.
 
 Not required:
