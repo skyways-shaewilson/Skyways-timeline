@@ -21,6 +21,7 @@
     --teal: #42C6C1;
     --orange: #FF9013;
     --white: #FFFFFF;
+    --thrust-green: #C2F213;
     --gray-05: #F3F4F4;
     --gray-15: #DCDEE0;
     --gray-50: #888F92;
@@ -370,46 +371,28 @@
   .progression-rail::-webkit-scrollbar {
     display: none;
   }
-  .rail-scroll-tracker {
-    position: sticky;
-    top: 73px;
-    z-index: 4;
-    height: 10px;
-    margin: 0 0 10px;
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 999px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)),
-      rgba(255,255,255,0.045);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.18),
-      0 16px 34px rgba(3,10,14,0.22);
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 220;
+    pointer-events: none;
+    background: rgba(255,255,255,0.1);
+    box-shadow: none;
     overflow: hidden;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
-  .rail-scroll-tracker-fill {
+  #scrollProgressFill {
     display: block;
     width: 100%;
     height: 100%;
-    transform: scaleX(0.08);
+    transform: scaleX(0.02);
     transform-origin: left center;
-    border-radius: 999px;
-    background:
-      linear-gradient(90deg, var(--lime), rgba(66,198,193,0.92), rgba(0,154,235,0.88));
-    box-shadow: 0 0 22px rgba(194,242,19,0.34);
+    background: linear-gradient(90deg, var(--thrust-green), rgba(0,154,235,0.94));
+    box-shadow: none;
     transition: transform 0.12s linear;
-  }
-  .rail-scroll-tracker::after {
-    content: 'SCROLL PLATFORM SPECS';
-    position: absolute;
-    right: 10px;
-    top: -20px;
-    color: rgba(255,255,255,0.54);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    will-change: transform;
   }
   .aircraft-card {
     --aircraft-image: none;
@@ -942,11 +925,11 @@
       gap: 12px;
       padding-bottom: 24px;
     }
-    .rail-scroll-tracker {
-      top: 132px;
-      margin-bottom: 8px;
+    #scrollProgress {
+      top: 0;
+      width: 100%;
+      height: 2px;
     }
-    .rail-scroll-tracker::after { display: none; }
     .aircraft-media,
     .aircraft-media img {
       height: 276px;
@@ -1077,6 +1060,7 @@
     </g>
   </svg>
 </div>
+<div id="scrollProgress" aria-hidden="true"><span id="scrollProgressFill"></span></div>
 <div class="site-shell">
   <header class="topbar">
     <div class="topbar-inner">
@@ -1110,9 +1094,6 @@
     </section>
 
     <section class="progression" aria-label="Aircraft platform progression">
-      <div class="rail-scroll-tracker" aria-hidden="true">
-        <span class="rail-scroll-tracker-fill"></span>
-      </div>
       <div class="progression-rail">
         <article class="aircraft-card" id="v1" style="--aircraft-image: url('assets/v1-skywalker-x5-reference.jpg'); --aircraft-focus: center center;">
           <div class="aircraft-media">
@@ -1709,14 +1690,14 @@
 
   (() => {
     const rail = document.querySelector('.progression-rail');
-    const fill = document.querySelector('.rail-scroll-tracker-fill');
+    const fill = document.getElementById('scrollProgressFill');
     if (!rail || !fill) return;
 
     let ticking = false;
     const updateTracker = () => {
       const max = Math.max(rail.scrollWidth - rail.clientWidth, 0);
       const progress = max > 0 ? Math.min(Math.max(rail.scrollLeft / max, 0), 1) : 1;
-      fill.style.transform = `scaleX(${Math.max(0.08, progress).toFixed(4)})`;
+      fill.style.transform = `scaleX(${Math.max(0.02, progress).toFixed(4)})`;
       ticking = false;
     };
     const requestTrackerUpdate = () => {
