@@ -1,6 +1,6 @@
 {
   "updated": "2026-05-08",
-  "source_model": "Timeline event-card backed platform progression data. Internal document links are not included. Runtime aircraft images use public Skyways/Sanity/HobbyKing assets unless explicitly promoted into the tracked site asset folder.",
+  "source_model": "Platform progression data verified against linked timeline event cards plus internal SME/source-of-truth packets. Tracked JSON uses safe source keys only; internal document paths, Slack URLs, and proprietary docs remain in ignored audit notes.",
   "spec_fields": [
     "payload",
     "range_endurance",
@@ -41,7 +41,42 @@
         "Code-to-aircraft autonomy proof"
       ],
       "readiness_evidence": "Autonomous takeoff, cargo pickup, delivery, return, and landing proved the first flight-software loop.",
-      "source_event_ids": [103]
+      "source_event_ids": [
+        103
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "early_platform_corrections"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "early_platform_corrections"
+        ],
+        "range_endurance": [
+          "early_platform_corrections"
+        ],
+        "wingspan": [
+          "early_platform_corrections"
+        ],
+        "weight_class": [
+          "early_platform_corrections"
+        ],
+        "cruise_speed": [
+          "early_platform_corrections"
+        ],
+        "cargo_volume": [
+          "early_platform_corrections"
+        ],
+        "architecture": [
+          "early_platform_corrections"
+        ],
+        "proof_point": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ]
+      },
+      "source_note": "Early prototype values are internally corrected chronology fields; missing quantitative specs remain Not logged rather than inferred."
     },
     {
       "id": "v20",
@@ -71,7 +106,43 @@
         "Baseline for defense evaluation aircraft"
       ],
       "readiness_evidence": "Build and flight evidence for the first composite aircraft and repeatable demonstration platform.",
-      "source_event_ids": [107]
+      "source_event_ids": [
+        107
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "early_platform_corrections"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "early_platform_corrections"
+        ],
+        "range_endurance": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "wingspan": [
+          "early_platform_corrections"
+        ],
+        "weight_class": [
+          "early_platform_corrections"
+        ],
+        "cruise_speed": [
+          "early_platform_corrections"
+        ],
+        "cargo_volume": [
+          "early_platform_corrections"
+        ],
+        "architecture": [
+          "early_platform_corrections"
+        ],
+        "proof_point": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ]
+      },
+      "source_note": "V2.0 values are early composite-platform chronology fields; unknown payload/speed/cargo values remain Not logged."
     },
     {
       "id": "v22",
@@ -101,7 +172,44 @@
         "Defense-relevant mission testing"
       ],
       "readiness_evidence": "Relevant environment proof: aircraft delivered for USMC-linked testing with NMSU and GTRI at White Sands.",
-      "source_event_ids": [105, 106]
+      "source_event_ids": [
+        105,
+        106
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "early_platform_corrections"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "early_platform_corrections"
+        ],
+        "range_endurance": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "wingspan": [
+          "early_platform_corrections"
+        ],
+        "weight_class": [
+          "early_platform_corrections"
+        ],
+        "cruise_speed": [
+          "early_platform_corrections"
+        ],
+        "cargo_volume": [
+          "early_platform_corrections"
+        ],
+        "architecture": [
+          "early_platform_corrections"
+        ],
+        "proof_point": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ]
+      },
+      "source_note": "V2.1/V2.2 values use the internally corrected 18 ft / 140 lb / 60+ mi defense-demo record."
     },
     {
       "id": "v25",
@@ -131,7 +239,48 @@
         "Hybrid propulsion logistics envelope maturation"
       ],
       "readiness_evidence": "Public event cards document the Navy requirement set, two weeks of CVN-78 deck trials, and source caveats around higher V2.5 payload/range claims.",
-      "source_event_ids": [10, 12, 13]
+      "source_event_ids": [
+        10,
+        12,
+        13
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "public_v2_navy_specs",
+        "early_platform_corrections"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "public_v2_navy_specs",
+          "timeline_event_cards"
+        ],
+        "range_endurance": [
+          "public_v2_navy_specs",
+          "timeline_event_cards"
+        ],
+        "wingspan": [
+          "public_v2_navy_specs",
+          "timeline_event_cards"
+        ],
+        "weight_class": [
+          "timeline_event_cards"
+        ],
+        "cruise_speed": [
+          "timeline_event_cards"
+        ],
+        "cargo_volume": [
+          "public_v2_navy_specs"
+        ],
+        "architecture": [
+          "public_v2_navy_specs",
+          "timeline_event_cards"
+        ],
+        "proof_point": [
+          "timeline_event_cards"
+        ]
+      },
+      "source_note": "V2.5 shows the historical Navy requirement/spec envelope, not the later V2.6B operational configuration."
     },
     {
       "id": "v3b0",
@@ -161,7 +310,48 @@
         "Airframe and autonomy integration shakedown"
       ],
       "readiness_evidence": "Internal event-card evidence marks early 2023 as the transition from V3 concept/subscale work to a full-scale flyable aircraft.",
-      "source_event_ids": [23]
+      "source_event_ids": [
+        23
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "early_platform_corrections"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "range_endurance": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "wingspan": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "weight_class": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "cruise_speed": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "cargo_volume": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "architecture": [
+          "timeline_event_cards",
+          "early_platform_corrections"
+        ],
+        "proof_point": [
+          "timeline_event_cards"
+        ]
+      },
+      "source_note": "V3 Block 0 values are intentionally non-quantitative because only the full-scale first-flight milestone is currently sourced for this page."
     },
     {
       "id": "v26",
@@ -191,7 +381,52 @@
         "RWE offshore and ANA island trials"
       ],
       "readiness_evidence": "Operational evidence across the V2.6/V2.6B campaign, RIMPAC, JMSDF resupply, CVSI, Project ULTRA support, and commercial demos.",
-      "source_event_ids": [27, 29, 32, 44]
+      "source_event_ids": [
+        27,
+        29,
+        32,
+        44
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "internal_v2_ops_validation",
+        "mission_planner_source_reconciliation"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "range_endurance": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "wingspan": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "weight_class": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "cruise_speed": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "cargo_volume": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "architecture": [
+          "internal_v2_ops_validation",
+          "mission_planner_source_reconciliation"
+        ],
+        "proof_point": [
+          "timeline_event_cards"
+        ]
+      },
+      "source_note": "V2.6B specs follow the internal V2 ops validation summary; cargo volume uses the corrected 1.8 ft3 value rather than older 1.0 ft3 references."
     },
     {
       "id": "v3b1",
@@ -205,7 +440,7 @@
       "mission_record": "267 flights",
       "assessed_trl": "TRL 6",
       "stats": {
-        "payload": "Test mule",
+        "payload": "74.3 lb useful load",
         "range_endurance": "521 NM",
         "wingspan": "26.2 ft",
         "weight_class": "326.8 lb",
@@ -220,8 +455,51 @@
         "Project ULTRA BVLOS customer demo",
         "Blood and cargo delivery profiles"
       ],
-      "readiness_evidence": "Customer demo evidence across BVLOS missions, heavy-fuel endurance, and Block 2 bridge testing.",
-      "source_event_ids": [21, 26, 37]
+      "readiness_evidence": "Customer demo evidence across BVLOS missions, heavy-fuel endurance, and Block 2 bridge testing. Specs shown are prototype/test-mule values, not production guarantees.",
+      "source_event_ids": [
+        21,
+        26,
+        37
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "internal_v3b1_capability",
+        "mission_planner_source_reconciliation"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "internal_v3b1_capability",
+          "mission_planner_source_reconciliation"
+        ],
+        "range_endurance": [
+          "internal_v3b1_capability",
+          "mission_planner_source_reconciliation"
+        ],
+        "wingspan": [
+          "internal_v3b1_capability",
+          "mission_planner_source_reconciliation"
+        ],
+        "weight_class": [
+          "internal_v3b1_capability",
+          "mission_planner_source_reconciliation"
+        ],
+        "cruise_speed": [
+          "internal_v3b1_capability",
+          "mission_planner_source_reconciliation"
+        ],
+        "cargo_volume": [
+          "internal_v3b1_capability"
+        ],
+        "architecture": [
+          "internal_v3b1_capability"
+        ],
+        "proof_point": [
+          "timeline_event_cards",
+          "internal_v3b1_capability"
+        ]
+      },
+      "source_note": "V3 Block 1 is a prototype test mule; useful load/range/speed are internal capability-brief values and should not be framed as production specs."
     },
     {
       "id": "v3b2",
@@ -237,8 +515,8 @@
       "mission_record": "First article path",
       "assessed_trl": "TRL 5",
       "stats": {
-        "payload": "105 lb",
-        "range_endurance": "750+ NM",
+        "payload": "105 lb useful load",
+        "range_endurance": "750+ NM one-way",
         "wingspan": "22 ft",
         "weight_class": "360 lb",
         "cruise_speed": "87+ kts",
@@ -252,8 +530,55 @@
         "Distributed long-range logistics envelope",
         "Heavy cargo modes with range caveat"
       ],
-      "readiness_evidence": "Engineering-approved maturity path across heavy-fuel architecture, in-flight recharge, first article build, and production ramp.",
-      "source_event_ids": [45, 46, 114]
+      "readiness_evidence": "Engineering-approved design-intent path across heavy-fuel architecture, in-flight recharge, first article build, and production ramp.",
+      "source_event_ids": [
+        45,
+        46,
+        114
+      ],
+      "source_status": "internal_verified_2026-05-07",
+      "source_keys": [
+        "timeline_event_cards",
+        "engineering_approved_v32_specs",
+        "mission_planner_source_reconciliation"
+      ],
+      "spec_source_keys": {
+        "payload": [
+          "engineering_approved_v32_specs"
+        ],
+        "range_endurance": [
+          "engineering_approved_v32_specs"
+        ],
+        "wingspan": [
+          "engineering_approved_v32_specs"
+        ],
+        "weight_class": [
+          "engineering_approved_v32_specs"
+        ],
+        "cruise_speed": [
+          "engineering_approved_v32_specs"
+        ],
+        "cargo_volume": [
+          "engineering_approved_v32_specs"
+        ],
+        "architecture": [
+          "engineering_approved_v32_specs"
+        ],
+        "proof_point": [
+          "timeline_event_cards",
+          "engineering_approved_v32_specs"
+        ]
+      },
+      "source_note": "V3.2 / Block 2 values are design-intent/engineering-approved envelopes. Range is one-way; max payload and max range should not be combined unless separately sourced."
     }
-  ]
+  ],
+  "source_registry": {
+    "timeline_event_cards": "Public/internal-safe timeline event cards linked from each platform card.",
+    "early_platform_corrections": "Internal early-platform correction trail and chronology updates.",
+    "public_v2_navy_specs": "Published V2 Navy requirement/spec coverage used for V2.5 historical envelope.",
+    "internal_v2_ops_validation": "Internal V2 operations validation, summarized without publishing source links.",
+    "internal_v3b1_capability": "Internal V3 Block 1 capability brief and compiled spec sheet, summarized without publishing source links.",
+    "engineering_approved_v32_specs": "Engineering-approved V3.2 / V3 Block 2 specs, summarized without publishing source links.",
+    "mission_planner_source_reconciliation": "Internal attribution sheet used for reconciliation and source precedence."
+  }
 }
