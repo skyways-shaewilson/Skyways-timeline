@@ -393,13 +393,15 @@
   .aircraft-card {
     --aircraft-image: none;
     --aircraft-focus: center center;
+    --card-sticky-top: 96px;
+    position: relative;
     min-height: 100%;
     border: 1px solid rgba(255,255,255,0.44);
     border-radius: 8px;
     background:
       linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 18%),
       #F2F5EF;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     color: var(--navy);
@@ -417,10 +419,17 @@
   #v3b1 { order: 7; }
   #v3b2 { order: 8; }
   .aircraft-media {
+    --media-stick-y: 0px;
     position: relative;
+    transform: translate3d(0, var(--media-stick-y), 0);
+    z-index: 4;
     min-height: 330px;
+    border-radius: 7px 7px 0 0;
     background: #0B151B;
     isolation: isolate;
+    overflow: hidden;
+    box-shadow: 0 18px 34px rgba(3,10,14,0.24);
+    will-change: transform;
   }
   .aircraft-media::before {
     content: '';
@@ -454,6 +463,11 @@
     object-position: var(--aircraft-focus);
     transform: scale(1.015);
   }
+  .aircraft-media.is-card-pinned {
+    box-shadow:
+      0 22px 40px rgba(3,10,14,0.32),
+      0 1px 0 rgba(255,255,255,0.16);
+  }
   .aircraft-card.image-type-rendering .aircraft-media {
     background:
       radial-gradient(circle at 50% 42%, rgba(194,242,19,0.12), transparent 31%),
@@ -468,13 +482,12 @@
   }
   .aircraft-card.image-type-rendering .aircraft-media img {
     object-fit: contain;
-    padding: 82px 28px 92px;
-    transform: scale(0.98);
+    padding: 58px 18px 76px;
+    transform: scale(1.05);
     filter:
-      invert(1)
-      drop-shadow(0 0 22px rgba(194,242,19,0.3))
+      drop-shadow(0 0 18px rgba(194,242,19,0.18))
       drop-shadow(0 18px 34px rgba(0,154,235,0.24));
-    opacity: 0.9;
+    opacity: 0.98;
   }
   .rendering-badge {
     position: absolute;
@@ -538,7 +551,7 @@
     position: relative;
     z-index: 3;
     margin-top: -64px;
-    padding: 82px 18px 18px;
+    padding: 110px 18px 18px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -915,13 +928,16 @@
       height: 276px;
       min-height: 276px;
     }
+    .aircraft-media {
+      --card-sticky-top: 154px;
+    }
     .aircraft-media::before {
       bottom: -62px;
       height: 148px;
     }
     .aircraft-body {
       margin-top: -64px;
-      padding-top: 78px;
+      padding-top: 104px;
       gap: 12px;
     }
     .aircraft-body::before {
@@ -1386,9 +1402,9 @@
           </div>
         </article>
 
-        <article class="aircraft-card image-type-rendering" id="v3b2" style="--aircraft-image: url('../Logos/V3TopSil.svg'); --aircraft-focus: center center;">
+        <article class="aircraft-card image-type-rendering" id="v3b2" style="--aircraft-image: url('assets/v3b2-render-hero.webp'); --aircraft-focus: center center;">
           <div class="aircraft-media">
-            <img src="../Logos/V3TopSil.svg" alt="V3.2 production-intent top-view aircraft rendering">
+            <img src="assets/v3b2-render-hero.webp" alt="V3.2 production-intent aircraft rendering from Bill presentation asset set">
             <div class="rendering-badge">Rendering</div>
             <div class="aircraft-title">
               <div class="aircraft-year">2026 | next</div>
@@ -1685,6 +1701,47 @@
     rail.addEventListener('scroll', requestTrackerUpdate, { passive: true });
     window.addEventListener('resize', requestTrackerUpdate);
     window.addEventListener('load', requestTrackerUpdate);
+  })();
+
+  (() => {
+    const rail = document.querySelector('.progression-rail');
+    if (!rail) return;
+
+    let ticking = false;
+
+    const getStickyTop = (media) => {
+      const raw = getComputedStyle(media).getPropertyValue('--card-sticky-top');
+      const value = Number.parseFloat(raw);
+      return Number.isFinite(value) ? value : 96;
+    };
+
+    const updatePinnedMedia = () => {
+      document.querySelectorAll('.aircraft-card').forEach((card) => {
+        const media = card.querySelector('.aircraft-media');
+        if (!media) return;
+
+        const cardRect = card.getBoundingClientRect();
+        const stickyTop = getStickyTop(media);
+        const maxTranslate = Math.max(card.offsetHeight - media.offsetHeight, 0);
+        const translate = Math.min(Math.max(stickyTop - cardRect.top, 0), maxTranslate);
+
+        media.style.setProperty('--media-stick-y', `${translate.toFixed(1)}px`);
+        media.classList.toggle('is-card-pinned', translate > 1 && translate < (maxTranslate - 1));
+      });
+      ticking = false;
+    };
+
+    const requestPinnedMediaUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updatePinnedMedia);
+    };
+
+    updatePinnedMedia();
+    window.addEventListener('scroll', requestPinnedMediaUpdate, { passive: true });
+    window.addEventListener('resize', requestPinnedMediaUpdate);
+    window.addEventListener('load', requestPinnedMediaUpdate);
+    rail.addEventListener('scroll', requestPinnedMediaUpdate, { passive: true });
   })();
 
   (() => {
