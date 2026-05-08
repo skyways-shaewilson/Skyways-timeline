@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skyways | Platform Progression</title>
-<link rel="icon" href="assets/platform-v3-favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="assets/platform-v3-apple-touch.png">
+<link rel="icon" href="assets/platform-v3-favicon.png?v=20260508b" type="image/png" sizes="256x256">
+<link rel="shortcut icon" href="assets/platform-v3-favicon.png?v=20260508b" type="image/png">
+<link rel="apple-touch-icon" href="assets/platform-v3-apple-touch.png?v=20260508b">
 <style>
   @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Founders Grotesk'; src: url('../Founders Grotesk Family/WOFF2/founders-grotesk-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -178,10 +179,11 @@
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    margin-left: -12px;
   }
   .brand-logo {
     width: auto;
-    height: 38px;
+    height: 46px;
     object-fit: contain;
   }
   .nav-actions {
@@ -340,21 +342,53 @@
     overscroll-behavior-inline: contain;
     scroll-padding-inline: 48px;
     scroll-snap-type: x proximity;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(194,242,19,0.74) rgba(255,255,255,0.08);
+    scrollbar-width: none;
     margin: 0 -48px;
-    padding: 10px 48px 30px;
+    padding: 14px 48px 30px;
   }
   .progression-rail::-webkit-scrollbar {
-    height: 8px;
+    display: none;
   }
-  .progression-rail::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.08);
+  .rail-scroll-tracker {
+    position: sticky;
+    top: 73px;
+    z-index: 4;
+    height: 10px;
+    margin: 0 0 10px;
+    border: 1px solid rgba(255,255,255,0.14);
     border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)),
+      rgba(255,255,255,0.045);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      0 16px 34px rgba(3,10,14,0.22);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
-  .progression-rail::-webkit-scrollbar-thumb {
-    background: rgba(194,242,19,0.72);
+  .rail-scroll-tracker-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0.08);
+    transform-origin: left center;
     border-radius: 999px;
+    background:
+      linear-gradient(90deg, var(--lime), rgba(66,198,193,0.92), rgba(0,154,235,0.88));
+    box-shadow: 0 0 22px rgba(194,242,19,0.34);
+    transition: transform 0.12s linear;
+  }
+  .rail-scroll-tracker::after {
+    content: 'SCROLL PLATFORM SPECS';
+    position: absolute;
+    right: 10px;
+    top: -20px;
+    color: rgba(255,255,255,0.54);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
   }
   .aircraft-card {
     --aircraft-image: none;
@@ -809,7 +843,8 @@
       flex-direction: column;
       gap: 14px;
     }
-    .brand-logo { height: 32px; }
+    .brand { margin-left: -8px; }
+    .brand-logo { height: 38px; }
     .nav-actions { justify-content: flex-start; }
     .nav-link { font-size: 11px; }
     .hero-panel-footer { grid-template-columns: 1fr; }
@@ -823,6 +858,11 @@
       gap: 12px;
       padding-bottom: 24px;
     }
+    .rail-scroll-tracker {
+      top: 132px;
+      margin-bottom: 8px;
+    }
+    .rail-scroll-tracker::after { display: none; }
     .aircraft-media,
     .aircraft-media img {
       height: 276px;
@@ -979,17 +1019,20 @@
     </section>
 
     <section class="progression" aria-label="Aircraft platform progression">
+      <div class="rail-scroll-tracker" aria-hidden="true">
+        <span class="rail-scroll-tracker-fill"></span>
+      </div>
       <div class="progression-rail">
-        <article class="aircraft-card" id="v1" style="--aircraft-image: url('https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp'); --aircraft-focus: center center;">
+        <article class="aircraft-card" id="v1" style="--aircraft-image: url('assets/v1-skywalker-x5-reference.jpg'); --aircraft-focus: center center;">
           <div class="aircraft-media">
-            <img src="https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp" alt="Early Skyways aircraft video still">
+            <img src="assets/v1-skywalker-x5-reference.jpg" alt="Skywalker X-5 COTS foam flying wing, the base aircraft Charles identified for V1">
             <div class="aircraft-title">
               <div class="aircraft-year">2016</div>
               <h2>V1</h2>
             </div>
           </div>
           <div class="aircraft-body">
-            <p>First San Francisco aircraft: a COTS foam-wing VTOL fixed-wing quadplane for cargo autonomy and precision landing.</p>
+            <p>First San Francisco aircraft: a Skywalker X-5 COTS foam flying wing modified with two carbon-fiber booms and four VTOL motors for cargo autonomy and precision landing.</p>
             <div class="spec-meta">
               <div class="meta-pill"><span>Maturity</span><strong>Prototype proof</strong></div>
               <div class="meta-pill"><span>Mission record</span><strong>A-B-C-A demo</strong></div>
@@ -1564,6 +1607,30 @@
     });
 
     group.dataset.rendered = 'true';
+  })();
+
+  (() => {
+    const rail = document.querySelector('.progression-rail');
+    const fill = document.querySelector('.rail-scroll-tracker-fill');
+    if (!rail || !fill) return;
+
+    let ticking = false;
+    const updateTracker = () => {
+      const max = Math.max(rail.scrollWidth - rail.clientWidth, 0);
+      const progress = max > 0 ? Math.min(Math.max(rail.scrollLeft / max, 0), 1) : 1;
+      fill.style.transform = `scaleX(${Math.max(0.08, progress).toFixed(4)})`;
+      ticking = false;
+    };
+    const requestTrackerUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateTracker);
+    };
+
+    updateTracker();
+    rail.addEventListener('scroll', requestTrackerUpdate, { passive: true });
+    window.addEventListener('resize', requestTrackerUpdate);
+    window.addEventListener('load', requestTrackerUpdate);
   })();
 
   (() => {

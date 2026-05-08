@@ -1,6 +1,6 @@
 {
   "updated": "2026-05-08",
-  "source_model": "Timeline event-card backed platform progression data. Internal document links are not included. Runtime aircraft images use public Skyways/Sanity assets unless explicitly promoted into the tracked site asset folder.",
+  "source_model": "Timeline event-card backed platform progression data. Internal document links are not included. Runtime aircraft images use public Skyways/Sanity/HobbyKing assets unless explicitly promoted into the tracked site asset folder.",
   "spec_fields": [
     "payload",
     "range_endurance",
@@ -16,10 +16,11 @@
       "id": "v1",
       "year_label": "2016",
       "generation": "V1",
-      "description": "First San Francisco aircraft: a COTS foam-wing VTOL fixed-wing quadplane for cargo autonomy and precision landing.",
-      "image": "https://www.skyways.com/_astro/video-still.KvHjdBXj_WuHxn.webp",
-      "image_alt": "Forward-facing Skyways aircraft view over open water",
+      "description": "First San Francisco aircraft: a Skywalker X-5 COTS foam flying wing modified with two carbon-fiber booms and four VTOL motors for cargo autonomy and precision landing.",
+      "image": "assets/v1-skywalker-x5-reference.jpg",
+      "image_alt": "Skywalker X-5 COTS foam flying wing, the base aircraft Charles identified for V1",
       "image_focus": "center center",
+      "image_source": "HobbyKing Skywalker X-5 product image, public reference.",
       "maturity": "Prototype proof",
       "mission_record": "A-B-C-A demo",
       "assessed_trl": "TRL 4",
