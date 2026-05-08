@@ -175,6 +175,12 @@
     justify-content: space-between;
     gap: 24px;
   }
+  .brand-cluster {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+  }
   .brand {
     display: inline-flex;
     align-items: center;
@@ -185,6 +191,21 @@
     width: auto;
     height: 46px;
     object-fit: contain;
+  }
+  .topbar-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
   .nav-actions {
     display: flex;
@@ -905,6 +926,9 @@
     }
     .brand { margin-left: -8px; }
     .brand-logo { height: 38px; }
+    .brand-cluster { gap: 12px; }
+    .topbar-divider { height: 18px; }
+    .topbar-title { font-size: 13px; letter-spacing: 0.85px; }
     .nav-actions { justify-content: flex-start; }
     .nav-link { font-size: 11px; }
     .hero-panel-footer { grid-template-columns: 1fr; }
@@ -1056,9 +1080,13 @@
 <div class="site-shell">
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="../" aria-label="Skyways history and timeline">
-        <img class="brand-logo" src="../Logos/Other%20Logo%20Files/logo-lime-white-transparent.svg" alt="Skyways">
-      </a>
+      <div class="brand-cluster">
+        <a class="brand" href="../" aria-label="Skyways history and timeline">
+          <img class="brand-logo" src="../Logos/Other%20Logo%20Files/logo-lime-white-transparent.svg" alt="Skyways">
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <div class="topbar-title">Platform Progression</div>
+      </div>
       <nav class="nav-actions" aria-label="Platform navigation">
         <a class="nav-link" href="../">Timeline</a>
       </nav>
