@@ -42,6 +42,7 @@ Logos/**
 !Logos/
 !Logos/Other Logo Files/
 !Logos/Other Logo Files/logo-white-transparent-background.png
+!Logos/Other Logo Files/logo-lime-white-transparent.svg
 
 # Licensed font sources stay internal; web fonts are required by the site
 Founders Grotesk Family/**
